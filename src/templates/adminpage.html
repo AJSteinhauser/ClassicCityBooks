@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Admin Page</title>
+
+		<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    	<link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static '/css/homepage.css' %}" >
+		<link rel="stylesheet" href="{% static '/css/adminpage.css' %}" >
+	</head>
+
+	<body>
+		
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        	<div class="navbar">
+            	<a class="navbar-brand" href="{% url 'adminpage' %}">Admin Page</a>
+            	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                	<span class="navbar-toggler-icon"></span>
+            	</button>
+            	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+         			<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+	          			<li class="nav-item">
+	              			<a class="nav-link active" aria-current="page" href="{% url 'home' %}">Bookstore</a>
+	           			</li>
+	           		</ul>
+       		 	</div>
+       		 </div>
+  		  </nav>
+
+
+
+  		<div class="container">
+  			<div class="row gx-5">
+  				<div class="col-md">
+  					<button type="button" class="btn btn-outline-primary-sm" onclick="location.href={% url 'managebooks' %}"><img src="{% static '/assets/book2_icon.png' %}" height="200" width="200"/></button>
+  					<div class="p-3 border">Manage Books</div>
+  				</div>
+  				<div class="col-md">
+  					<button type="button" class="btn btn-outline-primary-lg"><img src="{% static '/assets/users_icon.png' %}" height="200" width="250"/></button>
+  					<div class="p-3 border">Manage Users</div>
+  				</div>
+  				<div class="col-md">
+  					<button type="button" class="btn btn-outline-primary-lg"><img src="{% static '/assets/promotion.png' %}" height="200" width="200"/></button>
+  					<div class="p-3 border">Manage Promotions</div>
+  				</div>
+  			</div>
+  		</div>
+
+
+
+
+	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	    <script src="{% static '/js/bootstrap.js' %}"></script>
+	</body>
+</html>

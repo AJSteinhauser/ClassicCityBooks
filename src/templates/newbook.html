@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Enter A New Book</title>
+
+		<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    	<link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+		<link rel="stylesheet" href="../css/homepage.css" >
+		<link rel="stylesheet" href="../css/adminpage.css" >
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        	<div class="navbar">
+            	<a class="navbar-brand" href="adminpage">Admin Page</a>
+            	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                	<span class="navbar-toggler-icon"></span>
+            	</button>
+
+            	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+         			<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+	          			<li class="nav-item">
+	              			<a class="nav-link active" aria-current="page" href="managebooks">Manage Books</a>
+	           			</li>
+	           		</ul>
+       		 	</div>
+
+            	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+         			<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+	          			<li class="nav-item">
+	              			<a class="nav-link active" aria-current="page" href="{% url 'home' %}">Bookstore</a>
+	           			</li>
+	           		</ul>
+       		 	</div>
+
+       		 </div>
+  		  </nav>
+
+  		  <h1> Enter A New Book: </h1>
+  		  <p> Required fields denoted with an asterick (*)</p>
+
+  		  <form>
+			  <div class="mb-3">
+			    <label for="title" class="form-label">Title*</label>
+			    <input type="text" class="form-control" id="title">
+			  </div>
+			  <div class="mb-3">
+			    <label for="author" class="form-label">Author*</label>
+			    <input type="text" class="form-control" id="author">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="category" class="form-label">Category*</label>
+			    <input type="text" class="form-control" id="category">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="isbn" class="form-label">ISBN*</label>
+			    <input type="text" class="form-control" id="isbn">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="Edition" class="form-label">Edition*</label>
+			    <input type="text" class="form-control" id="edition">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="publisher" class="form-label">Publisher*</label>
+			    <input type="text" class="form-control" id="publisher">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="year" class="form-label">Publication Year*</label>
+			    <input type="text" class="form-control" id="publicationYear">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="quantity" class="form-label">Quantity*</label>
+			    <input type="text" class="form-control" id="quantity">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="minimum" class="form-label">Minimum Threshold*</label>
+			    <input type="text" class="form-control" id="minThresh">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="buyingPrice" class="form-label">Buying Price*</label>
+			    <input type="text" class="form-control" id="buyingPrice">
+			  </div>
+			  	<div class="mb-3">
+			    <label for="sellingPrice" class="form-label">Selling Price*</label>
+			    <input type="text" class="form-control" id="sellingPrice">
+			  </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+
+	</body>
+</html>

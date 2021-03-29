@@ -1,0 +1,38 @@
+
+[class ="col-md"] {
+  padding: 1rem;
+  background-color: #33b5e5;
+  border: 2px solid #fff;
+  color: #fff;
+  text-align: center;
+  width: 25%;
+  height: 300px;
+}
+
+[class*="con"] {
+  padding: 1rem;
+  
+  border: 2px solid #fff;
+  color: #fff;
+  text-align: center;
+}
+
+[class="navbar"] {
+  padding: 1rem;
+}
+
+form {
+  padding: 2rem;
+  border-style; solid;
+  border-width: 3px;
+  display: inline-block;
+
+}
+
+h1 {
+  padding: 1rem;
+}
+
+p {
+  padding: 1rem;
+}

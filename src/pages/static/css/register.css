@@ -1,0 +1,75 @@
+input, label {
+    margin: 3px;
+}
+
+.input-form h2 {
+    color: #2C3E50;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: solid;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.form_box {
+    width: 500px;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
+    border: 2px solid #2C3E50;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.form_box input {
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 475px;
+    box-sizing: border-box;
+    color: #2C3E50;
+    font-size: 14px;
+}
+
+label {
+   float: left;
+   padding-left: 5px;
+}
+
+button {
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: 0;
+    background: #2C3E50;
+    width: 100%;
+    padding: 15px;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    border-color: #2C3E50;
+    border-radius: 3px;
+}
+
+.input_field {
+    float: left;
+}
+
+#firstName { width: 48%;}
+
+#lastName { width: 48%;}
+
+#city { width: 50%; }
+
+#state { width: 22%; }
+
+#zipcode { width: 23%; }
+
+#line-break {
+    width: 100%;
+}
+
+#securityCode { width: 48%; }
+
+#expirationDate { width: 48% }
+
