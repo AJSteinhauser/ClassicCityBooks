@@ -55,9 +55,9 @@ button {
     float: left;
 }
 
-#firstName { width: 48%;}
+#id_first_name { width: 48%;}
 
-#lastName { width: 48%;}
+#id_last_name { width: 48%;}
 
 #city { width: 50%; }
 
