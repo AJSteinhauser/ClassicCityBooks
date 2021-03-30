@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
+
 # Create your views here.
 
 def homepage_view(request, *args, **kwargs):
@@ -8,17 +11,11 @@ def homepage_view(request, *args, **kwargs):
 def adminpage_view(request, *args, **kwargs):
 	return render(request, "adminpage.html", {})
 
-def checkout_view(request, *args, **kwargs):
-	return render(request, "checkout.html", {})
-
 def confirmation_view(request, *args, **kwargs):
 	return render(request, "confirmation.html", {})
 
 def details_view(request, *args, **kwargs):
 	return render(request, "details.html", {})
-
-def editacct_view(request, *args, **kwargs):
-	return render(request, "editacct.html", {})
 
 def homepage_registration_confirm_view(request, *args, **kwargs):
 	return render(request, "homepage_registration_confirm.html", {})
@@ -44,6 +41,14 @@ def search_view(request, *args, **kwargs):
 def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
-
+@login_required(login_url='login')
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
+
+@login_required(login_url='login')
+def editacct_view(request, *args, **kwargs):
+	return render(request, "editacct.html", {})
+
+@login_required(login_url='login')
+def checkout_view(request, *args, **kwargs):
+	return render(request, "checkout.html", {})
