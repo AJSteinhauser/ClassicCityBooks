@@ -101,8 +101,9 @@
     <!-- END OF NAVBAR -->
     
     <div class="text-center mt-5">
-        <form method="post" action="#" style="max-width: 300px; margin:auto;">
-            {% csrf_token %}
+        <form style="max-width: 300px; margin:auto;" method="POST" id="testform">
+			<input type="hidden" name="csrfmiddlewaretoken" value="NI3DViuNPOPfvADFqgwlJW0AbqBtfBy8UbVSQfCeYR5LGLLrsDjKoAGgBuvSz9DD">
+			{% csrf_token %}
             <h1 class = "h3 mb-3 font-weight-normal"> Login</h1>
 
             <label for="AccountID" class="sr-only">Account ID</label>
