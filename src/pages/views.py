@@ -48,19 +48,6 @@ def search_view(request, *args, **kwargs):
 def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
-<<<<<<< HEAD
-@login_required(login_url='login')
-def viewCart_view(request, *args, **kwargs):
-	return render(request, "viewCart.html", {})
-
-@login_required(login_url='login')
-def editacct_view(request, *args, **kwargs):
-	return render(request, "editacct.html", {})
-
-@login_required(login_url='login')
-def checkout_view(request, *args, **kwargs):
-	return render(request, "checkout.html", {})
-=======
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
 
@@ -100,4 +87,3 @@ def test_view(request, *args, **kwargs):
     
 
     
->>>>>>> b72a9749c3c8dd4ac1819e5cd237eae4088c0317
