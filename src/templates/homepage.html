@@ -113,8 +113,8 @@
         <div class="container">
           <div class="carousel-caption">
             <h1>Browse the Latest Books.</h1>
-			<p>BOOKSTORE NAME, second only to Amazon, offers a large selection of books for all your reading needs.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse Books</a></p>
+			<p>The Classic City Collection, second only to Amazon, offers a large selection of books for all your reading needs.</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'search' %}">Browse Books</a></p>
           </div>
         </div>
       </div>
@@ -220,6 +220,67 @@
     </div><!-- /.row -->
 
  
+  <h1 class="display-3" id="CulinaryTopSellers">Culinary Bestsellers</h1>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/Ikeandjanecookbook.jpeg' %}" height="200" width="150">
+        <h2>Secret Handshakes: The Ike & Jane Manual</h2>
+        <p>Ike & Jane was started in late 2008 on a wing and a prayer and less than one shoestring. They finally opened the door to you, their loyal fanbase and partners in crime, in February 2009. While the doors of their Normaltown location serving fun donuts, savory sandwiches, and smiles might have closed in November of 2019, Corie and the whole Ike & Jane crew have gathered together all their secrets (it's mostly butter) in this delectibly photographed tribute to Athens, fun, and community.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/thegritcook.jpeg' %}" height="200" width="150">
+
+        <h2>The Grit Cookbook: World-Wise, Down-Home Recipes</h2>
+        <p>The Grit, located in the quintessential boho town of Athens, Georgia, is known far and wide as the touring musicians' restaurant of choice. This classic cookbook features 150 of The Grit's most requested recipes, including 20 new recipes to celebrate the 20th anniversary of this famous establishment. True to its Southern roots, this hip vegetarian eatery combines soul-food sensibility with meatless cuisine, and while there are plenty of Italian, Indian, Mexican, and Middle Eastern favorites to satisfy the well-traveled vegetarian, the heart of this cuisine maintains the down-home, soul-food feeling of simple foods and classic combinations that are guaranteed to please. </p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/saltfatacid.jpeg' %}" height="200" width="150">
+    
+        <h2>Salt, Fat, Acid, Heat: Mastering the Elements of Good Cooking</h2>
+        <p>In the tradition of The Joy of Cooking and How to Cook Everything comes Salt, Fat, Acid, Heat, an ambitious new approach to cooking by a major new culinary voice. Chef and writer Samin Nosrat has taught everyone from professional chefs to middle school kids to author Michael Pollan to cook using her revolutionary, yet simple, philosophy. Master the use of just four elements—Salt, which enhances flavor; Fat, which delivers flavor and generates texture; Acid, which balances flavor; and Heat, which ultimately determines the texture of food—and anything you cook will be delicious.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/barefootcontessa.jpeg' %}" height="200" width="150">
+    
+        <h2>Modern Comfort Food: A Barefoot Contessa Cookbook</h2>
+        <p>In Modern Comfort Food, Ina Garten shares 85 new recipes that will feed your deepest cravings. Many of these dishes are inspired by childhood favorites—but with the volume turned way up, such as Cheddar and Chutney Grilled Cheese sandwiches (the perfect match for Ina’s Creamy Tomato Bisque), Smashed Hamburgers with Caramelized Onions, and the crispiest hash browns that are actually made in a waffle iron!</p>
+    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+  
+  <div class="row">
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/corkdork.jpeg' %}"height="200" width="150">
+        <h2>Cork Dork: A Wine-Fueled Adventure Among the Obsessive Sommeliers, Big Bottle Hunters, and Rogue Scientists Who Taught Me to Live for Taste</h2>
+    <p>Professional journalist and amateur drinker Bianca Bosker didn’t know much about wine—until she discovered an alternate universe where taste reigns supreme, a world of elite sommeliers who dedicate their lives to the pursuit of flavor. Astounded by their fervor and seemingly superhuman sensory powers, she set out to uncover what drove their obsession, and whether she, too, could become a “cork dork.”</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/farmingwhileblack.jpeg' %}" height="200" width="150">
+
+        <h2>Farming While Black: Soul Fire Farm's Practical Guide to Liberation on the Land</h2>
+        <p>In 1920, 14 percent of all land-owning US farmers were black. Today less than 2 percent of farms are controlled by black people--a loss of over 14 million acres and the result of discrimination and dispossession. While farm management is among the whitest of professions, farm labor is predominantly brown and exploited, and people of color disproportionately live in "food apartheid" neighborhoods and suffer from diet-related illness. The system is built on stolen land and stolen labor and needs a redesign.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/indianish.jpeg' %}" height="200" width="150">
+        <h2>Indian-ish: Recipes and Antics from a Modern American Family</h2>
+    <p>Indian food is everyday food! This colorful, lively book is food writer Priya Krishna’s loving tribute to her mom’s “Indian-ish” cooking—a trove of one-of-a-kind Indian-American hybrids that are easy to make, clever, practical, and packed with flavor. Think Roti Pizza, Tomato Rice with Crispy Cheddar, Whole Roasted Cauliflower with Green Pea Chutney, and Malaysian Ramen.</p>
+        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+        <img class="bookPic" src="{% static 'assets/sixseasons.jpeg' %}" height="200" width="150">
+    
+        <h2>Six Seasons: A New Way with Vegetables</h2>
+    <p>Joshua McFadden, chef and owner of renowned trattoria Ava Gene’s in Portland, Oregon, is a vegetable whisperer. After years racking up culinary cred at New York City restaurants like Lupa, Momofuku, and Blue Hill, he managed the trailblazing Four Season Farm in coastal Maine, where he developed an appreciation for every part of the plant and learned to coax the best from vegetables at each stage of their lives.</p>
+    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
 
   </div><!-- /.container -->
 
