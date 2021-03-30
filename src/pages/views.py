@@ -1,14 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-<<<<<<< HEAD
-from django.contrib.auth.decorators import login_required
-
-=======
 from .models import Book
 from .models import User
 from .form import BookForm
 from .form import UserRegister
->>>>>>> b72a9749c3c8dd4ac1819e5cd237eae4088c0317
 
 # Create your views here.
 
@@ -18,11 +13,17 @@ def homepage_view(request, *args, **kwargs):
 def adminpage_view(request, *args, **kwargs):
 	return render(request, "adminpage.html", {})
 
+def checkout_view(request, *args, **kwargs):
+	return render(request, "checkout.html", {})
+
 def confirmation_view(request, *args, **kwargs):
 	return render(request, "confirmation.html", {})
 
 def details_view(request, *args, **kwargs):
 	return render(request, "details.html", {})
+
+def editacct_view(request, *args, **kwargs):
+	return render(request, "editacct.html", {})
 
 def homepage_registration_confirm_view(request, *args, **kwargs):
 	return render(request, "homepage_registration_confirm.html", {})
