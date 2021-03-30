@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from pages.views import homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, homepage_registration_confirm_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, viewCart_view 
-
+from pages.views import test_view, homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, homepage_registration_confirm_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, viewCart_view 
 
 urlpatterns = [
 	path('', homepage_view, name = 'home'),
@@ -36,5 +35,5 @@ urlpatterns = [
     path('search/', search_view, name='search'),
     path('verifyemail/', verifyEmail_view, name='verifyemail'),
     path('viewcart/', viewCart_view, name='viewcart'),
-
+    path('test/', test_view, name='test'),
 ]
