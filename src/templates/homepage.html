@@ -1,4 +1,4 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +10,6 @@
     <title>Homepage</title>
   </head>
   <body>
-    
      <!-- BEGGINING OF NAVBAR -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<a href=""> 
@@ -162,60 +161,60 @@
 
     <div class="row">
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/harrypotter.jpg' %}" height="200" width="150">
-        <h2>Harry Potter and the Sorcerer's Stone</h2>
-		<p>Read about the exciting adventures of Harry Potter, a boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static book0.cover %}" height="200" width="150">
+        <h2>{{book0.title}}</h2>
+		    <p>{{book0.description}}</p>
+        <p>
+          <a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book0.isbn %}">View details &raquo;</a>
+        </p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/greatexpectations.jpg' %}" height="200" width="150">
-
-        <h2>Great Expectations</h2>
-        <p>Great Expectations is the story of Pip, an orphan boy adopted by a blacksmith's family, who has good luck and great expectations, and then loses both his luck and his expectations. Through this rise and fall, however, Pip learns how to find happiness. He learns the meaning of friendship and the meaning of love and, of course, becomes a better person for it. </p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static book1.cover %}" height="200" width="150">
+        <h2>{{book1.title}}</h2>
+        <p>{{book1.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book1.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/prideandprejudice.jpg' %}" height="200" width="150">
-		
-        <h2>Pride and Prejudice</h2>
-        <p>Pride and Prejudice follows the turbulent relationship between Elizabeth Bennet, the daughter of a country gentleman, and Fitzwilliam Darcy, a rich aristocratic landowner. They must overcome the titular sins of pride and prejudice in order to fall in love and marry.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static book2.cover %}" height="200" width="150">
+        <h2>{{book2.title}}</h2>
+        <p>{{book2.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book2.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
 	  <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/gameofthrones.jpg' %}" height="200" width="150">
+        <img class="bookPic" src="{% static book3.cover %}" height="200" width="150">
 		
-        <h2>A Game of Thrones</h2>
-        <p>A Game of Thrones is the first novel in A Song of Ice and Fire, a series of fantasy novels by the American author George R. R. Martin. When the story begins, a decade-long summer is ending, and winter looms as characters battle to claim the "Iron Throne," the seat of the king of the Seven Kingdoms, the regime that rules all but the northern tip of Westeros.</p>
-		<p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <h2>{{book3.title}}</h2>
+        <p>{{book3.description}}</p>
+		<p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book3.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 	
 	<div class="row">
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/hungrycaterpillar.jpg' %}"height="200" width="220">
-        <h2>The Very Hungry Caterpillar</h2>
-		<p>The Very Hungry Caterpillar is a picture book about the life of a young, hungry caterpillar who is in search of food to eat to turn him into a beautiful butterfly.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static book4.cover %}"height="200" width="220">
+        <h2>{{book4.title}}</h2>
+        <p>{{book4.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book4.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/apromisedland.jpg' %}" height="200" width="150">
+        <img class="bookPic" src="{% static book5.cover %}" height="200" width="150">
 
-        <h2>A Promised Land</h2>
-        <p>In the stirring, highly anticipated first volume of his presidential memoirs, Barack Obama tells the story of his improbable odyssey from young man searching for his identity to leader of the free world, describing in strikingly personal detail both his political education and the landmark moments of the first term of his historic presidency—a time of dramatic transformation and turmoil.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <h2>{{book5.title}}</h2>
+        <p>{{book5.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book5.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/leavesofgrass.jpg' %}" height="200" width="150">
-        <h2>Leaves Of Grass</h2>
-		<p>Leaves of Grass is a collection of poetry written over Walt Whitman's entire lifetime organized thematically into sections. Whitman revised and added to the book throughout his life, the final edition being published only months before his death in 1891. Whitman was concerned with the journey of the poetry. He desired that the reader would see a self formed through the words and themes of the book.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static book6.cover %}" height="200" width="150">
+        <h2>{{book6.title}}</h2>
+		<p>{{book6.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book6.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
 	  <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/tokillamockingbird.jpg' %}" height="200" width="150">
+        <img class="bookPic" src="{% static book7.cover %}" height="200" width="150">
 		
-        <h2>To Kill a Mockingbird</h2>
-		<p>Atticus Finch, a lawyer in the Depression-era South, defends a black man against an undeserved rape charge, and his children against prejudice.</p>
-		<p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <h2>{{book7.title}}</h2>
+		<p>{{book7.description}}</p>
+		<p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book7.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
@@ -224,60 +223,55 @@
 
     <div class="row">
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/Ikeandjanecookbook.jpeg' %}" height="200" width="150">
-        <h2>Secret Handshakes: The Ike & Jane Manual</h2>
-        <p>Ike & Jane was started in late 2008 on a wing and a prayer and less than one shoestring. They finally opened the door to you, their loyal fanbase and partners in crime, in February 2009. While the doors of their Normaltown location serving fun donuts, savory sandwiches, and smiles might have closed in November of 2019, Corie and the whole Ike & Jane crew have gathered together all their secrets (it's mostly butter) in this delectibly photographed tribute to Athens, fun, and community.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary0.cover %}" height="200" width="150">
+        <h2>{{culinary0.title}}</h2>
+        <p>{{culinary0.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary0.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/thegritcook.jpeg' %}" height="200" width="150">
-
-        <h2>The Grit Cookbook: World-Wise, Down-Home Recipes</h2>
-        <p>The Grit, located in the quintessential boho town of Athens, Georgia, is known far and wide as the touring musicians' restaurant of choice. This classic cookbook features 150 of The Grit's most requested recipes, including 20 new recipes to celebrate the 20th anniversary of this famous establishment. True to its Southern roots, this hip vegetarian eatery combines soul-food sensibility with meatless cuisine, and while there are plenty of Italian, Indian, Mexican, and Middle Eastern favorites to satisfy the well-traveled vegetarian, the heart of this cuisine maintains the down-home, soul-food feeling of simple foods and classic combinations that are guaranteed to please. </p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary1.cover %}" height="200" width="150">
+        <h2>{{culinary1.title}}</h2>
+        <p>{{culinary1.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary1.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/saltfatacid.jpeg' %}" height="200" width="150">
-    
-        <h2>Salt, Fat, Acid, Heat: Mastering the Elements of Good Cooking</h2>
-        <p>In the tradition of The Joy of Cooking and How to Cook Everything comes Salt, Fat, Acid, Heat, an ambitious new approach to cooking by a major new culinary voice. Chef and writer Samin Nosrat has taught everyone from professional chefs to middle school kids to author Michael Pollan to cook using her revolutionary, yet simple, philosophy. Master the use of just four elements—Salt, which enhances flavor; Fat, which delivers flavor and generates texture; Acid, which balances flavor; and Heat, which ultimately determines the texture of food—and anything you cook will be delicious.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary2.cover %}" height="200" width="150">
+        <h2>{{culinary2.title}}</h2>
+        <p>{{culinary2.description}}</p> 
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary2.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/barefootcontessa.jpeg' %}" height="200" width="150">
-    
-        <h2>Modern Comfort Food: A Barefoot Contessa Cookbook</h2>
-        <p>In Modern Comfort Food, Ina Garten shares 85 new recipes that will feed your deepest cravings. Many of these dishes are inspired by childhood favorites—but with the volume turned way up, such as Cheddar and Chutney Grilled Cheese sandwiches (the perfect match for Ina’s Creamy Tomato Bisque), Smashed Hamburgers with Caramelized Onions, and the crispiest hash browns that are actually made in a waffle iron!</p>
-    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      <img class="bookPic" src="{% static culinary3.cover %}" height="200" width="150">
+      <h2>{{culinary3.title}}</h2>
+      <p>{{culinary3.description}}</p>
+      <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary3.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
   
   <div class="row">
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/corkdork.jpeg' %}"height="200" width="150">
-        <h2>Cork Dork: A Wine-Fueled Adventure Among the Obsessive Sommeliers, Big Bottle Hunters, and Rogue Scientists Who Taught Me to Live for Taste</h2>
-    <p>Professional journalist and amateur drinker Bianca Bosker didn’t know much about wine—until she discovered an alternate universe where taste reigns supreme, a world of elite sommeliers who dedicate their lives to the pursuit of flavor. Astounded by their fervor and seemingly superhuman sensory powers, she set out to uncover what drove their obsession, and whether she, too, could become a “cork dork.”</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary4.cover %}" height="200" width="150">
+        <h2>{{culinary4.title}}</h2>
+        <p>{{culinary4.description}}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary4.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/farmingwhileblack.jpeg' %}" height="200" width="150">
-
-        <h2>Farming While Black: Soul Fire Farm's Practical Guide to Liberation on the Land</h2>
-        <p>In 1920, 14 percent of all land-owning US farmers were black. Today less than 2 percent of farms are controlled by black people--a loss of over 14 million acres and the result of discrimination and dispossession. While farm management is among the whitest of professions, farm labor is predominantly brown and exploited, and people of color disproportionately live in "food apartheid" neighborhoods and suffer from diet-related illness. The system is built on stolen land and stolen labor and needs a redesign.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary5.cover %}" height="200" width="150">
+        <h2>{{culinary5.title}}</h2>
+        <p>{{culinary5.description}}</p>
+         <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary5.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/indianish.jpeg' %}" height="200" width="150">
-        <h2>Indian-ish: Recipes and Antics from a Modern American Family</h2>
-    <p>Indian food is everyday food! This colorful, lively book is food writer Priya Krishna’s loving tribute to her mom’s “Indian-ish” cooking—a trove of one-of-a-kind Indian-American hybrids that are easy to make, clever, practical, and packed with flavor. Think Roti Pizza, Tomato Rice with Crispy Cheddar, Whole Roasted Cauliflower with Green Pea Chutney, and Malaysian Ramen.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+        <img class="bookPic" src="{% static culinary6.cover %}" height="200" width="150">
+        <h2>{{culinary6.title}}</h2>
+        <p>{{culinary6.description}}</p>
+         <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary6.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-        <img class="bookPic" src="{% static 'assets/sixseasons.jpeg' %}" height="200" width="150">
-    
-        <h2>Six Seasons: A New Way with Vegetables</h2>
-    <p>Joshua McFadden, chef and owner of renowned trattoria Ava Gene’s in Portland, Oregon, is a vegetable whisperer. After years racking up culinary cred at New York City restaurants like Lupa, Momofuku, and Blue Hill, he managed the trailblazing Four Season Farm in coastal Maine, where he developed an appreciation for every part of the plant and learned to coax the best from vegetables at each stage of their lives.</p>
-    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+      <img class="bookPic" src="{% static culinary7.cover %}" height="200" width="150">
+      <h2>{{culinary7.title}}</h2>
+      <p>{{culinary7.description}}</p>
+      <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static culinary7.isbn %}">View details &raquo;</a></p>
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
