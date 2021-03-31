@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static '/css/register.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" >
     <title>BookStore Registration</title>
 
 </head>
@@ -103,14 +103,15 @@
     </nav>
     <!-- END OF NAVBAR -->
 <div class="form_box">
+
 <form method='POST' action='.' class="input-form"> {% csrf_token %}
 	
-	
+	<h1> REGISTER </h1>
 	{{ form|crispy }}
 	<!--
 	<input type='text' name='title' placeholder='your title'>
 	-->
-	<input type='submit' value='Save'/>
+	<input type='submit' value='Submit'/>
 	
 </form>
 
