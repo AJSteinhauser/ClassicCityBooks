@@ -106,17 +106,17 @@
         <div class="row">
             <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
                 <div class="team-single-img">
-                    <img src="../assets/harrypotter.jpg" alt="">
+                    <img src="{% static book.cover %}" alt="">
                 </div>
                 <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
-                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Harry Potter and the Sorcerer's Stone</h4>
+                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">{{book.title}}</h4>
                 </div>
             </div>
 
             <div class="col-lg-8 col-md-7">
                 <div class="team-single-text padding-50px-left sm-no-padding-left">
                     <h4 class="font-size38 sm-font-size32 xs-font-size30">Book Details</h4>
-                    <p class="no-margin-bottom">Read about the exciting adventures of Harry Potter, a boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards.</p>
+                    <p class="no-margin-bottom">{{book.description}}</p>
                     <div class="contact-info-section margin-40px-tb">
                         <ul class="list-group">
                             <li>
@@ -127,7 +127,7 @@
                                         <strong class="margin-10px-left text-orange">Author:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>J.K. Rowling</p>
+                                        <p>{{book.author}}</p>
                                     </div>
                                 </div>
 
@@ -153,7 +153,7 @@
                                         <strong class="margin-10px-left text-lightred">Genre:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>Fantasy</p>
+                                        <p>{{book.genre}}</p>
                                     </div>
                                 </div>
 
@@ -179,7 +179,7 @@
                                         <strong class="margin-10px-left xs-margin-four-left text-purple">ISBN:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
-                                        <p>0-7475-3269-9</p>
+                                        <p>{{book.isbn}}</p>
                                     </div>
                                 </div>
 

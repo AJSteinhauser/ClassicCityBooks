@@ -6,8 +6,10 @@ class Book(models.Model):
 	isbn = models.CharField(max_length=15, primary_key=True)
 	title = models.CharField(max_length=50)
 	author = models.CharField(max_length=50)
-	description = models.TextField()
-	cover = models.TextField(null = True)
+	description = models.TextField();
+	isBestSeller = models.IntegerField();
+	cover = models.TextField(null = True);
+	genre = models.TextField();
 	class Meta():
 		db_table = 'Books'
 
