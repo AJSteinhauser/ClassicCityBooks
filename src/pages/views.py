@@ -55,10 +55,10 @@ def newbook_view(request, *args, **kwargs):
 @login_required(login_url = "login")
 def orderHistory_view(request, *args, **kwargs):
 	return render(request, "orderHistory.html", {})
-
+"""
 def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
-
+"""
 def search_view(request, *args, **kwargs):
 	return render(request, "search.html", {})
 
@@ -70,7 +70,7 @@ def verifyEmail_view(request, *args, **kwargs):
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
 
-def test_view(request, *args, **kwargs):
+def register_view(request, *args, **kwargs):
     form = UserRegister()
     if request.method =="POST":
         form = UserRegister(request.POST)
@@ -79,7 +79,7 @@ def test_view(request, *args, **kwargs):
     context = {
         "form": form
     }
-    return render(request, "test.html", context)
+    return render(request, "register.html", context)
 
 def test2_view(request, *args, **kwargs):
 

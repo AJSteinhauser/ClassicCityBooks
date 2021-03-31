@@ -2,7 +2,7 @@ input, label {
     margin: 3px;
 }
 
-.input-form h2 {
+.input-form h1 {
     color: #2C3E50;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -51,13 +51,8 @@ button {
     border-radius: 3px;
 }
 
-.input_field {
-    float: left;
-}
 
-#id_first_name { width: 48%;}
 
-#id_last_name { width: 48%;}
 
 #city { width: 50%; }
 
