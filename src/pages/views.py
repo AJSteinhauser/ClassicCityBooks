@@ -78,9 +78,6 @@ def test_view(request, *args, **kwargs):
     }
     return render(request, "test.html", context)
 
-
-
-
 def test2_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
     context = {}
@@ -90,7 +87,6 @@ def test2_view(request, *args, **kwargs):
             break
         context["book" + str(iterator) ] = book
         iterator = iterator + 1
-
     return render(request, "test2.html", context)
 
 
