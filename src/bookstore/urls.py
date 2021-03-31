@@ -39,4 +39,5 @@ urlpatterns = [
     path('verifyemail/', verifyEmail_view, name='verifyemail'),
     path('viewcart/', viewCart_view, name='viewcart'),
     path('test2/', test2_view, name='test2'),
+    path('loginerror/', login_view, name='loginerror'),
 ]

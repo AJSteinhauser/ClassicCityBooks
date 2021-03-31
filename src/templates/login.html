@@ -105,7 +105,12 @@
     <div class="text-center mt-5">
 	<form method='POST' action='.' class="input-form"> {% csrf_token %}
       <div class="form_box">
-		<p style="color:white"><b>PLEASE ENTER EITHER YOUR ACCOUNT ID OR EMAIL</b></p>
+	  	{% if messages %}
+		{% for message in messages %}
+		<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+		{% endfor %}
+		{% endif %}
+
         <h1 class = "h3 mb-3 font-weight-normal"> Login</h1>
 		{{ form.user_id|as_crispy_field }}
 		<h3> OR <h3>
@@ -115,6 +120,7 @@
 	</div>
 	</form>
     </div>
+	
 
   
 

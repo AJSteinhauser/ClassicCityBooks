@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Book
 from .models import User
 from .form import BookForm
 from .form import UserRegister
 from .login import UserLogin
+import easygui
+
 
 import re
 
@@ -49,7 +52,29 @@ def login_view(request, *args, **kwargs):
     if request.method =="POST":
         form = UserLogin(request.POST)
         if form.is_valid():
-            print("Valid!")
+            id = form.cleaned_data["user_id"]
+            email = form.cleaned_data["user_email"]
+            user_password = form.cleaned_data["user_pass"]
+            if id == "" and email=="":
+                messages.error(request, "Please enter an ID or an Email")
+            elif id != "":
+                try:
+                    obj = User.objects.get(user_id=id)
+                    if user_password != obj.user_pass:
+                        messages.error(request, "Either your ID or Password is incorrect")
+                    else:
+                        pass#correct
+                except: 
+                    messages.error(request, "That ID does not exist")
+            else:
+                try:
+                    obj = User.objects.get(user_email=email)
+                    if user_password != obj.user_pass:
+                        messages.error(request, "Either your Email or Password is incorrect")
+                    else:
+                        pass#correct
+                except: 
+                    messages.error(request, "That email does not exist")
     context = {
         "form": form
     }
