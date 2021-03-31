@@ -9,10 +9,3 @@ class Migration(migrations.Migration):
         ('pages', '0005_auto_20210330_1455'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='book',
-            name='cover',
-            field=models.TextField(null=True),
-        ),
-    ]

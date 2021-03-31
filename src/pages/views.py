@@ -6,6 +6,7 @@ from .models import Book
 from .models import User
 from .form import BookForm
 from .form import UserRegister
+from .login import UserLogin
 
 import re
 
@@ -55,7 +56,15 @@ def editacct_view(request, *args, **kwargs):
 	return render(request, "editacct.html", {})
 
 def login_view(request, *args, **kwargs):
-	return render(request, "login.html", {})  
+    form = UserLogin()
+    if request.method =="POST":
+        form = UserLogin(request.POST)
+        if form.is_valid():
+            print("Valid!")
+    context = {
+        "form": form
+    }
+    return render(request, "login.html", context) 
 
 def managebooks_view(request, *args, **kwargs):
 	return render(request, "managebooks.html", {})
