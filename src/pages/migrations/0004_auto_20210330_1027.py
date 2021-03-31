@@ -9,14 +9,4 @@ class Migration(migrations.Migration):
         ('pages', '0003_auto_20210330_1025'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='user',
-            name='id',
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='user_email',
-            field=models.EmailField(max_length=50, primary_key=True, serialize=False),
-        ),
-    ]
+

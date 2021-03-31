@@ -9,45 +9,5 @@ class Migration(migrations.Migration):
         ('pages', '0002_user'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='user',
-            name='first_name',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='last_name',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='phone_num',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_card_exp',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_card_num',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_card_seccode',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_city',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_state',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_street',
-        ),
-        migrations.RemoveField(
-            model_name='user',
-            name='user_zip',
-        ),
-    ]
+    
+    
