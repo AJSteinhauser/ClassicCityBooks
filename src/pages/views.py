@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Book
 from .models import User
 from .form import BookForm
 from .form import UserRegister
+from .login import UserLogin
+import easygui
+
 
 import re
 
@@ -13,7 +17,22 @@ import re
 # Create your views here.
 
 def homepage_view(request, *args, **kwargs):
-    return render(request, "homepage.html", {})
+    booksQuery = Book.objects.all()
+    context = {}
+    bestSeller = 0;
+    culinary = 0;
+    for book in booksQuery:
+        if book.isBestSeller == 1:
+            context["book" + str(bestSeller) ] = book
+            book.title = book.title[0:50] + "..."
+            book.description = book.description[0:300] + "..."
+            bestSeller = bestSeller + 1
+        if book.genre == "culinary":
+            context["culinary" + str(culinary) ] = book
+            book.title = book.title[0:50] + "..."
+            book.description = book.description[0:300] + "..."
+            culinary = culinary + 1;
+    return render(request, "homepage.html", context)
 
 def adminpage_view(request, *args, **kwargs):
 	return render(request, "adminpage.html", {})
@@ -28,23 +47,49 @@ def details_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
     context = {}
     targetISBN = request.get_full_path()[-13:]
-    print(targetISBN)
-    bestSeller = 0;
-    culinary = 0;
     for book in booksQuery:
         if book.isbn == targetISBN:
             context["book"] = book
+            break
+    print(dir(book));
     return render(request, "details.html", context)
 
 @login_required(login_url = "login")
 def editacct_view(request, *args, **kwargs):
 	return render(request, "editacct.html", {})
 
-def homepage_registration_confirm_view(request, *args, **kwargs):
-	return render(request, "homepage_registration_confirm.html", {})
-
 def login_view(request, *args, **kwargs):
-	return render(request, "login.html", {})  
+    form = UserLogin()
+    if request.method =="POST":
+        form = UserLogin(request.POST)
+        if form.is_valid():
+            id = form.cleaned_data["user_id"]
+            email = form.cleaned_data["user_email"]
+            user_password = form.cleaned_data["user_pass"]
+            if id == "" and email=="":
+                messages.error(request, "Please enter an ID or an Email")
+            elif id != "":
+                try:
+                    obj = User.objects.get(user_id=id)
+                    if user_password != obj.user_pass:
+                        messages.error(request, "Either your ID or Password is incorrect")
+                    else:
+                        pass#correct
+                except: 
+                    messages.error(request, "That ID does not exist")
+            else:
+                try:
+                    obj = User.objects.get(user_email=email)
+                    if user_password != obj.user_pass:
+                        messages.error(request, "Either your Email or Password is incorrect")
+                    else:
+                        pass#correct
+                except: 
+                    messages.error(request, "That email does not exist")
+    context = {
+        "form": form
+    }
+    return render(request, "login.html", context) 
 
 def managebooks_view(request, *args, **kwargs):
 	return render(request, "managebooks.html", {})
@@ -62,7 +107,7 @@ def register_view(request, *args, **kwargs):
 def search_view(request, *args, **kwargs):
 	return render(request, "search.html", {})
 
-@login_required(login_url = "login")
+#@login_required(login_url = "login")
 def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
@@ -80,26 +125,6 @@ def register_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "register.html", context)
-
-def test2_view(request, *args, **kwargs):
-
-    booksQuery = Book.objects.all()
-    context = {}
-    bestSeller = 0;
-    culinary = 0;
-    for book in booksQuery:
-        if book.isBestSeller == 1:
-            context["book" + str(bestSeller) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
-            bestSeller = bestSeller + 1
-        if book.genre == "culinary":
-            context["culinary" + str(culinary) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
-            culinary = culinary + 1;
-    return render(request, "test2.html", context)
-
 
   
 """  

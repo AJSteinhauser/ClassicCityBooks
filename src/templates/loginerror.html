@@ -1,17 +1,19 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static '/css/homepage.css' %}">
-	<link rel="stylesheet" href="{% static '/css/bookdetails.css' %}" >
-    <title>Homepage</title>
-  </head>
-  <body>
-    
+	<link rel="stylesheet" href="{% static 'css/register.css' %}" >
+    <title>Bookstore Login</title>
+</head>
+
+<body>
      <!-- BEGGINING OF NAVBAR -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<a href="{% url 'home' %}"><img src="{% static '/assets/athens.png' %}" width="100px" height="60px" ></a>
@@ -99,111 +101,27 @@
       </div>
     </nav>
     <!-- END OF NAVBAR -->
-	<main>
-	<div class="text-center mt-5" style="max-width: 80%; margin:0 auto;">
-		<div class="container">
-    <div class="team-single">
-        <div class="row">
-            <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
-                <div class="team-single-img">
-                    <img src="{% static book.cover %}" alt="">
-                </div>
-                <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
-                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">{{book.title}}</h4>
-                </div>
-            </div>
-
-            <div class="col-lg-8 col-md-7">
-                <div class="team-single-text padding-50px-left sm-no-padding-left">
-                    <h4 class="font-size38 sm-font-size32 xs-font-size30">Book Details</h4>
-                    <p class="no-margin-bottom">{{book.description}}</p>
-                    <div class="contact-info-section margin-40px-tb">
-                        <ul class="list-group">
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-graduation-cap text-orange"></i>
-                                        <strong class="margin-10px-left text-orange">Author:</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p>{{book.author}}</p>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="far fa-gem text-yellow"></i>
-                                        <strong class="margin-10px-left text-yellow">Publication Date:</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p>{{book.publicationDate}}</p>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="far fa-file text-lightred"></i>
-                                        <strong class="margin-10px-left text-lightred">Genre:</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p>{{book.genre}}</p>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-map-marker-alt text-green"></i>
-                                        <strong class="margin-10px-left text-green">Publisher</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p>{{book.publisher}}</p>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-5">
-                                        <i class="fas fa-mobile-alt text-purple"></i>
-                                        <strong class="margin-10px-left xs-margin-four-left text-purple">ISBN:</strong>
-                                    </div>
-                                    <div class="col-md-7 col-7">
-                                        <p>{{book.isbn}}</p>
-                                    </div>
-                                </div>
-
-                            </li>
-							<p><a class="btn btn-secondary" href="#">Add to Cart &raquo;</a></p>
-                        </ul>
-                    </div>
-
-                    
-
-                </div>
-            </div>
-
-            <div class="col-md-12">
-
-            </div>
-        </div>
+    
+    <div class="text-center mt-5">
+	<form method='POST' action='.' class="input-form"> {% csrf_token %}
+      <div class="form_box">
+		<p style="color:red"><b>PLEASE ENTER EITHER YOUR ACCOUNT ID OR EMAIL</b></p>
+        <h1 class = "h3 mb-3 font-weight-normal"> Login</h1>
+		{{ form.user_id|as_crispy_field }}
+		<h3> OR <h3>
+		{{ form.user_email|as_crispy_field }}
+		{{ form.user_pass|as_crispy_field }}
+		<input type='submit' value='Submit'/>
+	</div>
+	</form>
     </div>
-</div>
-	</main>
+
+  
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="../js/bootstrap.js"></script>
-  </body>
+</body>
 </html>
+{% endblock %}

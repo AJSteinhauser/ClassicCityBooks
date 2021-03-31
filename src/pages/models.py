@@ -1,34 +1,38 @@
 from django.db import models
 
-# Create your models here.
 
 class Book(models.Model):
-	isbn = models.CharField(max_length=15, primary_key=True)
-	title = models.CharField(max_length=50)
-	author = models.CharField(max_length=50)
-	description = models.TextField();
-	isBestSeller = models.IntegerField();
-	cover = models.TextField(null = True);
-	genre = models.TextField();
-	class Meta():
-		db_table = 'Books'
+    isbn = models.CharField(primary_key=True, max_length=15)
+    title = models.CharField(max_length=150, blank=True, null=True)
+    author = models.CharField(max_length=50)
+    description = models.TextField()
+    cover = models.TextField(blank=True, null=True)
+    genre = models.CharField(max_length=50, blank=True, null=True)
+    isBestSeller = models.IntegerField(db_column='isBestSeller', blank=True, null=True)  # Field name made lowercase.
+    publicationDate = models.DateField(blank=True, null=True)
+    publisher = models.CharField(max_length=100)
+    class Meta:
+        managed = True
+        db_table = 'Books'
 
 class User(models.Model):
-	first_name = models.CharField(max_length=25, null=True)
-	last_name = models.CharField(max_length=25, null=True)
-	phone_num = models.CharField(max_length=11, null=True)
-	user_email = models.EmailField(max_length=50, primary_key=True)
-	user_pass = models.CharField(max_length=50, null=True)
-	user_street = models.CharField(max_length=50, null=True)
-	user_city = models.CharField(max_length=50, null=True)
-	user_state = models.CharField(max_length=2, null=True)
-	user_zip = models.CharField(max_length=10, null=True)
-	user_card_num = models.CharField(max_length=50, null=True)
-	user_card_exp = models.DateField(null=True)
-	user_card_seccode = models.CharField(max_length=3, null=True)
+    user_id = models.AutoField(max_length=50, primary_key=True)
+    user_email = models.CharField(max_length=50)
+    user_pass = models.CharField(max_length=50, blank=True, null=True)
+    first_name = models.CharField(max_length=25, blank=True, null=True)
+    last_name = models.CharField(max_length=25, blank=True, null=True)
+    phone_num = models.PositiveIntegerField(max_length=10, blank=True, null=True)
+    user_card_exp = models.DateField(blank=True, null=True)
+    user_card_num = models.CharField(max_length=50, blank=True, null=True)
+    user_card_seccode = models.CharField(max_length=3, blank=True, null=True)
+    user_city = models.CharField(max_length=50, blank=True, null=True)
+    user_state = models.CharField(max_length=2, blank=True, null=True)
+    user_street = models.CharField(max_length=50, blank=True, null=True)
+    user_zip = models.CharField(max_length=11, blank=True, null=True)
 
-	class Meta():
-		db_table = "Users"
+    class Meta:
+        managed = True
+        db_table = 'Users'
 
 
 
