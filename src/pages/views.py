@@ -8,7 +8,21 @@ from .form import UserRegister
 # Create your views here.
 
 def homepage_view(request, *args, **kwargs):
-	return render(request, "homepage.html", {})
+    '''
+    booksQuery = Book.objects.all()
+    context = {};
+    iterator = 0;
+    for book in booksQuery:
+        if iterator > 16:
+            break
+        context["Book" + iterator ] = book;
+        iterator++;
+'''
+    return render(request, "homepage.html", {})
+
+
+
+
 
 def adminpage_view(request, *args, **kwargs):
 	return render(request, "adminpage.html", {})
@@ -63,6 +77,23 @@ def register_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "register.html", context)
+
+
+
+
+def test2_view(request, *args, **kwargs):
+    booksQuery = Book.objects.all()
+    context = {}
+    iterator = 0
+    for book in booksQuery:
+        if iterator > 16:
+            break
+        context["book" + str(iterator) ] = book
+        iterator = iterator + 1
+
+    return render(request, "test2.html", context)
+
+
   
 """  
 def test_view(request, *args, **kwargs):

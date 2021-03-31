@@ -1,2 +1,5 @@
 bin
 lib
+__pycache__
+__pychache__/*
+src/pages/__pycache__/*
