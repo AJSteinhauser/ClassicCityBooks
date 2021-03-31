@@ -17,7 +17,22 @@ import re
 # Create your views here.
 
 def homepage_view(request, *args, **kwargs):
-    return render(request, "homepage.html", {})
+    booksQuery = Book.objects.all()
+    context = {}
+    bestSeller = 0;
+    culinary = 0;
+    for book in booksQuery:
+        if book.isBestSeller == 1:
+            context["book" + str(bestSeller) ] = book
+            book.title = book.title[0:50] + "..."
+            book.description = book.description[0:300] + "..."
+            bestSeller = bestSeller + 1
+        if book.genre == "culinary":
+            context["culinary" + str(culinary) ] = book
+            book.title = book.title[0:50] + "..."
+            book.description = book.description[0:300] + "..."
+            culinary = culinary + 1;
+    return render(request, "homepage.html", context)
 
 def adminpage_view(request, *args, **kwargs):
 	return render(request, "adminpage.html", {})
@@ -32,20 +47,16 @@ def details_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
     context = {}
     targetISBN = request.get_full_path()[-13:]
-    print(targetISBN)
-    bestSeller = 0;
-    culinary = 0;
     for book in booksQuery:
         if book.isbn == targetISBN:
             context["book"] = book
+            break
+    print(dir(book));
     return render(request, "details.html", context)
 
 @login_required(login_url = "login")
 def editacct_view(request, *args, **kwargs):
 	return render(request, "editacct.html", {})
-
-def homepage_registration_confirm_view(request, *args, **kwargs):
-	return render(request, "homepage_registration_confirm.html", {})
 
 def login_view(request, *args, **kwargs):
     form = UserLogin()
@@ -114,26 +125,6 @@ def register_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "register.html", context)
-
-def test2_view(request, *args, **kwargs):
-
-    booksQuery = Book.objects.all()
-    context = {}
-    bestSeller = 0;
-    culinary = 0;
-    for book in booksQuery:
-        if book.isBestSeller == 1:
-            context["book" + str(bestSeller) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
-            bestSeller = bestSeller + 1
-        if book.genre == "culinary":
-            context["culinary" + str(culinary) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
-            culinary = culinary + 1;
-    return render(request, "test2.html", context)
-
 
   
 """  
