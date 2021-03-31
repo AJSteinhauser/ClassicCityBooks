@@ -9,7 +9,8 @@ class Book(models.Model):
     cover = models.TextField(blank=True, null=True)
     genre = models.CharField(max_length=50, blank=True, null=True)
     isBestSeller = models.IntegerField(db_column='isBestSeller', blank=True, null=True)  # Field name made lowercase.
-
+    publicationDate = models.DateField(blank=True, null=True)
+    publisher = models.CharField(max_length=100)
     class Meta:
         managed = True
         db_table = 'Books'
