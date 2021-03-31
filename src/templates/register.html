@@ -1,4 +1,7 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,38 +102,18 @@
       </div>
     </nav>
     <!-- END OF NAVBAR -->
+<div class="form_box">
+<form method='POST' action='.' class="input-form"> {% csrf_token %}
+	
+	
+	{{ form|crispy }}
+	<!--
+	<input type='text' name='title' placeholder='your title'>
+	-->
+	<input type='submit' value='Save'/>
+	
+</form>
 
-<div class="{% url 'register' %}">
-    <header class="register_header">
-    </header>
-    <div class="form_box">
-        <form class="input-form">
-            <h2>Create Account</h2>
-            <input type="text" class="input_field" id="firstName" placeholder="First Name*" required autofocus>
-            <input type="text" class="input_field" id="lastName" placeholder="Last Name*" required autofocus>
-            <input type="tel" class="input_field" placeholder="Phone Number (XXX-XXX-XXXX)*"
-                       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required autofocus>
-            <input type="email" class="input_field" placeholder="Email Address*" required autofocus>
-            <input type="password" class="input_field" placeholder="Password*" required autofocus>
-	    <hr id="line-break"> </hr>
-	    <label for="street"> Address </label>  
-            <input type="street" class="input_field" id="inputStreet" placeholder="Street"/>
-            <input type="city" class="input_field" id="city" placeholder="City" />
-            <input type="state" class="input_field" id="state" placeholder="State" />
-            <input name="zipcode" class="input_field" id="zipcode" placeholder="Zip Code"/>
-	    <hr id="line-break"> </hr>
-	    <label for="card"> Credit Card Information </label>
-	    <input type="card" class="input_field" id="cardNumber" placeholder="Card Number"/>
-	    <input type="text" class="input_field" id="expirationDate" placeholder="Expiration Date (MM/YYYY)" 
-		   onfocus="(this.type='month')"/>
-	    <input type="text" class="input_field" id="securityCode" placeholder="Security Code" pattern="[0-9]*" 
-		   inputmode="numeric"/>
-	    <hr id="line-break"> </hr>
-	        <p> Already registered? <a href="{% url 'login' %}"> Login here. </a> </p>
-	        <button type="button"> Submit </button>
-        </form>
-    </div>
 </div>
 
-</body>
-</html>
+{% endblock %}
