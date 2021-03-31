@@ -8,12 +8,11 @@ class Book(models.Model):
     description = models.TextField()
     cover = models.TextField(blank=True, null=True)
     genre = models.CharField(max_length=50, blank=True, null=True)
-    isbestseller = models.IntegerField(db_column='isBestSeller', blank=True, null=True)  # Field name made lowercase.
+    isBestSeller = models.IntegerField(db_column='isBestSeller', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = True
         db_table = 'Books'
-
 
 class User(models.Model):
     user_id = models.AutoField(max_length=50, primary_key=True)
