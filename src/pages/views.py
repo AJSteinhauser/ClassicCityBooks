@@ -8,6 +8,9 @@ from .models import User
 from .form import BookForm
 from .form import UserRegister
 from .login import UserLogin
+from .email import emailSelf
+import easygui
+
 
 import re
 
@@ -130,23 +133,36 @@ def verifyEmail_view(request, *args, **kwargs):
 @login_required(login_url = "login")
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
+    
+def recover_view(request, *args, **kwargs):
+	form = UserLogin()
+	if request.method =="POST":
+		form = UserLogin(request.POST)
+	context = {
+		"form": form
+	}
+	return render(request, "recover.html", context)
 
 def register_view(request, *args, **kwargs):
     form = UserRegister()
     if request.method =="POST":
         form = UserRegister(request.POST)
         if form.is_valid():
-            email = form.cleaned_data["user_email"]
+            entered_email = form.cleaned_data["user_email"]
             try:
-                obj = User.objects.get(user_email=email)
+                obj = User.objects.get(user_email=entered_email)
                 messages.error(request, "There is already an account with that email!")
             except:
                 User.objects.create(**form.cleaned_data)
-            
+                obj = User.objects.get(user_email=entered_email)
+                emailSelf(entered_email, obj.user_id)
+                messages.info(request, "A unique account ID has been sent to your email. This can be used as an alrternative to email and password login. We look forward to your business!")
+                return render(request, "logout.html", {})
     context = {
         "form": form
     }
     return render(request, "register.html", context)
+
 
   
 """  

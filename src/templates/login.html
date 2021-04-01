@@ -35,6 +35,7 @@
 		{{ form.user_pass|as_crispy_field }}
 		
 		<input type='submit' value='Submit'/>
+		<h3 class = "h3 mb-3 font-weight-normal"><a href="{% url 'recover' %}">Forgot Password? Click Here</a></h3>
 	</div>
 	</form>
 	{% endif %}

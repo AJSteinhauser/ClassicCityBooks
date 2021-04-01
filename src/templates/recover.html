@@ -8,19 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
 	<link rel="stylesheet" href="{% static 'css/register.css' %}" >
-    <title>Bookstore Login</title>
+    <title>Recover Password</title>
 </head>
 {% include './navbar.html' %}
 
 
     
-    <div style="width:50%; margin:auto"class="text-center mt-5">
+    <form method='POST' action='.' class="input-form"> {% csrf_token %}
+      <div class="form_box">
 
-	{% if messages %}
-	{% for message in messages %}
-	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
-	{% endfor %}
-	{% endif %}
+
+        <h1 class = "h3 mb-3 font-weight-normal"> Recover Your Password</h1>
+		<p>Please enter the account ID or email associated with your account.</p>
+		{{ form.user_id|as_crispy_field }}
+		<h3> OR <h3>
+		{{ form.user_email|as_crispy_field }}
+		
+		<input type='submit' value='Submit'/>
+
+	</div>
+	</form>
+
     </div>
 
   
