@@ -9,6 +9,7 @@ from .form import BookForm
 from .form import UserRegister
 from .login import UserLogin
 from .email import emailSelf
+from .email import recoverEmail
 
 
 import re
@@ -134,13 +135,44 @@ def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
     
 def recover_view(request, *args, **kwargs):
-	form = UserLogin()
-	if request.method =="POST":
-		form = UserLogin(request.POST)
-	context = {
-		"form": form
-	}
-	return render(request, "recover.html", context)
+    form = UserLogin()
+    if request.method =="POST":
+        form = UserLogin(request.POST)
+        if not form.is_valid():
+            id = form.cleaned_data["user_id"]
+            email = form.cleaned_data["user_email"]
+            if id == "" and email == "":
+                messages.error(request, "Please enter an ID or an Email")
+            elif id != "" and email != "":
+                messages.error(request, "Please enter either the ID or the Email, not both")
+            else: 
+                id = form.cleaned_data["user_id"]
+                email = form.cleaned_data["user_email"]
+                if email == "":
+                    try:
+                        obj = User.objects.get(user_id=id)
+                        email = obj.user_email
+                        password = obj.user_pass
+                        recoverEmail(email, password)
+                        messages.error(request, "A recovery email has been sent to the email associated with that account")
+                        return render(request, "logout.html", {})
+                    except:
+                        messages.error(request, "There is no account with that ID")
+                else:
+                    try:
+                        obj = User.objects.get(user_email=email)
+                        password = obj.user_pass
+                        recoverEmail(email, password)
+                        messages.error(request, "A recovery email has been sent to the email associated with that account")
+                        return render(request, "logout.html", {})
+                    except:
+                        messages.error(request, "There is no account with that Email")
+            
+    
+    context = {
+        "form": form
+    }
+    return render(request, "recover.html", context)
 
 def register_view(request, *args, **kwargs):
     form = UserRegister()

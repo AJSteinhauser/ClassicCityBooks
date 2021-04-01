@@ -12,8 +12,13 @@
 </head>
 {% include './navbar.html' %}
 
+    <div class="text-center mt-5">
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
 
-    
     <form method='POST' action='.' class="input-form"> {% csrf_token %}
       <div class="form_box">
 

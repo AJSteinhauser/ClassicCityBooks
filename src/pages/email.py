@@ -4,7 +4,6 @@ from email.mime.text import MIMEText
 def emailSelf(you, user_id):
     gmail_user = 'classiccitycollection@gmail.com'
     gmail_password = 'CCC123!@'
-    #you = 'danielamacd@gmail.com'
     # Create message container
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Verify your account"
@@ -42,3 +41,40 @@ def emailSelf(you, user_id):
     mail.quit()
     return "Your email has been sent."
         
+def recoverEmail(email, password):
+    gmail_user = 'classiccitycollection@gmail.com'
+    gmail_password = 'CCC123!@'
+    # Create message container
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Verify your account"
+    msg['From'] = gmail_user
+    msg['To'] = email
+    # Create the body of the message (a plain-text and an HTML version).
+    text = "Hello, from Classic City Collections! Your password is: " + password + ". Click this link to login: http://127.0.0.1:8000/login/"
+    body = """\
+    <html>
+      <head></head>
+      <body>
+        <h1>Recovery Password</h1>
+        <p>Hello, from Classic City Collections! Your password is: """ + password + """.
+           Click <a href="http://127.0.0.1:8000/login/">this link</a> to login.
+        </p>
+      </body>
+    </html>
+    """
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(body, 'html')
+    # Attach parts into message container.
+    msg.attach(part1)
+    msg.attach(part2)
+    # Send the message via local SMTP server.
+    mail = smtplib.SMTP('smtp.gmail.com', 587)
+    mail.ehlo()
+    mail.starttls()
+    mail.login(gmail_user, gmail_password)
+    # sendmail function takes 3 arguments: sender's address, recipient's address
+    # and message to send - here it is sent as one string.
+    mail.sendmail(gmail_user, email, msg.as_string())
+    mail.quit()
+    return "Your email has been sent."
