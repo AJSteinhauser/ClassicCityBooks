@@ -9,7 +9,6 @@ from .form import BookForm
 from .form import UserRegister
 from .login import UserLogin
 
-
 import re
 
 
