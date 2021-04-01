@@ -1,22 +1,17 @@
 {% load static %}
-{% load crispy_forms_tags %}
-{%block content %}
-<!DOCTYPE html>
 <html lang="en">
-<head>
-
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'css/register.css' %}" >
-    <title>Bookstore Login</title>
-</head>
-
-<body>
+		<link rel="stylesheet" href="{% static '/css/homepage.css' %}" >
+    <title>Edit Account</title>
+  </head>
+  <body>
+    
      <!-- BEGGINING OF NAVBAR -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<a href="{% url 'home' %}"><img src="{% static '/assets/athens.png' %}" width="100px" height="60px" ></a>
+		<a href="{% url 'home' %}"><img src="{% static '/assets/athens.png' %}" width="100px" height="60px"  ></a>
       <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">The Classic City Collection</a>
 		
@@ -42,7 +37,7 @@
                   <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{% url 'logout' %}">
                             <svg class="bi bi-power" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z" />
                                 <path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z" />
@@ -65,7 +60,7 @@
                       <li><a class="dropdown-item" href="{% url 'editacct' %}">Edit profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{% url 'logout' %}">
                                 <svg class="bi bi-power" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z" />
                                     <path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z" />
@@ -101,27 +96,5 @@
       </div>
     </nav>
     <!-- END OF NAVBAR -->
-    
-    <div class="text-center mt-5">
-	<form method='POST' action='.' class="input-form"> {% csrf_token %}
-      <div class="form_box">
-		<p style="color:red"><b>PLEASE ENTER EITHER YOUR ACCOUNT ID OR EMAIL</b></p>
-        <h1 class = "h3 mb-3 font-weight-normal"> Login</h1>
-		{{ form.user_id|as_crispy_field }}
-		<h3> OR <h3>
-		{{ form.user_email|as_crispy_field }}
-		{{ form.user_pass|as_crispy_field }}
-		<input type='submit' value='Submit'/>
-	</div>
-	</form>
-    </div>
-
-  
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="../js/bootstrap.js"></script>
-</body>
+  </body>
 </html>
-{% endblock %}

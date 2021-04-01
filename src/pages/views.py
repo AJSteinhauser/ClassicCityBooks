@@ -40,6 +40,9 @@ def adminpage_view(request, *args, **kwargs):
 def checkout_view(request, *args, **kwargs):
 	return render(request, "checkout.html", {})
 
+def navbar_view(request, *args, **kwargs):
+	return render(request, "navbar.html", {})
+
 def confirmation_view(request, *args, **kwargs):
 	return render(request, "confirmation.html", {})
 
@@ -59,6 +62,10 @@ def editacct_view(request, *args, **kwargs):
 	return render(request, "editacct.html", {})
 
 def login_view(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        print("TEST")
+        messages.error(request, "You're already logged in")
+        #return render(request, "details.html", context) 
     form = UserLogin()
     if request.method =="POST":
         form = UserLogin(request.POST)
@@ -74,7 +81,8 @@ def login_view(request, *args, **kwargs):
                     if user_password != obj.user_pass:
                         messages.error(request, "Either your ID or Password is incorrect")
                     else:
-                        pass#correct
+                        request.session['user_id'] = id
+                        messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That ID does not exist")
             else:
@@ -83,13 +91,23 @@ def login_view(request, *args, **kwargs):
                     if user_password != obj.user_pass:
                         messages.error(request, "Either your Email or Password is incorrect")
                     else:
-                        pass#correct
+                        id = obj.user_id
+                        request.session['user_id'] = id
+                        messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That email does not exist")
     context = {
         "form": form
     }
-    return render(request, "login.html", context) 
+    return render(request, "login.html", context)
+    
+def logout_view(request, *args, **kwargs):
+    try:
+        del request.session['user_id']
+        messages.error(request, "You have been logged out!")
+    except:
+        messages.error(request, "You are not logged in!")
+    return render(request, "logout.html", {})
 
 def managebooks_view(request, *args, **kwargs):
 	return render(request, "managebooks.html", {})
