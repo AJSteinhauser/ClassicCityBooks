@@ -21,7 +21,7 @@ class User(models.Model):
     user_pass = models.CharField(max_length=50, blank=True, null=True)
     first_name = models.CharField(max_length=25, blank=True, null=True)
     last_name = models.CharField(max_length=25, blank=True, null=True)
-    phone_num = models.CharField(max_length=11, blank=True, null=True)
+    phone_num = models.PositiveIntegerField(max_length=10, blank=True, null=True)
     user_card_exp = models.DateField(blank=True, null=True)
     user_card_num = models.CharField(max_length=50, blank=True, null=True)
     user_card_seccode = models.CharField(max_length=3, blank=True, null=True)

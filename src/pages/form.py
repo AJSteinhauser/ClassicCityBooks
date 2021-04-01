@@ -21,10 +21,10 @@ class UserRegister(forms.Form):
 	user_street = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Street'}), label="")
 	user_city = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'City'}), label="")
 	user_state = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'State'}), label="")
-	user_zip = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Zip Code'}), label="")
-	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="")
+	user_zip = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Zip Code'}), label="", max_length=5, min_length=5)
+	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="", max_length=16, min_length=16)
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
-	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
+	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
     
     
     #first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input_field'}),label="")

@@ -125,7 +125,7 @@ def register_view(request, *args, **kwargs):
 def search_view(request, *args, **kwargs):
 	return render(request, "search.html", {})
 
-@login_required(login_url = "login")
+#@login_required(login_url = "login")
 def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
