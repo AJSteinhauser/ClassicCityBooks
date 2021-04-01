@@ -9,9 +9,13 @@
 	<link rel="stylesheet" href="{% static '/css/homepage.css' %}" >
     <title>Homepage</title>
   </head>
- {% include './navbar.html' %}
+	{% include './navbar.html' %}
 	<main>
-
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:green"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
