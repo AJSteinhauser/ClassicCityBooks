@@ -8,7 +8,6 @@ from .models import User
 from .form import BookForm
 from .form import UserRegister
 from .login import UserLogin
-import easygui
 
 
 import re
