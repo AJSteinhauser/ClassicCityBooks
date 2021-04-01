@@ -138,7 +138,13 @@ def register_view(request, *args, **kwargs):
     if request.method =="POST":
         form = UserRegister(request.POST)
         if form.is_valid():
-            User.objects.create(**form.cleaned_data)
+            email = form.cleaned_data["user_email"]
+            try:
+                obj = User.objects.get(user_email=email)
+                messages.error(request, "There is already an account with that email!")
+            except:
+                User.objects.create(**form.cleaned_data)
+            
     context = {
         "form": form
     }
