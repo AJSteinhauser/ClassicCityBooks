@@ -1,0 +1,25 @@
+Classic City Collection
+
+Contributors:
+
+Aaron Daugherty
+AJ Steinhauser
+Caroline Lewis
+Daniel MacDonald
+Laine Kehoe
+
+Pre-Installed Requirements:
+
+Python
+Django
+django-cryptography
+crispy_forms
+
+
+To Run: 
+
+cd into src directory, and run the server using the command below:
+
+   python3 manage.py runserver
+
+Once the server is running correctly, copy and paste the URL into your browser.From there you can explore the Classic City Collection.   
