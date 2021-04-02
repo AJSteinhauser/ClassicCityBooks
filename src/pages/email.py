@@ -42,7 +42,7 @@ def emailSelf(you, user_id, confirm_code):
     mail.quit()
     return "Your email has been sent."
         
-def recoverEmail(email, password):
+def recoverEmail(email, confirm_code, id):
     gmail_user = 'classiccitycollection@gmail.com'
     gmail_password = 'CCC123!@'
     # Create message container
@@ -50,15 +50,18 @@ def recoverEmail(email, password):
     msg['Subject'] = "Verify your account"
     msg['From'] = gmail_user
     msg['To'] = email
+    confirm_code = str(confirm_code)
+    id = str(id)
     # Create the body of the message (a plain-text and an HTML version).
-    text = "Hello, from Classic City Collections! Your password is: " + password + ". Click this link to login: http://127.0.0.1:8000/login/"
+    text = "Hello, from Classic City Collections! Your confirmation code is: " + confirm_code + ".\
+     Your id is " + id + ". Click this link to login: http://127.0.0.1:8000/resetpass/"
     body = """\
     <html>
       <head></head>
       <body>
         <h1>Recovery Password</h1>
-        <p>Hello, from Classic City Collections! Your password is: """ + password + """.
-           Click <a href="http://127.0.0.1:8000/login/">this link</a> to login.
+        <p>Hello, from Classic City Collections! Your confirmation code is: <b>""" + confirm_code + """</b>.
+           Your id is <b>""" + id + """</b>. Click <a href="http://127.0.0.1:8000/resetpass/">this link</a> to login.
         </p>
       </body>
     </html>

@@ -11,6 +11,7 @@ from .login import UserLogin
 from .email import emailSelf
 from .email import recoverEmail
 from .form import confirmRegister
+from .form import resetPass
 from random import randint
 
 
@@ -60,12 +61,37 @@ def confirmation_view(request, *args, **kwargs):
                     obj.confirmed = True
                     obj.save()
                     return render(request, "logout.html", {})
+                else:
+                    messages.info(request, "Either the ID or the security code is incorrect")
             except:
                 messages.info(request, "No account exists with that ID!")
     context = {
         "form": form
     }
     return render(request, "confirmation.html", context)
+
+def resetpass_view(request, *args, **kwargs):
+    form = resetPass()
+    if request.method =="POST":
+        form = resetPass(request.POST)
+        if form.is_valid():
+            id = form.cleaned_data["user_id"]
+            confirm_code = form.cleaned_data["confirm_code"]
+            try:
+                obj = User.objects.get(user_id=id)
+                if obj.user_id == id and obj.confirm_code == confirm_code:
+                    messages.info(request, "Your password has been reset!")
+                    obj.user_pass = form.cleaned_data["user_pass"]
+                    obj.save()
+                    return render(request, "logout.html", {})
+                else:
+                    messages.info(request, "Either the ID or the security code is incorrect")
+            except:
+                messages.info(request, "No account exists with that ID!")
+    context = {
+        "form": form
+    }
+    return render(request, "resetpass.html", context)
 
 def details_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
@@ -212,7 +238,10 @@ def recover_view(request, *args, **kwargs):
                         obj = User.objects.get(user_id=id)
                         email = obj.user_email
                         password = obj.user_pass
-                        recoverEmail(email, password)
+                        confirm_code = randint(100000,999999)
+                        obj.confirm_code = confirm_code
+                        obj.save()
+                        recoverEmail(email, confirm_code, id)
                         messages.error(request, "A recovery email has been sent to the email associated with that account")
                         return render(request, "logout.html", {})
                     except:
@@ -220,8 +249,12 @@ def recover_view(request, *args, **kwargs):
                 else:
                     try:
                         obj = User.objects.get(user_email=email)
+                        id = obj.user_id
                         password = obj.user_pass
-                        recoverEmail(email, password)
+                        confirm_code = randint(100000,999999)
+                        obj.confirm_code = confirm_code
+                        obj.save()
+                        recoverEmail(email, confirm_code, id)
                         messages.error(request, "A recovery email has been sent to the email associated with that account")
                         return render(request, "logout.html", {})
                     except:

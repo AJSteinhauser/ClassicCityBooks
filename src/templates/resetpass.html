@@ -1,0 +1,45 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+    <title>Registration confirmation</title>
+
+</head>
+
+{% include './navbar.html' %}
+
+ <main style="text-align: center; margin: 6% auto;">
+     <div class="text-center mt-5">
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
+	</div>
+   <h1> Reset Your Password </h1>
+   <div class="form_box" style="width: 10%; margin:auto; min-width: 100px;">
+
+	<form method='POST' action='.' class="input-form"> 
+	{% csrf_token %}
+	{{ form.user_id| as_crispy_field }}
+	<p></p>
+	{{ form.user_pass| as_crispy_field }}
+	<p></p>
+	{{ form.confirm_code| as_crispy_field }}
+	<p></p>
+	<input type='submit' value='Verify'>
+   </form>
+   </div>
+ </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static '/js/bootstrap.js' %}"></script>
+</body>
+</html>
+{% endblock %}

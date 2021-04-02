@@ -18,7 +18,7 @@ from django.urls import include, path, re_path
 
 
 
-from pages.views import recover_view, navbar_view, logout_view, homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, viewCart_view 
+from pages.views import resetpass_view, recover_view, navbar_view, logout_view, homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, viewCart_view 
 
 
 urlpatterns = [
@@ -39,5 +39,6 @@ urlpatterns = [
     path('viewcart/', viewCart_view, name='viewcart'),
     path('logout/', logout_view, name='logout'),
     path('navbar/', navbar_view, name='navbar'),
-    path('recover/', recover_view, name='recover')
+    path('recover/', recover_view, name='recover'),
+    path('resetpass/', resetpass_view, name='resetpass')
 ]

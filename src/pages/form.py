@@ -29,3 +29,8 @@ class UserRegister(forms.Form):
 class confirmRegister(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
     confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
+
+class resetPass(forms.Form):
+    user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
+    user_pass = forms.CharField(widget=forms.PasswordInput(render_value=True, attrs={'placeholder': 'Password*'}), label="")
+    confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
