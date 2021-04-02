@@ -13,6 +13,7 @@ from .email import recoverEmail
 from .form import confirmRegister
 from .form import resetPass
 from random import randint
+from .email import accountChange
 
 
 import re
@@ -80,6 +81,7 @@ def resetpass_view(request, *args, **kwargs):
             try:
                 obj = User.objects.get(user_id=id)
                 if obj.user_id == id and obj.confirm_code == confirm_code:
+                    accountChange(obj.user_email)
                     messages.info(request, "Your password has been reset!")
                     obj.user_pass = form.cleaned_data["user_pass"]
                     obj.save()
@@ -132,6 +134,7 @@ def editacct_view(request, *args, **kwargs):
                 user.user_card_exp= form.cleaned_data['user_card_exp']
                 user.user_card_seccode= form.cleaned_data['user_card_seccode']
                 user.save()
+                accountChange(user.user_email)
                 messages.error(request, "You're changes have been saved!")
                 return render(request, "logout.html", {})
         context = {
