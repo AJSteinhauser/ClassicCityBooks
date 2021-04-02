@@ -115,7 +115,6 @@ def details_view(request, *args, **kwargs):
     print(dir(book));
     return render(request, "details.html", context)
 
-@login_required(login_url = "login")
 def editacct_view(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
