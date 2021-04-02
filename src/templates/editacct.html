@@ -1,243 +1,49 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
-    <title>Edit Account</title>
-  </head>
-  <body>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" >
+    <title>BookStore Registration</title>
+
+</head>
+
+<body>
  	{% include './navbar.html' %}
-<main>
-<div class="container">
-<div class="row flex-lg-nowrap">
-  
+	<div class="text-center mt-5">
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
+	</div>
+	{% if request.session.user_id %}
+<div class="form_box">
 
-  <div class="col">
-    <div class="row">
-      <div class="col mb-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="e-profile">
-              <div class="row">
-                <div class="col-12 col-sm-auto mb-3">
-                  <div class="mx-auto" style="width: 140px;">
-                    <img src="{% static '/assets/michaelcera.jpg' %}" width="140px" height="140px">
-                  </div>
-                </div>
-                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                  <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Michael Cera</h4>
-                    <p class="mb-0">@michael.c</p>
-                    <div class="mt-2">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fa fa-fw fa-camera"></i>
-                        <span>Change Photo</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="text-center text-sm-right">
-                    <span class="badge badge-secondary">administrator</span>
-                    <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
-                  </div>
-                </div>
-              </div>
-              <ul class="nav nav-tabs">
-                <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
-              </ul>
-              <div class="tab-content pt-3">
-                <div class="tab-pane active">
-                  <form class="form" novalidate="">
-                    <div class="row">
-                      <div class="col">
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Full Name</label>
-                              <input class="form-control" type="text" name="name" placeholder="Michael Cera" value="Michael Cera">
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Username</label>
-                              <input class="form-control" type="text" name="username" placeholder="michael.s" value="michael.s">
-                            </div>
-                          </div>
-                        </div>
-						<div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Phone Number</label>
-                              <input class="form-control" type="text" name="phone" placeholder="7062332145" value="7062332145">
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Email</label>
-                              <input class="form-control" type="text" name="email" placeholder="michael.c@gmail.com" value="michael.c@gmail.com">
-                            </div>
-                          </div>
-                        </div>
-						<br>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-6 mb-3">
-                        <div class="mb-2"><b>Change Password</b></div>
-                        <div class="row">
-						
-                          <div class="col">
-						<div class="form-check">
-							<input type="checkbox" class="form-check-input" id="changepassword">
-							<label class="form-check-label" for="changepassword">Change Password</label>
-						</div>						  
-                            <div class="form-group">
-                              <label>Current Password</label>
-                              <input id="currpass" class="form-control" type="password" placeholder="••••••" disabled>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>New Password</label>
-                              <input id="newpass" class="form-control" type="password" placeholder="••••••" disabled>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                              <input id="confirmpass" class="form-control" type="password" placeholder="••••••" disabled></div>
-                          </div>
-                        </div>
-                      </div>
-					  <div class="col-12 col-sm-6 mb-3">
-						<div class="mb-2"><b>Change Shipping Info</b></div>
-						<div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Street</label>
-                              <input class="form-control" type="text" placeholder="123 Main Street" value="123 Main Street">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>City</label>
-                              <input class="form-control" type="text" placeholder="Athens" value="Athens">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>State</label>
-                              <input class="form-control" type="text" placeholder="Georgia" value="Georgia"></div>
-                          </div>
-                        </div>
-						<div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Zip Code</label>
-                              <input class="form-control" type="text" placeholder="30606" value="30606"></div>
-                          </div>
-                        </div>
-					  </div>
-					  <div class="row">
-                      <div class="col-12 col-sm-6 mb-3">
-                        <div class="mb-2"><b>Change Credit Card Information</b></div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Current Card</label>
-                              <input class="form-control" type="text" placeholder="123456789012" value="123456789012" readonly>
-                            </div>
-                          </div>
-                        </div>
-						<div class="form-check">
-							<input type="checkbox" class="form-check-input" id="keepcardinfo">
-							<label class="form-check-label" for="keepcardinfo">Change Card Info</label>
-						</div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>New Card</label>
-                              <input id="newcard" class="form-control" type="text" placeholder="" disabled>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Expiration date</label>
-                              <input id="expdate" class="form-control" type="text" placeholder="" disabled></div>
-                          </div>
-                        </div>
-						 <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>CCV Number</label>
-                              <input id="ccv" class="form-control" type="text" placeholder="" disabled></div>
-                          </div>
-                        </div>
-						 <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Zip Code</label>
-                              <input id="cardzipc" class="form-control" type="text" placeholder="" disabled></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col d-flex justify-content-end">
-                        <button id="bntsubmit" class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter">Save Changes</button>
-                      </div>
-                    </div>
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-						  <div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">confirmation</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							  <span aria-hidden="true">&times;</span>
-							</button>
-						  </div>
-						  <div class="modal-body">
-						  Are you sure you want to save these changes?
-						  </div>
-						  <div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
-						  </div>
-						</div>
-					  </div>
-					</div>
-                  </form>
+<form method='POST' action='.' class="input-form"> {% csrf_token %}
+	
+	<h1> Edit Profile </h1>
+	{{ form|crispy }}
+	<!--
+	<input type='text' name='title' placeholder='your title'>
+	-->
+	<input type='submit' value='Apply Changes' onclick ="{% url 'verifyemail' %}">
+	
+	{% else %}
+		<div class="text-center mt-5">
+		<h3> You are not logged in. Please log in to edit your profile. </h3>
+		</div>
+	{% endif %}
+</form>
 
-                </div>
-              </div>
-            </div>
-			
-          </div>
-		  
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
 </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="{% static '/js/bootstrap.js' %}"></script>
-	<script src="{% static '/js/changecredit.js' %}"></script>
-</main>
-</body>
-</html>
+    <script src="../js/bootstrap.js"></script>
+{% endblock %}

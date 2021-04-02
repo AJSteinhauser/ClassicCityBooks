@@ -60,7 +60,40 @@ def details_view(request, *args, **kwargs):
 
 @login_required(login_url = "login")
 def editacct_view(request, *args, **kwargs):
-	return render(request, "editacct.html", {})
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        password = user.user_pass
+        form = UserRegister(initial={'first_name': user.first_name, 
+        'last_name': user.last_name, 'phone_num': user.phone_num,
+        'user_email': user.user_email, 'user_pass': password, #NOT WORKING
+        'user_street': user.user_street, 'user_city': user.user_city,
+        'user_state': user.user_state, 'user_zip': user.user_zip,
+        'user_card_num': user.user_card_num, 'user_card_exp': user.user_card_exp,
+        'user_card_seccode': user.user_card_seccode})
+        form.fields['user_email'].widget.attrs['readonly'] = True
+        if request.method =="POST":
+            form = UserRegister(request.POST)
+            if form.is_valid():
+                user.first_name = form.cleaned_data['first_name']
+                user.last_name = form.cleaned_data['last_name']
+                user.user_pass = form.cleaned_data['user_pass']
+                user.phone_num = form.cleaned_data['phone_num']
+                user.user_street = form.cleaned_data['user_street']
+                user.user_city= form.cleaned_data['user_city']
+                user.user_state= form.cleaned_data['user_state']
+                user.user_zip= form.cleaned_data['user_zip']
+                user.user_card_num= form.cleaned_data['user_card_num']
+                user.user_card_exp= form.cleaned_data['user_card_exp']
+                user.user_card_seccode= form.cleaned_data['user_card_seccode']
+                user.save()
+                messages.error(request, "You're changes have been saved!")
+                return render(request, "logout.html", {})
+        context = {
+            "form": form
+        }
+    else:
+        context = {}
+    return render(request, "editacct.html", context)
 
 def login_view(request, *args, **kwargs):
     if request.session.has_key('user_id'):
