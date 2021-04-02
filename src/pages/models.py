@@ -1,5 +1,5 @@
 from django.db import models
-
+from django_cryptography.fields import encrypt
 
 class Book(models.Model):
     isbn = models.CharField(primary_key=True, max_length=15)

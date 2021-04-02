@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from django.templatetags.static import static
 from .models import Book
 from .models import User
 from .form import BookForm
@@ -14,8 +14,10 @@ from .form import confirmRegister
 from .form import resetPass
 from random import randint
 from .email import accountChange
-
-
+from django_cryptography.fields import encrypt
+from cryptography.fernet import Fernet
+import os
+from django.conf import settings
 import re
 
 
@@ -83,7 +85,14 @@ def resetpass_view(request, *args, **kwargs):
                 if obj.user_id == id and obj.confirm_code == confirm_code:
                     accountChange(obj.user_email)
                     messages.info(request, "Your password has been reset!")
-                    obj.user_pass = form.cleaned_data["user_pass"]
+                    print(1)
+                    key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+                    print(2)
+                    f = Fernet(key)
+                    print(3)
+                    obj.user_pass = f.encrypt((form.cleaned_data['user_pass']).encode('utf-8'))
+                    #obj.user_pass = form.cleaned_data["user_pass"]
+                    print(4)
                     obj.save()
                     return render(request, "logout.html", {})
                 else:
@@ -111,6 +120,15 @@ def editacct_view(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
         password = user.user_pass
+        key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+        f = Fernet(key)
+        data_pass = user.user_pass[2:]
+        data_pass = user.user_pass[2:]
+        data_pass = data_pass[:len(data_pass)-1]
+        data_pass = data_pass.encode()
+        data_pass = f.decrypt(data_pass)
+        password = data_pass.decode()
+        print(password)
         form = UserRegister(initial={'first_name': user.first_name, 
         'last_name': user.last_name, 'phone_num': user.phone_num,
         'user_email': user.user_email, 'user_pass': password, #NOT WORKING
@@ -124,7 +142,8 @@ def editacct_view(request, *args, **kwargs):
             if form.is_valid():
                 user.first_name = form.cleaned_data['first_name']
                 user.last_name = form.cleaned_data['last_name']
-                user.user_pass = form.cleaned_data['user_pass']
+                #user.user_pass = form.cleaned_data['user_pass']
+                user.user_pass = f.encrypt((form.cleaned_data['user_pass']).encode('utf-8'))
                 user.phone_num = form.cleaned_data['phone_num']
                 user.user_street = form.cleaned_data['user_street']
                 user.user_city= form.cleaned_data['user_city']
@@ -156,12 +175,25 @@ def login_view(request, *args, **kwargs):
             id = form.cleaned_data["user_id"]
             email = form.cleaned_data["user_email"]
             user_password = form.cleaned_data["user_pass"]
+            
+            key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+            f = Fernet(key)
+            user_password = f.encrypt((user_password).encode())
+            user_password = f.decrypt(user_password)
+            user_password = user_password.decode()
+            
             if id == "" and email=="":
                 messages.error(request, "Please enter an ID or an Email")
             elif id != "":
                 try:
                     obj = User.objects.get(user_id=id)
-                    if user_password != obj.user_pass:
+                    data_pass = obj.user_pass[2:]
+                    data_pass = obj.user_pass[2:]
+                    data_pass = data_pass[:len(data_pass)-1]
+                    data_pass = data_pass.encode()
+                    data_pass = f.decrypt(data_pass)
+                    data_pass = data_pass.decode()
+                    if user_password != data_pass:
                         messages.error(request, "Either your ID or Password is incorrect")
                     else:
                         if obj.confirmed == False:
@@ -174,7 +206,13 @@ def login_view(request, *args, **kwargs):
             else:
                 try:
                     obj = User.objects.get(user_email=email)
-                    if user_password != obj.user_pass:
+                    data_pass = obj.user_pass[2:]
+                    data_pass = obj.user_pass[2:]
+                    data_pass = data_pass[:len(data_pass)-1]
+                    data_pass = data_pass.encode()
+                    data_pass = f.decrypt(data_pass)
+                    data_pass = data_pass.decode()
+                    if user_password != data_pass:
                         messages.error(request, "Either your Email or Password is incorrect")
                     else:
                         if obj.confirmed == False:
@@ -283,6 +321,10 @@ def register_view(request, *args, **kwargs):
                 obj = User.objects.get(user_email=entered_email)
                 confirm_code = randint(100000,999999)
                 obj.confirm_code = confirm_code
+                
+                key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+                f = Fernet(key)
+                obj.user_pass = f.encrypt((obj.user_pass).encode('utf-8'))
                 obj.save()
                 emailSelf(entered_email, obj.user_id, confirm_code)
                 messages.info(request, "A unique account ID has been sent to your email. This can be used as an alrternative to email and password login. We look forward to your business!")
