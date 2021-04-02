@@ -31,9 +31,11 @@
                   </svg>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="right: 0; left: auto;">
-                  <li class="nav-item">
+                  {% if not request.session.user_id %}
+				  <li class="nav-item">
                     <a class="dropdown-item" href="{% url 'login' %}">Login</a>
                   </li>
+				  {% else %}
                   <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
@@ -45,6 +47,7 @@
                             Log out
                         </a>
                     </li>
+					{% endif %}
                 </ul>
             </li>
                 <li class="nav-item dropdown">
@@ -54,9 +57,11 @@
                         </svg>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="right: 0; left: auto;">
-                      <li class="nav-item">
+                      {% if not request.session.user_id %}
+					  <li class="nav-item">
                         <a class="dropdown-item" href="{% url 'login' %}">Login</a>
                       </li>
+					  {% else %}
                       <li><a class="dropdown-item" href="{% url 'editacct' %}">Edit profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
@@ -68,6 +73,7 @@
                                 Log out
                             </a>
                         </li>
+						{% endif %}
                     </ul>
                 </li>
 
