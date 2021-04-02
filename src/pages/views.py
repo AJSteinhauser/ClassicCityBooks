@@ -10,6 +10,8 @@ from .form import UserRegister
 from .login import UserLogin
 from .email import emailSelf
 from .email import recoverEmail
+from .form import confirmRegister
+from random import randint
 
 
 import re
@@ -45,7 +47,25 @@ def navbar_view(request, *args, **kwargs):
 	return render(request, "navbar.html", {})
 
 def confirmation_view(request, *args, **kwargs):
-	return render(request, "confirmation.html", {})
+    form = confirmRegister()
+    if request.method =="POST":
+        form = confirmRegister(request.POST)
+        if form.is_valid():
+            id = form.cleaned_data["user_id"]
+            confirm_code = form.cleaned_data["confirm_code"]
+            try:
+                obj = User.objects.get(user_id=id)
+                if obj.user_id == id and obj.confirm_code == confirm_code:
+                    messages.info(request, "Your account has been confirmed. You can login now!")
+                    obj.confirmed = True
+                    obj.save()
+                    return render(request, "logout.html", {})
+            except:
+                messages.info(request, "No account exists with that ID!")
+    context = {
+        "form": form
+    }
+    return render(request, "confirmation.html", context)
 
 def details_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
@@ -115,8 +135,11 @@ def login_view(request, *args, **kwargs):
                     if user_password != obj.user_pass:
                         messages.error(request, "Either your ID or Password is incorrect")
                     else:
-                        request.session['user_id'] = id
-                        messages.info(request, "You have been logged in!")
+                        if obj.confirmed == False:
+                            messages.info(request, "You need to confirm your account! Check your email")
+                        else:
+                            request.session['user_id'] = id
+                            messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That ID does not exist")
             else:
@@ -125,9 +148,12 @@ def login_view(request, *args, **kwargs):
                     if user_password != obj.user_pass:
                         messages.error(request, "Either your Email or Password is incorrect")
                     else:
-                        id = obj.user_id
-                        request.session['user_id'] = id
-                        messages.info(request, "You have been logged in!")
+                        if obj.confirmed == False:
+                            messages.info(request, "You need to confirm your account! Check your email")
+                        else:
+                            id = obj.user_id
+                            request.session['user_id'] = id
+                            messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That email does not exist")
     context = {
@@ -219,7 +245,10 @@ def register_view(request, *args, **kwargs):
             except:
                 User.objects.create(**form.cleaned_data)
                 obj = User.objects.get(user_email=entered_email)
-                emailSelf(entered_email, obj.user_id)
+                confirm_code = randint(100000,999999)
+                obj.confirm_code = confirm_code
+                obj.save()
+                emailSelf(entered_email, obj.user_id, confirm_code)
                 messages.info(request, "A unique account ID has been sent to your email. This can be used as an alrternative to email and password login. We look forward to your business!")
                 return render(request, "logout.html", {})
     context = {

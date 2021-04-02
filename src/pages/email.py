@@ -1,7 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-def emailSelf(you, user_id):
+def emailSelf(you, user_id, confirm_code):
     gmail_user = 'classiccitycollection@gmail.com'
     gmail_password = 'CCC123!@'
     # Create message container
@@ -11,15 +11,16 @@ def emailSelf(you, user_id):
     msg['To'] = you
     # Create the body of the message (a plain-text and an HTML version).
     user_id = str(user_id)
-    text = "Your account has been created with the user ID: " + user_id +". However, you still need to verify your account.\
-    \nClick this link to verify your account: http://127.0.0.1:8000/"
+    confirm_code = str(confirm_code)
+    text = "Your account has been created with the user ID: " + user_id +". However, you still need to verify your account."
+    text += "Your security code is: " + confirm_code+".\n Click this link to verify your account: http://127.0.0.1:8000/"
     body = """\
     <html>
       <head></head>
       <body>
         <h1>Verify your account</h1>
-        <p>Your account has been created with the user ID: """ + user_id + """, but you still need to verify it.
-           Click <a href="http://127.0.0.1:8000/">this link</a> to verify your account.
+        <p>Your account has been created with the user ID: """ + user_id + """, but you still need to verify your account.
+           Your security code is: """ + confirm_code+""".\n Click <a href="http://127.0.0.1:8000/">this link</a> to verify your account.
         </p>
       </body>
     </html>

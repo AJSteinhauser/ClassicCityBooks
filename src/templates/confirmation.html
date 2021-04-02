@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +14,25 @@
 {% include './navbar.html' %}
 
  <main style="text-align: center; margin: 6% auto;">
-   <h1> Registration Complete </h1>
+     <div class="text-center mt-5">
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
+	</div>
+   <h1> Complete Registration </h1>
+   <div class="form_box" style="width: 10%; margin:auto; min-width: 100px;">
 
-   <p style="margin: auto; padding: 10px; width: 400px"> Thank you for verifying your email address. Your registration process is now complete.
-     <a href="{% url 'login' %}"> Login here. </a> </p>
+	<form method='POST' action='.' class="input-form"> 
+	{% csrf_token %}
+	{{ form.user_id| as_crispy_field }}
+	<p></p>
+	{{ form.confirm_code| as_crispy_field }}
+	<p></p>
+	<input type='submit' value='Verify'>
+   </form>
+   </div>
  </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -23,3 +40,4 @@
     <script src="{% static '/js/bootstrap.js' %}"></script>
 </body>
 </html>
+{% endblock %}

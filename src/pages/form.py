@@ -26,6 +26,6 @@ class UserRegister(forms.Form):
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
 	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
     
-    
-    #first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input_field'}),label="")
-    
+class confirmRegister(forms.Form):
+    user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
+    confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
