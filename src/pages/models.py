@@ -11,6 +11,7 @@ class Book(models.Model):
     isBestSeller = models.IntegerField(db_column='isBestSeller', blank=True, null=True)  # Field name made lowercase.
     publicationDate = models.DateField(blank=True, null=True)
     publisher = models.CharField(max_length=100)
+    price = models.FloatField();
     class Meta:
         managed = True
         db_table = 'Books'
@@ -31,7 +32,8 @@ class User(models.Model):
     user_zip = models.CharField(max_length=11, blank=True, null=True)
     confirm_code = models.PositiveIntegerField(null=True)
     confirmed = models.BooleanField(default=False)
-    
+    isAdmin = models.BooleanField(default=False);
+
     class Meta:
         managed = True
         db_table = 'Users'

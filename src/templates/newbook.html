@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,6 +12,8 @@
     	<link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
 		<link rel="stylesheet" href="../css/homepage.css" >
 		<link rel="stylesheet" href="../css/adminpage.css" >
+		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+		<link rel="stylesheet" href="{% static 'css/register.css' %}" >
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -38,56 +42,35 @@
        		 </div>
   		  </nav>
 
-  		  <h1> Enter A New Book: </h1>
-  		  <p> Required fields denoted with an asterick (*)</p>
 
-  		  <form>
-			  <div class="mb-3">
-			    <label for="title" class="form-label">Title*</label>
-			    <input type="text" class="form-control" id="title">
-			  </div>
-			  <div class="mb-3">
-			    <label for="author" class="form-label">Author*</label>
-			    <input type="text" class="form-control" id="author">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="category" class="form-label">Category*</label>
-			    <input type="text" class="form-control" id="category">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="isbn" class="form-label">ISBN*</label>
-			    <input type="text" class="form-control" id="isbn">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="Edition" class="form-label">Edition*</label>
-			    <input type="text" class="form-control" id="edition">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="publisher" class="form-label">Publisher*</label>
-			    <input type="text" class="form-control" id="publisher">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="year" class="form-label">Publication Year*</label>
-			    <input type="text" class="form-control" id="publicationYear">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="quantity" class="form-label">Quantity*</label>
-			    <input type="text" class="form-control" id="quantity">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="minimum" class="form-label">Minimum Threshold*</label>
-			    <input type="text" class="form-control" id="minThresh">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="buyingPrice" class="form-label">Buying Price*</label>
-			    <input type="text" class="form-control" id="buyingPrice">
-			  </div>
-			  	<div class="mb-3">
-			    <label for="sellingPrice" class="form-label">Selling Price*</label>
-			    <input type="text" class="form-control" id="sellingPrice">
-			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
+		<div class="text-center mt-5">
+			<h1> Enter A New Book: </h1>
+			<p> Required fields denoted with an asterick (*)</p>
+			{% if messages %}
+			{% for message in messages %}
+			<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+			{% endfor %}
+			{% endif %}
+		
+		
+		<div class="form_box">
+
+			<form method='POST' action='.' class="input-form"> {% csrf_token %}
+				
+				<h1> REGISTER </h1>
+				{{ form|crispy }}
+				<!--
+				<input type='text' name='title' placeholder='your title'>
+				-->
+				<input type='submit' value='Submit' onclick ="{% url 'verifyemail' %}">
+				
 			</form>
+		</div>
 
 	</body>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.js"></script>
 </html>
+{% endblock %}

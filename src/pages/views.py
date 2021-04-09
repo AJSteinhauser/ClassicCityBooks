@@ -248,8 +248,50 @@ def logout_view(request, *args, **kwargs):
 def managebooks_view(request, *args, **kwargs):
 	return render(request, "managebooks.html", {})
 
-def newbook_view(request, *args, **kwargs):
-	return render(request, "newbook.html", {})
+def newbook_view(request, *args, **kwargs):  
+    context = {};
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        password = unencrypt(user.user_pass)
+        card_num = unencrypt(user.user_card_num)
+        card_seccode = unencrypt(user.user_card_seccode)
+        card_exp = unencrypt(user.user_card_exp)
+        print(password)
+        form = UserRegister(initial={'first_name': user.first_name, 
+        'last_name': user.last_name, 'phone_num': user.phone_num,
+        'user_email': user.user_email, 'user_pass': password, 
+        'user_street': user.user_street, 'user_city': user.user_city,
+        'user_state': user.user_state, 'user_zip': user.user_zip,
+        'user_card_num': card_num, 'user_card_exp': card_exp,
+        'user_card_seccode': card_seccode})
+        form.fields['user_email'].widget.attrs['readonly'] = True
+        if request.method =="POST":
+            form = UserRegister(request.POST)
+            if form.is_valid():
+                key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+                f = Fernet(key)
+                user.first_name = form.cleaned_data['first_name']
+                user.last_name = form.cleaned_data['last_name']
+                #user.user_pass = form.cleaned_data['user_pass']
+                user.user_pass = f.encrypt((form.cleaned_data['user_pass']).encode('utf-8'))
+                user.phone_num = form.cleaned_data['phone_num']
+                user.user_street = form.cleaned_data['user_street']
+                user.user_city= form.cleaned_data['user_city']
+                user.user_state= form.cleaned_data['user_state']
+                user.user_zip= form.cleaned_data['user_zip']
+                user.user_card_num= f.encrypt((form.cleaned_data['user_card_num']).encode('utf-8'))
+                date = form.cleaned_data['user_card_exp']
+                date = date.strftime('%m/%d/%Y')
+                user.user_card_exp= f.encrypt((date).encode('utf-8'))
+                user.user_card_seccode= f.encrypt((form.cleaned_data['user_card_seccode']).encode('utf-8'))
+                user.save()
+                accountChange(user.user_email)
+                messages.error(request, "You're changes have been saved!")
+                return render(request, "logout.html", {})
+        context = {
+            "form": form
+        }
+    return render(request, "newbook.html", context)
 
 @login_required(login_url = "login")
 def orderHistory_view(request, *args, **kwargs):
