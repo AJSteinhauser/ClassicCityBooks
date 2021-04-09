@@ -25,6 +25,17 @@ class UserRegister(forms.Form):
 	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="", max_length=16, min_length=16)
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
 	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
+
+
+class NewBook(forms.Form):
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'BookTitle*'}), label="")
+    author = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Author*'}), label="")
+    description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Description*'}), label="")
+    genre = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Genre*'}), label="")
+    isbn = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'ISBN*'}), label="")
+    publisher = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Publisher*'}), label="")
+    #year = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Year*'}), label ="")
+
     
 class confirmRegister(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
