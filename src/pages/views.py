@@ -19,6 +19,7 @@ from cryptography.fernet import Fernet
 import os
 from django.conf import settings
 import re
+import datetime
 
 
 # Create your views here.
@@ -115,30 +116,37 @@ def details_view(request, *args, **kwargs):
     print(dir(book));
     return render(request, "details.html", context)
 
+def unencrypt(string):
+    key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+    f = Fernet(key)
+    string = string[2:len(string)-1]
+    string = string.encode()
+    string = f.decrypt(string)
+    string = string.decode()
+    return string
+    
+
 def editacct_view(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
-        password = user.user_pass
-        key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
-        f = Fernet(key)
-        data_pass = user.user_pass[2:]
-        data_pass = user.user_pass[2:]
-        data_pass = data_pass[:len(data_pass)-1]
-        data_pass = data_pass.encode()
-        data_pass = f.decrypt(data_pass)
-        password = data_pass.decode()
+        password = unencrypt(user.user_pass)
+        card_num = unencrypt(user.user_card_num)
+        card_seccode = unencrypt(user.user_card_seccode)
+        card_exp = unencrypt(user.user_card_exp)
         print(password)
         form = UserRegister(initial={'first_name': user.first_name, 
         'last_name': user.last_name, 'phone_num': user.phone_num,
-        'user_email': user.user_email, 'user_pass': password, #NOT WORKING
+        'user_email': user.user_email, 'user_pass': password, 
         'user_street': user.user_street, 'user_city': user.user_city,
         'user_state': user.user_state, 'user_zip': user.user_zip,
-        'user_card_num': user.user_card_num, 'user_card_exp': user.user_card_exp,
-        'user_card_seccode': user.user_card_seccode})
+        'user_card_num': card_num, 'user_card_exp': card_exp,
+        'user_card_seccode': card_seccode})
         form.fields['user_email'].widget.attrs['readonly'] = True
         if request.method =="POST":
             form = UserRegister(request.POST)
             if form.is_valid():
+                key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+                f = Fernet(key)
                 user.first_name = form.cleaned_data['first_name']
                 user.last_name = form.cleaned_data['last_name']
                 #user.user_pass = form.cleaned_data['user_pass']
@@ -148,9 +156,11 @@ def editacct_view(request, *args, **kwargs):
                 user.user_city= form.cleaned_data['user_city']
                 user.user_state= form.cleaned_data['user_state']
                 user.user_zip= form.cleaned_data['user_zip']
-                user.user_card_num= form.cleaned_data['user_card_num']
-                user.user_card_exp= form.cleaned_data['user_card_exp']
-                user.user_card_seccode= form.cleaned_data['user_card_seccode']
+                user.user_card_num= f.encrypt((form.cleaned_data['user_card_num']).encode('utf-8'))
+                date = form.cleaned_data['user_card_exp']
+                date = date.strftime('%m/%d/%Y')
+                user.user_card_exp= f.encrypt((date).encode('utf-8'))
+                user.user_card_seccode= f.encrypt((form.cleaned_data['user_card_seccode']).encode('utf-8'))
                 user.save()
                 accountChange(user.user_email)
                 messages.error(request, "You're changes have been saved!")
@@ -324,6 +334,9 @@ def register_view(request, *args, **kwargs):
                 key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
                 f = Fernet(key)
                 obj.user_pass = f.encrypt((obj.user_pass).encode('utf-8'))
+                obj.user_card_num = f.encrypt((obj.user_card_num).encode('utf-8'))
+                obj.user_card_exp = f.encrypt((obj.user_card_exp).encode('utf-8'))
+                obj.user_card_seccode = f.encrypt((obj.user_card_seccode).encode('utf-8'))
                 obj.save()
                 emailSelf(entered_email, obj.user_id, confirm_code)
                 messages.info(request, "A unique account ID has been sent to your email. This can be used as an alrternative to email and password login. We look forward to your business!")

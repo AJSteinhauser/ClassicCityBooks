@@ -22,7 +22,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=25, blank=True, null=True)
     last_name = models.CharField(max_length=25, blank=True, null=True)
     phone_num = models.PositiveIntegerField(blank=True, null=True)
-    user_card_exp = models.DateField(blank=True, null=True)
+    user_card_exp = models.CharField(max_length=150, blank=True, null=True)
     user_card_num = models.CharField(max_length=50, blank=True, null=True)
     user_card_seccode = models.CharField(max_length=3, blank=True, null=True)
     user_city = models.CharField(max_length=50, blank=True, null=True)
