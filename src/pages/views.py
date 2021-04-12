@@ -21,7 +21,7 @@ import os
 from django.conf import settings
 import re
 import datetime
-
+from .form import newpromotion
 
 # Create your views here.
 
@@ -388,7 +388,12 @@ def register_view(request, *args, **kwargs):
     }
     return render(request, "register.html", context)
 
+def promotions_view(request, *args, **kwargs):
+    return render(request, "promotions.html", {})
 
+def newpromotion_view(request, *args, **kwargs):
+
+    return render(request, "newpromotion.html", {})
   
 """  
 def test_view(request, *args, **kwargs):
