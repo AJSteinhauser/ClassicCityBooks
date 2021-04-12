@@ -44,7 +44,9 @@ def homepage_view(request, *args, **kwargs):
     return render(request, "homepage.html", context)
 
 def adminpage_view(request, *args, **kwargs):
-	return render(request, "adminpage.html", {})
+    if checkAdminStatus(request, *args, **kwargs):
+	    return render(request, "adminpage.html", {})
+    return homepage_view(request, *args, **kwargs);
 
 def checkout_view(request, *args, **kwargs):
 	return render(request, "checkout.html", {})
@@ -242,7 +244,9 @@ def logout_view(request, *args, **kwargs):
     return render(request, "logout.html", {})
 
 def managebooks_view(request, *args, **kwargs):
-	return render(request, "managebooks.html", {})
+    if checkAdminStatus(request, *args, **kwargs):
+	    return render(request, "managebooks.html", {})
+    return homepage_view(request, *args, **kwargs);
 
 
 @login_required(login_url = "login")
@@ -262,6 +266,11 @@ def verifyEmail_view(request, *args, **kwargs):
 @login_required(login_url = "login")
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
+
+def checkAdminStatus(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        return user.isAdmin
     
 def recover_view(request, *args, **kwargs):
     form = UserLogin()
@@ -313,30 +322,40 @@ def recover_view(request, *args, **kwargs):
 
 def newbook_view(request, *args, **kwargs):  
     context = {};
-    if request.session.has_key('user_id'):
-        user = User.objects.get(user_id=request.session.get('user_id'))
-        if user.isAdmin == True:
-            form = NewBook(initial={});
-            if request.method =="POST":
-                form = NewBook(request.POST)
-                if form.is_valid():
-                    isbn_entered = form.cleaned_data["isbn"];
+    if checkAdminStatus(request, *args, **kwargs):
+        form = NewBook(initial={});
+        context = {"form": form}
+        if request.method =="POST":
+            form = NewBook(request.POST)
+            
+            if form.is_valid():
+                context = {"form": form}
+                isbn_entered = form.cleaned_data["isbn"];
+                try:
+                    obj = Book.objects.get(isbn=isbn_entered);#Errors if book does not exist
+                    messages.error(request, "This book already exists");
+                    return render(request, "newbook.html", context) 
+                except:
                     try:
-                        obj = User.objects.get(isbn=isbn_entered);
-                        messages.error(request, "This book already exists");
-                    except:
                         Book.objects.create(**form.cleaned_data)
                         obj = Book.objects.get(isbn=isbn_entered)
                         obj.title = form.cleaned_data['title']
                         obj.author = form.cleaned_data['author']
                         obj.genre = form.cleaned_data['genre']
                         obj.description = form.cleaned_data['description']
+                        obj.publicationDate = form.cleaned_data['publicationDate'];
+                        obj.price = float(form.cleaned_data['price']);
+                        obj.cover = "assets/" + form.cleaned_data['cover'];
                         obj.save()
                         messages.error(request, "You're changes have been saved!")
-                        return render(request, "logout.html", {})
-            context = {
-                "form": form
-            }
+                        return render(request, "newbook.html", context)
+                    except:
+                        messages.error(request, "There's been a problem with some of the data input")
+                        return render(request, "newbook.html", context)
+
+
+    else:
+        return homepage_view(request, *args, **kwargs);
     return render(request, "newbook.html", context)
 
 def register_view(request, *args, **kwargs):

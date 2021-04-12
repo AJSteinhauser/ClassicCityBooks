@@ -34,7 +34,9 @@ class NewBook(forms.Form):
     genre = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Genre*'}), label="")
     isbn = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'ISBN*'}), label="")
     publisher = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Publisher*'}), label="")
-    #year = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Year*'}), label ="")
+    publicationDate = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Date Published*'}), label="")
+    price = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Price*'}), label="");
+    cover = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'CoverImage*'}), label="");
 
     
 class confirmRegister(forms.Form):

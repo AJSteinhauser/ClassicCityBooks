@@ -44,13 +44,14 @@
 
 
 		<div class="text-center mt-5">
-			<h1> Enter A New Book: </h1>
-			<p> Required fields denoted with an asterick (*)</p>
 			{% if messages %}
 			{% for message in messages %}
 			<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
 			{% endfor %}
 			{% endif %}
+			<h1> Enter A New Book: </h1>
+			<p> Required fields denoted with an asterick (*)</p>
+	
 		
 		
 		<div class="form_box">
