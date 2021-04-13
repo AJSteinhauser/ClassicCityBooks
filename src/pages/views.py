@@ -209,6 +209,7 @@ def login_view(request, *args, **kwargs):
                             messages.info(request, "You need to confirm your account! Check your email")
                         else:
                             request.session['user_id'] = id
+                            request.session['isAdmin'] = obj.isAdmin
                             messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That ID does not exist")
@@ -229,6 +230,7 @@ def login_view(request, *args, **kwargs):
                         else:
                             id = obj.user_id
                             request.session['user_id'] = id
+                            request.session['isAdmin'] = obj.isAdmin
                             messages.info(request, "You have been logged in!")
                 except: 
                     messages.error(request, "That email does not exist")
