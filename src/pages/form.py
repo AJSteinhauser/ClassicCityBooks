@@ -10,8 +10,8 @@ class BookForm(forms.ModelForm):
             'isbn',
             'author'
         ]
-        
-        
+
+
 class UserRegister(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name*'}), label="")
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name*'}), label="")
