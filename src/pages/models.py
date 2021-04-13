@@ -43,6 +43,17 @@ class User(models.Model):
         managed = True
         db_table = 'Users'
 
+class Promotion(models.Model):
+    id = models.AutoField(primary_key=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    promocode = models.CharField(max_length=255, blank=True, null=True)
+    percent = models.FloatField(null=True)
+    
+    class Meta:
+        managed = True
+        db_table = 'Promotions'
+
 
 
 

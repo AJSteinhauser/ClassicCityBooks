@@ -47,3 +47,9 @@ class resetPass(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
     user_pass = forms.CharField(widget=forms.PasswordInput(render_value=True, attrs={'placeholder': 'Password*'}), label="", max_length=15)
     confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
+
+class newpromotion(forms.Form):
+    promocode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Promo Code'}), label="")
+    percent = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Percentage'}), label="")
+    start_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Start Date'}), label ="")
+    end_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")

@@ -1,10 +1,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
-{%block content %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Enter A New Book</title>
+		<title>Enter A New Promotion</title>
 
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
             	<div class="collapse navbar-collapse" id="navbarSupportedContent">
          			<ul class="navbar-nav mr-auto mb-2 mb-lg-0">
 	          			<li class="nav-item">
-	              			<a class="nav-link active" aria-current="page" href="{% url 'managebooks' %}">Manage Books</a>
+	              			<a class="nav-link active" aria-current="page" href="{% url 'promotions' %}">Promotions</a>
 	           			</li>
 	           		</ul>
        		 	</div>
@@ -49,8 +49,8 @@
 			<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
 			{% endfor %}
 			{% endif %}
-			<h1> Enter A New Book: </h1>
-			<p> Required fields denoted with an asterick (*)</p>
+			<h1> Enter A New Promotion: </h1>
+			
 	
 		
 		
@@ -58,7 +58,7 @@
 
 			<form method='POST' action='.' class="input-form"> {% csrf_token %}
 				
-				<h1> REGISTER </h1>
+				<h1> CREATE PROMO </h1>
 				{{ form|crispy }}
 				<!--
 				<input type='text' name='title' placeholder='your title'>
