@@ -273,6 +273,7 @@ def checkAdminStatus(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
         return user.isAdmin
+    return False
     
 def recover_view(request, *args, **kwargs):
     form = UserLogin()
@@ -391,9 +392,13 @@ def register_view(request, *args, **kwargs):
     return render(request, "register.html", context)
 
 def promotions_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
     return render(request, "promotions.html", {})
 
 def newpromotion_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
     form = newpromotion()
     if request.method =="POST":
         form = newpromotion(request.POST)
@@ -403,9 +408,12 @@ def newpromotion_view(request, *args, **kwargs):
                 obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
                 messages.error(request, "There is already a promotion with that promo code!")
             except:
-                Promotion.objects.create(**form.cleaned_data)
-                messages.error(request, "That promo code has been created!")
-                return HttpResponseRedirect(".")
+                if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
+                    messages.error(request, "Please enter a valid percent!")
+                else:
+                    Promotion.objects.create(**form.cleaned_data)
+                    messages.error(request, "That promo code has been created!")
+                    return HttpResponseRedirect(".")
     context = {
         "form": form
     }
