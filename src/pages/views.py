@@ -414,7 +414,7 @@ def newpromotion_view(request, *args, **kwargs):
                     messages.error(request, "Please enter a valid percent!")
                 else:
                     Promotion.objects.create(**form.cleaned_data)
-                    messages.error(request, "That promo code has been created!")
+                    messages.error(request, "Promotion Submitted")
                     return HttpResponseRedirect(".")
     context = {
         "form": form
