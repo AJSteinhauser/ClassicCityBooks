@@ -49,7 +49,7 @@ class resetPass(forms.Form):
     confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
 
 class newpromotion(forms.Form):
-    promo_code = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Promo Code'}), label="")
-    percentage = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Percentage'}), label="")
+    promocode = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Promo Code'}), label="")
+    percent = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Percentage'}), label="")
     start_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Start Date'}), label ="")
-    expiration_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
+    end_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")

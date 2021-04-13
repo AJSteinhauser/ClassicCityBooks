@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.templatetags.static import static
 from .models import Book
 from .models import User
+from .models import Promotion
 from .form import BookForm
 from .form import UserRegister
 from .form import NewBook
@@ -22,6 +23,7 @@ from django.conf import settings
 import re
 import datetime
 from .form import newpromotion
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -392,8 +394,22 @@ def promotions_view(request, *args, **kwargs):
     return render(request, "promotions.html", {})
 
 def newpromotion_view(request, *args, **kwargs):
-
-    return render(request, "newpromotion.html", {})
+    form = newpromotion()
+    if request.method =="POST":
+        form = newpromotion(request.POST)
+        if form.is_valid():
+            try:
+                print(form.cleaned_data["promocode"])
+                obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
+                messages.error(request, "There is already a promotion with that promo code!")
+            except:
+                Promotion.objects.create(**form.cleaned_data)
+                messages.error(request, "That promo code has been created!")
+                return HttpResponseRedirect(".")
+    context = {
+        "form": form
+    }
+    return render(request, "newpromotion.html", context)
   
 """  
 def test_view(request, *args, **kwargs):
