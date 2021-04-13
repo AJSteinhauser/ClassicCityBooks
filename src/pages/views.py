@@ -66,7 +66,7 @@ def confirmation_view(request, *args, **kwargs):
             try:
                 obj = User.objects.get(user_id=id)
                 if obj.user_id == id and obj.confirm_code == confirm_code:
-                    messages.info(request, "Your account has been confirmed. You can login now!")
+                    messages.info(request, "Your account is confirmed. You can login now!")
                     obj.confirmed = True
                     obj.save()
                     return render(request, "logout.html", {})
@@ -210,7 +210,7 @@ def login_view(request, *args, **kwargs):
                         else:
                             request.session['user_id'] = id
                             request.session['isAdmin'] = obj.isAdmin
-                            messages.info(request, "You have been logged in!")
+                            messages.info(request, "You are logged in!")
                 except: 
                     messages.error(request, "That ID does not exist")
             else:
@@ -231,7 +231,7 @@ def login_view(request, *args, **kwargs):
                             id = obj.user_id
                             request.session['user_id'] = id
                             request.session['isAdmin'] = obj.isAdmin
-                            messages.info(request, "You have been logged in!")
+                            messages.info(request, "You are logged in!")
                 except: 
                     messages.error(request, "That email does not exist")
     context = {
@@ -242,7 +242,7 @@ def login_view(request, *args, **kwargs):
 def logout_view(request, *args, **kwargs):
     try:
         del request.session['user_id']
-        messages.error(request, "You have been logged out!")
+        messages.error(request, "You are logged out!")
     except:
         messages.error(request, "You are not logged in!")
     return render(request, "logout.html", {})
@@ -352,10 +352,10 @@ def newbook_view(request, *args, **kwargs):
                         obj.price = float(form.cleaned_data['price']);
                         obj.cover = "assets/" + form.cleaned_data['cover'];
                         obj.save()
-                        messages.error(request, "You're changes have been saved!")
+                        messages.error(request, "Changes saved")
                         return render(request, "newbook.html", context)
                     except:
-                        messages.error(request, "There's been a problem with some of the data input")
+                        messages.error(request, "There is a problem with some of the data input")
                         return render(request, "newbook.html", context)
 
 
