@@ -38,7 +38,6 @@ class NewBook(forms.Form):
     price = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Price*'}), label="");
     cover = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'CoverImage*'}), label="");
 
-    
 class confirmRegister(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
     confirm_code = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="")
