@@ -406,19 +406,15 @@ def newpromotion_view(request, *args, **kwargs):
         form = newpromotion(request.POST)
         if form.is_valid():
             try:
-                print("\n\n(1\n\n")
                 obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
                 messages.error(request, "There is already a promotion with that promo code!")
             except:
-                print("\n\n(2\n\n")
                 if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
-                    print("\n\n(3\n\n")
                     messages.error(request, "Please enter a valid percent!")
                 else:
-                    print("\n\n(4\n\n")
                     Promotion.objects.create(**form.cleaned_data)
                     obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
-                    obj.isActivated = 1;
+                    obj.isActive = False;
                     obj.save();
                     messages.error(request, "Promotion Submitted")
                     return HttpResponseRedirect(".")
@@ -427,37 +423,6 @@ def newpromotion_view(request, *args, **kwargs):
     }
     return render(request, "newpromotion.html", context)
 
-
-def newpromotion_not_submitted_view(request, *args, **kwargs):
-    if not checkAdminStatus(request, *args, **kwargs):
-        return homepage_view(request, *args, **kwargs);
-    form = newpromotion()
-    if request.method =="POST":
-        form = newpromotion(request.POST)
-        if form.is_valid():
-            try:
-                obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
-                messages.error(request, "There is already a promotion with that promo code!")
-                print("\n\n1\n\n")
-            except:
-                print("\n\n2\n\n")
-                if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
-                    messages.error(request, "Please enter a valid percent!")
-                    print("\n\n3\n\n")
-                else:
-                    print("\n\n4\n\n")
-                    Promotion.objects.create(**form.cleaned_data)
-                    obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
-                    obj.isActivated = 0;
-                    obj.save();
-                    print(obj.isActivated);
-                    messages.error(request, "Promotion is saved, but not active")
-                    return HttpResponseRedirect(".")
-    context = {
-        "form": form
-    }
-    return render(request, "newpromotion.html", context)
-  
 """  
 def test_view(request, *args, **kwargs):
     context = {}

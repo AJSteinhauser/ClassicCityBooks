@@ -5,7 +5,7 @@ from django_cryptography.fields import encrypt
 class Promotions(models.Model):
     start_date = models.DateField(blank=True, null=True);
     end_date = models.DateField(blank=True, null=True);
-    isActivated = models.BooleanField(default=False);
+    isActive = models.BooleanField(default=False);
     promocode = models.CharField(max_length=15);
     percent = models.PositiveIntegerField(blank=True, null=True)
 
@@ -56,8 +56,4 @@ class Promotion(models.Model):
     class Meta:
         managed = True
         db_table = 'Promotions'
-
-
-
-
 
