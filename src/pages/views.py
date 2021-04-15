@@ -144,16 +144,25 @@ def editacct_view(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
         password = unencrypt(user.user_pass)
-        card_num = unencrypt(user.user_card_num)
-        card_seccode = unencrypt(user.user_card_seccode)
-        card_exp = unencrypt(user.user_card_exp)
+        if user.user_card_num != "":
+            card_num = unencrypt(user.user_card_num)
+        else:
+            card_num = ""
+        if user.user_card_seccode != "":
+            card_seccode = unencrypt(user.user_card_seccode)
+        else:
+            card_seccode = ""
+        if user.user_card_exp != None:
+            card_exp = unencrypt(user.user_card_exp)
+        else:
+            card_exp = ""
         form = UserRegister(initial={'first_name': user.first_name, 
         'last_name': user.last_name, 'phone_num': user.phone_num,
         'user_email': user.user_email, 'user_pass': password, 
         'user_street': user.user_street, 'user_city': user.user_city,
         'user_state': user.user_state, 'user_zip': user.user_zip,
         'user_card_num': card_num, 'user_card_exp': card_exp,
-        'user_card_seccode': card_seccode, 'user_promos': user.isSubscribed})
+        'user_card_seccode': card_seccode, 'isSubscribed': user.isSubscribed})
         form.fields['user_email'].widget.attrs['readonly'] = True
         if request.method =="POST":
             form = UserRegister(request.POST)
@@ -171,10 +180,13 @@ def editacct_view(request, *args, **kwargs):
                 user.user_zip= form.cleaned_data['user_zip']
                 user.user_card_num= f.encrypt((form.cleaned_data['user_card_num']).encode('utf-8'))
                 date = form.cleaned_data['user_card_exp']
-                date = date.strftime('%m/%d/%Y')
-                user.user_card_exp= f.encrypt((date).encode('utf-8'))
+                if date != None:
+                    date = date.strftime('%m/%d/%Y')
+                    user.user_card_exp= f.encrypt((date).encode('utf-8'))
+                else:
+                    user.user_card_exp = None
                 user.user_card_seccode= f.encrypt((form.cleaned_data['user_card_seccode']).encode('utf-8'))
-                user.isSubscribed = form.cleaned_data['user_promos']
+                user.isSubscribed = form.cleaned_data['isSubscribed']
                 user.save()
                 accountChange(user.user_email)
                 messages.error(request, "You're changes have been saved!")
