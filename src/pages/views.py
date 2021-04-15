@@ -24,6 +24,7 @@ import re
 import datetime
 from .form import newpromotion
 from django.http import HttpResponseRedirect
+from .form import userStatus
 
 # Create your views here.
 
@@ -422,6 +423,38 @@ def newpromotion_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "newpromotion.html", context)
+
+def manageusers_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+
+    return render(request, "manageusers.html", {})
+
+def suspenduser_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+    form = userStatus()
+    if request.method == "POST":
+        if form.is_valid():
+            try:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                message.error(request, "There is not a user with that ID")
+            except:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                user.isSuspended = True
+                user.save()
+                return HttpResponseRedirect('.')
+    context = {
+        "form": form
+    }
+
+    return render(request, "suspenduser.html", {})
+
+def unsuspend_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+
+    return render(request, "unsuspend.html", {})
 
 """  
 def test_view(request, *args, **kwargs):

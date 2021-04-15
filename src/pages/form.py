@@ -59,3 +59,7 @@ class newpromotion(forms.Form):
     start_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Start Date'}), label ="")
     end_date = forms.DateField(widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
     isActive = forms.ChoiceField(choices=ACTIVE, label="")
+
+class userStatus(forms.Form):
+    user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
+
