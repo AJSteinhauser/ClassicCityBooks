@@ -441,20 +441,34 @@ def suspenduser_view(request, *args, **kwargs):
                 message.error(request, "There is not a user with that ID")
             except:
                 user = User.objects.get(user_id=form.cleaned_data["user_id"])
-                user.isSuspended = True
+                user.isSuspended = 1
                 user.save()
                 return HttpResponseRedirect('.')
     context = {
         "form": form
     }
 
-    return render(request, "suspenduser.html", {})
+    return render(request, "suspenduser.html", context)
 
 def unsuspend_view(request, *args, **kwargs):
     if not checkAdminStatus(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
+    form = userStatus()
+    if request.method == "POST":
+        if form.is_valid():
+            try:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                message.error(request, "There is not a user with that ID")
+            except:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                user.isSuspended = 0
+                user.save()
+                return HttpResponseRedirect('.')
+    context = {
+        "form": form
+    }
 
-    return render(request, "unsuspend.html", {})
+    return render(request, "unsuspend.html", context)
 
 """  
 def test_view(request, *args, **kwargs):
