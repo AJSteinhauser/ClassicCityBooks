@@ -42,6 +42,7 @@ class User(models.Model):
     confirmed = models.BooleanField(default=False)
     isAdmin = models.BooleanField(default=False);
     isSubscribed = models.BooleanField(default=False);
+    isSuspended = models.BooleanField(default=False);
 
     class Meta:
         managed = True

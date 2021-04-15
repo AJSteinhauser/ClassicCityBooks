@@ -29,6 +29,12 @@ from .form import userStatus
 
 # Create your views here.
 
+def checkSuspendedStatus(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        return user.isSuspended
+    return False
+
 def homepage_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
     context = {}
@@ -45,6 +51,11 @@ def homepage_view(request, *args, **kwargs):
             book.title = book.title[0:50] + "..."
             book.description = book.description[0:300] + "..."
             culinary = culinary + 1;
+    if(checkSuspendedStatus(request, *args, **kwargs)):
+        if request.session.has_key('user_id'):
+            del request.session['user_id']
+        if request.session.has_key('isAdmin'):
+            del request.session['isAdmin']
     return render(request, "homepage.html", context)
 
 def adminpage_view(request, *args, **kwargs):
@@ -209,6 +220,8 @@ def login_view(request, *args, **kwargs):
                     else:
                         if obj.confirmed == False:
                             messages.info(request, "You need to confirm your account! Check your email")
+                        elif obj.isSuspended == True:
+                            messages.info(request, "Your account is suspended! Please contact us if you believe this was an accident.")
                         else:
                             request.session['user_id'] = id
                             request.session['isAdmin'] = obj.isAdmin
@@ -229,6 +242,8 @@ def login_view(request, *args, **kwargs):
                     else:
                         if obj.confirmed == False:
                             messages.info(request, "You need to confirm your account! Check your email")
+                        elif obj.isSuspended == True:
+                            messages.info(request, "Your account is suspended! Please contact us if you believe this was an accident.")
                         else:
                             id = obj.user_id
                             request.session['user_id'] = id
@@ -277,6 +292,14 @@ def checkAdminStatus(request, *args, **kwargs):
     if request.session.has_key('user_id'):
         user = User.objects.get(user_id=request.session.get('user_id'))
         return user.isAdmin
+    return False
+
+def checkSuspendedStatus(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        print(user.isSuspended)
+        return user.isSuspended
+    print("test")
     return False
     
 def recover_view(request, *args, **kwargs):
@@ -478,15 +501,20 @@ def suspenduser_view(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
     form = userStatus()
     if request.method == "POST":
+        form = userStatus(request.POST)
         if form.is_valid():
             try:
                 user = User.objects.get(user_id=form.cleaned_data["user_id"])
-                message.error(request, "There is not a user with that ID")
+                if (user.isSuspended == 1):
+                    messages.error(request, "That user is already suspended!")
+                else:
+                    user.isSuspended = 1
+                    user.save()
+                    messages.error(request, "The user is suspended!")
+                    return HttpResponseRedirect('.')
             except:
-                user = User.objects.get(user_id=form.cleaned_data["user_id"])
-                user.isSuspended = 1
-                user.save()
-                return HttpResponseRedirect('.')
+                messages.error(request, "There is not a user with that ID")
+
     context = {
         "form": form
     }
@@ -498,19 +526,23 @@ def unsuspend_view(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
     form = userStatus()
     if request.method == "POST":
+        form = userStatus(request.POST)
         if form.is_valid():
             try:
                 user = User.objects.get(user_id=form.cleaned_data["user_id"])
-                message.error(request, "There is not a user with that ID")
+                if (user.isSuspended == 0):
+                    messages.error(request, "That user is already unsuspended!")
+                else:
+                    user.isSuspended = 0
+                    user.save()
+                    messages.error(request, "The user is unsuspended!")
+                    return HttpResponseRedirect('.')
             except:
-                user = User.objects.get(user_id=form.cleaned_data["user_id"])
-                user.isSuspended = 0
-                user.save()
-                return HttpResponseRedirect('.')
+                messages.error(request, "There is not a user with that ID")
+
     context = {
         "form": form
     }
-
     return render(request, "unsuspend.html", context)
 
 
