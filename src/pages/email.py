@@ -88,7 +88,7 @@ def accountChange(email):
     gmail_password = 'CCC123!@'
     # Create message container
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Promotional Code!"
+    msg['Subject'] = "Account Changes"
     msg['From'] = gmail_user
     msg['To'] = email
     # Create the body of the message (a plain-text and an HTML version).

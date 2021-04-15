@@ -153,7 +153,7 @@ def editacct_view(request, *args, **kwargs):
         'user_street': user.user_street, 'user_city': user.user_city,
         'user_state': user.user_state, 'user_zip': user.user_zip,
         'user_card_num': card_num, 'user_card_exp': card_exp,
-        'user_card_seccode': card_seccode})
+        'user_card_seccode': card_seccode, 'user_promos': user.isSubscribed})
         form.fields['user_email'].widget.attrs['readonly'] = True
         if request.method =="POST":
             form = UserRegister(request.POST)
@@ -174,6 +174,7 @@ def editacct_view(request, *args, **kwargs):
                 date = date.strftime('%m/%d/%Y')
                 user.user_card_exp= f.encrypt((date).encode('utf-8'))
                 user.user_card_seccode= f.encrypt((form.cleaned_data['user_card_seccode']).encode('utf-8'))
+                user.isSubscribed = form.cleaned_data['user_promos']
                 user.save()
                 accountChange(user.user_email)
                 messages.error(request, "You're changes have been saved!")
