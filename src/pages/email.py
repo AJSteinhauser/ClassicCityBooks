@@ -127,7 +127,7 @@ def promoEmail(email, promocode, percentage, start, end):
     gmail_password = 'CCC123!@'
     # Create message container
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Account Changes"
+    msg['Subject'] = "Promotional Email"
     msg['From'] = gmail_user
     msg['To'] = email
     # Create the body of the message (a plain-text and an HTML version).
