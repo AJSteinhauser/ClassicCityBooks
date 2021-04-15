@@ -39,9 +39,12 @@
 				<!--
 				<input type='text' name='title' placeholder='your title'>
 				-->
-				<input type='submit' value='Save to the Database' onclick ="{% url 'verifyemail' %}">
-
-
+				<button type='submit' name="save" class="btn btn-success" value='Save to the Database' onclick ="{% url 'verifyemail' %}">
+				Save to the Database
+				</button>
+				<button type='submit' name="saveandsub" class="btn btn-danger" value='Save and Send to the Users' onclick ="{% url 'verifyemail' %}">
+				Save and Send to the Users
+				</button>
 			</form>
 		</div>
 

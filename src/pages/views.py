@@ -418,12 +418,21 @@ def newpromotion_view(request, *args, **kwargs):
                     obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
                     obj.isActive = False;
                     obj.save();
-                    messages.error(request, "Promotion Submitted")
-                    emailAllUsers(
-                    str(form.cleaned_data["promocode"]), 
-                    str(form.cleaned_data["percent"]),
-                    form.cleaned_data["start_date"].strftime('%m/%d/%Y'),
-                    form.cleaned_data["end_date"].strftime('%m/%d/%Y'))
+                    button = request.POST.get("saveandsub")
+                    print(button)
+                    if (not button):
+                        messages.error(request, "Promotion Saved!")
+                        return HttpResponseRedirect(".")    
+                    else:
+                        emailAllUsers(
+                        str(form.cleaned_data["promocode"]), 
+                        str(form.cleaned_data["percent"]),
+                        form.cleaned_data["start_date"].strftime('%m/%d/%Y'),
+                        form.cleaned_data["end_date"].strftime('%m/%d/%Y'))
+                        obj.isActive = True;
+                        obj.save();
+                        messages.error(request, "Promotion Saved and Sent to the Users!")
+                    print(request.POST)
                     return HttpResponseRedirect(".")
     context = {
         "form": form

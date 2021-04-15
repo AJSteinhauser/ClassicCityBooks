@@ -59,7 +59,11 @@
               {{ promotion.end_date }}
             </div>
             <div class="col-sm">
-              {{ promotion.isActive }}
+			  {% if promotion.isActive %}
+			  Active
+              {% else %}
+			  Not Active
+			  {% endif %}
             </div>
 
             <div class="col-sm">
