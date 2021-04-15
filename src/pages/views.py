@@ -16,6 +16,7 @@ from .form import confirmRegister
 from .form import resetPass
 from random import randint
 from .email import accountChange
+from .email import promoEmail
 from django_cryptography.fields import encrypt
 from cryptography.fernet import Fernet
 import os
@@ -415,12 +416,42 @@ def newpromotion_view(request, *args, **kwargs):
                 else:
                     Promotion.objects.create(**form.cleaned_data)
                     messages.error(request, "Promotion Submitted")
+                    emailAllUsers(
+                    str(form.cleaned_data["promocode"]), 
+                    str(form.cleaned_data["percent"]),
+                    form.cleaned_data["start_date"].strftime('%m/%d/%Y'),
+                    form.cleaned_data["end_date"].strftime('%m/%d/%Y'))
                     return HttpResponseRedirect(".")
     context = {
         "form": form
     }
     return render(request, "newpromotion.html", context)
-  
+    
+def emailAllUsers(promocode, percentage, start, end):
+    subbedUsers = User.objects.filter(isSubscribed=True)
+    for user in subbedUsers:
+        promoEmail(
+        user.user_email,
+        promocode,
+        percentage,
+        start,
+        end)
+                    
+def viewpromotions_view(request, *args, **kwargs):
+    promotionsQuery = Promotion.objects.all()
+    context = {
+        "promotion_list": promotionsQuery
+    }
+    for promotion in promotionsQuery:
+        context["promotion"] = promotion;
+    if request.method =="POST":
+        promo = Promotion.objects.get(id=request.POST.get("name"))
+        emailAllUsers(str(promo.promocode), str(promo.percent), promo.start_date.strftime('%m/%d/%Y'), promo.end_date.strftime('%m/%d/%Y'))
+        promo.isActive = 1
+        promo.save()
+        return HttpResponseRedirect(".")
+    return render(request, "viewpromotions.html", context)
+    
 """  
 def test_view(request, *args, **kwargs):
     context = {}

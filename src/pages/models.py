@@ -41,6 +41,7 @@ class User(models.Model):
     confirm_code = models.PositiveIntegerField(null=True)
     confirmed = models.BooleanField(default=False)
     isAdmin = models.BooleanField(default=False);
+    isSubscribed = models.BooleanField(default=False);
 
     class Meta:
         managed = True
@@ -52,6 +53,7 @@ class Promotion(models.Model):
     end_date = models.DateField(blank=True, null=True)
     promocode = models.CharField(max_length=255, blank=True, null=True)
     percent = models.FloatField(null=True)
+    isActive = models.BooleanField(default=False);
     
     class Meta:
         managed = True

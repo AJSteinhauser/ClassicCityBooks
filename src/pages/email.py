@@ -121,3 +121,45 @@ def accountChange(email):
     mail.sendmail(gmail_user, email, msg.as_string())
     mail.quit()
     return "Your email has been sent."
+    
+def promoEmail(email, promocode, percentage, start, end):
+    gmail_user = 'classiccitycollection@gmail.com'
+    gmail_password = 'CCC123!@'
+    # Create message container
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Account Changes"
+    msg['From'] = gmail_user
+    msg['To'] = email
+    # Create the body of the message (a plain-text and an HTML version).
+    text = "Hello, from Classic City Collections! We have a new promotional code that you can use on all of our products!" \
+    " The promocode is " + promocode + ". You can use it to get " + percentage + "% of your order! You can use the code" \
+    "starting on " + start + ". You have until " + end + " to use it."
+        
+    body = """\
+    <html>
+      <head></head>
+      <body>
+        <h1>Promotional Code</h1>
+        <p>Hello, from Classic City Collections! We have a new promotional code that you can use on all of our products!
+           The promocode is """ + promocode + """. You can use it to get """ + percentage + """% of your order! You can use the 
+           code starting on """ + start + """. You have until """ + end + """ to use it.
+        </p>
+      </body>
+    </html>
+    """
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(body, 'html')
+    # Attach parts into message container.
+    msg.attach(part1)
+    msg.attach(part2)
+    # Send the message via local SMTP server.
+    mail = smtplib.SMTP('smtp.gmail.com', 587)
+    mail.ehlo()
+    mail.starttls()
+    mail.login(gmail_user, gmail_password)
+    # sendmail function takes 3 arguments: sender's address, recipient's address
+    # and message to send - here it is sent as one string.
+    mail.sendmail(gmail_user, email, msg.as_string())
+    mail.quit()
+    return "Your email has been sent."
