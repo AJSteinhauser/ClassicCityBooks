@@ -59,7 +59,3 @@ class Promotion(models.Model):
         managed = True
         db_table = 'Promotions'
 
-
-
-
-

@@ -25,6 +25,7 @@ import re
 import datetime
 from .form import newpromotion
 from django.http import HttpResponseRedirect
+from .form import userStatus
 
 # Create your views here.
 
@@ -407,7 +408,6 @@ def newpromotion_view(request, *args, **kwargs):
         form = newpromotion(request.POST)
         if form.is_valid():
             try:
-                print(form.cleaned_data["promocode"])
                 obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
                 messages.error(request, "There is already a promotion with that promo code!")
             except:
@@ -415,6 +415,9 @@ def newpromotion_view(request, *args, **kwargs):
                     messages.error(request, "Please enter a valid percent!")
                 else:
                     Promotion.objects.create(**form.cleaned_data)
+                    obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
+                    obj.isActive = False;
+                    obj.save();
                     messages.error(request, "Promotion Submitted")
                     emailAllUsers(
                     str(form.cleaned_data["promocode"]), 
@@ -426,6 +429,7 @@ def newpromotion_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "newpromotion.html", context)
+
     
 def emailAllUsers(promocode, percentage, start, end):
     subbedUsers = User.objects.filter(isSubscribed=True)
@@ -452,6 +456,55 @@ def viewpromotions_view(request, *args, **kwargs):
         return HttpResponseRedirect(".")
     return render(request, "viewpromotions.html", context)
     
+
+
+def manageusers_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+
+    return render(request, "manageusers.html", {})
+
+def suspenduser_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+    form = userStatus()
+    if request.method == "POST":
+        if form.is_valid():
+            try:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                message.error(request, "There is not a user with that ID")
+            except:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                user.isSuspended = 1
+                user.save()
+                return HttpResponseRedirect('.')
+    context = {
+        "form": form
+    }
+
+    return render(request, "suspenduser.html", context)
+
+def unsuspend_view(request, *args, **kwargs):
+    if not checkAdminStatus(request, *args, **kwargs):
+        return homepage_view(request, *args, **kwargs);
+    form = userStatus()
+    if request.method == "POST":
+        if form.is_valid():
+            try:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                message.error(request, "There is not a user with that ID")
+            except:
+                user = User.objects.get(user_id=form.cleaned_data["user_id"])
+                user.isSuspended = 0
+                user.save()
+                return HttpResponseRedirect('.')
+    context = {
+        "form": form
+    }
+
+    return render(request, "unsuspend.html", context)
+
+
 """  
 def test_view(request, *args, **kwargs):
     context = {}

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Admin Page</title>
+		<title>Manage Users</title>
 
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,23 +14,19 @@
 
 	<body>
 		
-	{% include './navbar.html' %}
+		{% include './navbar.html' %}
 
 
 
   		<div class="container buttons">
   			<div class="row gx-5">
   				<div class="col-md pagebutton">
-  					<button type="button" class="btn btn-outline-primary-sm" onclick="location.href={% url 'managebooks' %}"><img src="{% static '/assets/book2_icon.png' %}" height="200" width="200"/></button>
-  					<div class="p-3 border">Manage Books</div>
+  					<button type="button" class="btn btn-outline-primary-sm" onclick="location.href={% url 'suspenduser' %}"><img src="{% static '/assets/ban.png' %}" height="200" width="200"/></button>
+  					<div class="p-3 border">Suspend User</div>
   				</div>
   				<div class="col-md pagebutton">
-  					<button type="button" class="btn btn-outline-primary-lg" onclick="location.href={% url 'manageusers' %}"><img src="{% static '/assets/users_icon.png' %}" height="200" width="250"/></button>
-  					<div class="p-3 border">Manage Users</div>
-  				</div>
-  				<div class="col-md pagebutton">
-  					<button type="button" class="btn btn-outline-primary-lg" onclick="location.href={% url 'promotions' %}"><img src="{% static '/assets/promotion.png' %}" height="200" width="200"/></button>
-  					<div class="p-3 border">Manage Promotions</div>
+  					<button type="button" class="btn btn-outline-primary-lg" onclick="location.href={% url 'unsuspend' %}"><img src="{% static '/assets/checkmark.png' %}" height="200" width="210"/></button>
+  					<div class="p-3 border">Unsuspend User</div>
   				</div>
   			</div>
   		</div>
