@@ -30,7 +30,7 @@ class UserRegister(forms.Form):
 	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="", max_length=16, min_length=16)
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
 	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
-	user_promos = forms.ChoiceField(choices=CHOICES, label="")
+	isSubscribed = forms.ChoiceField(choices=CHOICES, label="")
 
 class NewBook(forms.Form):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'BookTitle*'}), label="")

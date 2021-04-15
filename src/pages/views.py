@@ -406,10 +406,15 @@ def register_view(request, *args, **kwargs):
                 
                 key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
                 f = Fernet(key)
-                obj.user_pass = f.encrypt((obj.user_pass).encode('utf-8'))
-                obj.user_card_num = f.encrypt((obj.user_card_num).encode('utf-8'))
-                obj.user_card_exp = f.encrypt((obj.user_card_exp).encode('utf-8'))
-                obj.user_card_seccode = f.encrypt((obj.user_card_seccode).encode('utf-8'))
+                if form.cleaned_data["user_pass"] != "":
+                    obj.user_pass = f.encrypt((obj.user_pass).encode('utf-8'))
+                if form.cleaned_data["user_card_num"] != "":
+                    obj.user_card_num = f.encrypt((obj.user_card_num).encode('utf-8'))
+                if form.cleaned_data["user_card_exp"] != None:
+                    print(form.cleaned_data["user_card_exp"])
+                    obj.user_card_exp = f.encrypt((obj.user_card_exp).encode('utf-8'))
+                if form.cleaned_data["user_card_seccode"] != None:
+                    obj.user_card_seccode = f.encrypt((obj.user_card_seccode).encode('utf-8'))
                 obj.save()
                 emailSelf(entered_email, obj.user_id, confirm_code)
                 messages.info(request, "A unique account ID has been sent to your email. This can be used as an alrternative to email and password login. We look forward to your business!")
