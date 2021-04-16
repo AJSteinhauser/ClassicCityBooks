@@ -31,6 +31,7 @@ from .form import userStatus
 
 def checkSuspendedStatus(request, *args, **kwargs):
     if request.session.has_key('user_id'):
+        del request.session['user_id']
         user = User.objects.get(user_id=request.session.get('user_id'))
         return user.isSuspended
     return False

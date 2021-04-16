@@ -15,8 +15,10 @@
       <div class="container" style="justify-content: flex-start;">
         <a class="navbar-brand" href="{% url 'home' %}">The Classic City Collection</a>
 		{% if request.session.user_id %}
+      {% if request.session.isAdmin %}
 		<div style="color:white; margin-right: 20px;">|</div>
 		<a class="navbar-brand" href="{% url 'adminpage' %}">Admin Page</a>
+     {% endif %}
 		{% endif %}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
