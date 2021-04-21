@@ -37,7 +37,7 @@ class NewBook(forms.Form):
     author = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Author*'}), label="")
     description = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Description*'}), label="")
     genre = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Genre*'}), label="")
-    isbn = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'ISBN*'}), label="")
+    isbn = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'ISBN*'}), label="", max_length=13)
     publisher = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Publisher*'}), label="")
     publicationDate = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Date Published*'}), label="")
     price = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Price*'}), label="");

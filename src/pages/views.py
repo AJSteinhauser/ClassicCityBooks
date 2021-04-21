@@ -26,6 +26,7 @@ import datetime
 from .form import newpromotion
 from django.http import HttpResponseRedirect
 from .form import userStatus
+import datetime
 
 # Create your views here.
 
@@ -128,7 +129,6 @@ def details_view(request, *args, **kwargs):
         if book.isbn == targetISBN:
             context["book"] = book
             break
-    print(dir(book));
     return render(request, "details.html", context)
 
 def unencrypt(string):
@@ -461,8 +461,8 @@ def newpromotion_view(request, *args, **kwargs):
                     obj.isActive = False;
                     obj.save();
                     button = request.POST.get("saveandsub")
-                    print(button)
                     if (not button):
+                        print(form.cleaned_data["start_date"].strftime('%m/%d/%Y'));
                         messages.error(request, "Promotion Saved!")
                         return HttpResponseRedirect(".")    
                     else:
