@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{%block content%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +16,13 @@
 
 <body>
  {% include './navbar.html' %}
+<form method='GET' action='.' class="input-form"> {% csrf_token %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 mx-auto mt-5">
             <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Harry Potter" />
+                {{ form.search|as_crispy_field }}
+				
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
@@ -29,18 +33,12 @@
                                 <form class="form-horizontal" role="form">
                                   <div class="form-group text-center">
                                     <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>All Books</option>
-                                        <option value="1">Title</option>
-                                        <option value="2">Author</option>
-                                        <option value="3">Genre</option>
-                                        <option value="4">ISBN</option>
-                                    </select>
+									{{ form.searchFilter|as_crispy_field }}
                                   </div>
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-dark">
+                        <button type="submit" class="btn btn-dark">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -52,8 +50,7 @@
           </div>
         </div>
 	</div>
-</div>
-
+</form>
 
 <div class="container marketing mt-5">
 
@@ -139,3 +136,4 @@
     <script src="{% static '/js/bootstrap.js' %}"></script>
 </body>
 </html>
+{% endblock %}

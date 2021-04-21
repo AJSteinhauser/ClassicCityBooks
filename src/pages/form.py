@@ -11,7 +11,7 @@ class BookForm(forms.ModelForm):
             'author'
         ]
 
-CHOICES = (
+SUBCHOICES = (
     ('', 'Promotion Active*'),
     (False, 'False'),
     (True, 'True')
@@ -30,7 +30,7 @@ class UserRegister(forms.Form):
 	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="", max_length=16, min_length=16)
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
 	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
-	isSubscribed = forms.ChoiceField(choices=CHOICES, label="")
+	isSubscribed = forms.ChoiceField(choices=SUBCHOICES, label="")
 
 class NewBook(forms.Form):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'BookTitle*'}), label="")
@@ -67,6 +67,14 @@ class newpromotion(forms.Form):
 class userStatus(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
 
+SEARCHCHOICES = (
+    ('subject', 'Subject'),
+    ('title', 'Title'),
+    ('isbn', 'ISBN'),
+    ('author', 'Author')
+    )
+    
+
 class searchForm(forms.Form):
     search = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Search'}), label="")
-
+    searchFilter = forms.ChoiceField(choices=SEARCHCHOICES, label="")

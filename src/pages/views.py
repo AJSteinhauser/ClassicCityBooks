@@ -9,6 +9,7 @@ from .models import Promotion
 from .form import BookForm
 from .form import UserRegister
 from .form import NewBook
+from .form import searchForm
 from .login import UserLogin
 from .email import emailSelf
 from .email import recoverEmail
@@ -292,7 +293,13 @@ def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
 """
 def search_view(request, *args, **kwargs):
-	return render(request, "search.html", {})
+    form = searchForm()
+    if request.method =="POST":
+        form = searchForm(request.POST)
+    context = {
+        "form": form
+    }
+    return render(request, "search.html", context)
 
 #@login_required(login_url = "login")
 def verifyEmail_view(request, *args, **kwargs):
