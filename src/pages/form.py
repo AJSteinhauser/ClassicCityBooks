@@ -67,3 +67,6 @@ class newpromotion(forms.Form):
 class userStatus(forms.Form):
     user_id = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'ID'}), label="")
 
+class searchForm(forms.Form):
+    search = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Search'}), label="")
+
