@@ -126,13 +126,12 @@ def resetpass_view(request, *args, **kwargs):
 def addtocart(cart, book):
     found = False;
     for item in cart:
-        print(book.title,"SEP",cart[item]["title"]);
-        if book.title == cart[item]["title"]:
+        if book.title == cart[item]["book_title"]:
             cart[item]["quantity"] += 1;
             found = True;
             break;
     if not found:
-        cart[str(len(cart)+1)] = {"title" : book.title, 
+        cart[str(len(cart)+1)] = {"book_title" : book.title, 
                     "quantity" : 1,
                     "price" : book.price
                     }
@@ -157,7 +156,7 @@ def details_view(request, *args, **kwargs):
             cart = json.loads(tmpcart);
             user.cart = json.dumps(addtocart(cart,mainbook))
             user.save();
-            return render(request, "details.html", context)
+            return viewCart_view(request, *args, **kwargs)
         else:
             return render(request, "details.html", context)
     return render(request, "details.html", context)
@@ -337,7 +336,19 @@ def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
 def viewCart_view(request, *args, **kwargs):
-	return render(request, "viewCart.html", {})
+    context = {};
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        tmp = user.cart or "{}"
+        cart = json.loads(tmp) 
+        loop = {}
+        total = 0;
+        for item in cart:
+            total = total + cart[item]["price"] * cart[item]["quantity"];
+        for i in range(0,11):
+            loop[i] = i;
+        context = {"cart" : cart, "loop": loop, "total":total}
+    return render(request, "viewCart.html", context)
 
 def checkAdminStatus(request, *args, **kwargs):
     if request.session.has_key('user_id'):

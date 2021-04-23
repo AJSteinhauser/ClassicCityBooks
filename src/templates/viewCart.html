@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,61 +32,48 @@
             </div>
             <hr class="solid">
           </div>
-          <div class="row p-3 mb-2 bg-light text-dark">
-            <div class="col-sm">
-                The Lion, the Witch and the Wardrobe
-            </div>
-            <div class="col-sm">
-                <select name="Amount">
-                    <option value ="0">0</option>
-                    <option value ="1" selected>1</option>
-                    <option value ="2">2</option>
-                    <option value ="3">3</option>
-                </select> 
-            </div>
-            <div class="col-sm">
-              $20.00
-            </div>
-          </div>
-          <div class="row p-3 mb-2 bg-light text-dark">
-            <div class="col-sm">
-                The Great Gatsby
-            </div>
-            <div class="col-sm">
-                <select name="Amount">
-                    <option value ="0">0</option>
-                    <option value ="1" selected>1</option>
-                    <option value ="2">2</option>
-                    <option value ="3">3</option>
-                </select> 
-            </div>
-            <div class="col-sm">
-                $15.00
+          {% for key,value in cart.items %}
+            <div class="row p-3 mb-2 bg-light text-dark">
+              <div class="col-sm">
+                {{ value.book_title }}
               </div>
+              <div class="col-sm">
+                  <select name="Amount">
+                    {% for i in loop %}
+              
+                      <option value ="{{i}}" {% if i == value.quantity %} SELECTED {%endif%}   >{{i}}</option>
+                     
+                    {% endfor %}
+                  </select> 
+              </div>
+              <div class="col-sm">
+                ${{ value.price }}0
+              </div>
+            </div>
+          {% endfor %}
           </div>
             <hr class="solid">
             <div class="row">
                 <div class="col-sm"></div>
                 <div class="col-sm"> </div>
-                <div class="col-sm"><h5>Total Price: $35.00</h5></div>
+                <div class="col-sm"><h5>Total Price: ${{total}}0</h5></div>
             </div>
             <div class="row">
                 <div class="col-sm"></div>
                 <div class="col-sm"> </div>
                 <div class="col-sm">
-                    <button type="button" class="btn btn-warning">Cancel</button>
-                    <button type="button" class="btn btn-success">checkout</button>
+                    <button type="button" href="/clearcart" class="btn btn-warning">Clear Cart</button>
+                    <button type="button" class="btn btn-success">Checkout</button>
                 </div>
             </div>
 
         </div>
     </div>
-
-  
-Checkout
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="../js/bootstrap.js"></script>
 </body>
 </html>
+
+{% endblock %}
