@@ -1,3 +1,4 @@
+
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
@@ -42,7 +43,7 @@ body {
   }
   
   
-  /* RESPONSIVE CSS
+  /* RESPONlSIVE CSS
   -------------------------------------------------- */
   
   @media (min-width: 40em) {
@@ -66,7 +67,7 @@ body {
   
   .col-lg-4 {
       width: 25%;
-      min-width: 13.5em;
+      min-width: 3.5em;
   }
   
   .display-3 {
@@ -74,13 +75,12 @@ body {
       font-size: 1.5rem;
   }
 
-  .display-4 {
+  .display-8 {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 0.5rem;
 }
   
   .bookPic {
-      border: 2px solid black;
+      border: 10px solid black;
   }
-  
   

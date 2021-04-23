@@ -10,6 +10,7 @@ from .models import Promotion
 from .form import BookForm
 from .form import UserRegister
 from .form import NewBook
+from .form import searchForm
 from .login import UserLogin
 from .email import emailSelf
 from .email import recoverEmail
@@ -323,7 +324,13 @@ def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
 """
 def search_view(request, *args, **kwargs):
-	return render(request, "search.html", {})
+    form = searchForm()
+    if request.method =="POST":
+        form = searchForm(request.POST)
+    context = {
+        "form": form
+    }
+    return render(request, "search.html", context)
 
 #@login_required(login_url = "login")
 def verifyEmail_view(request, *args, **kwargs):
@@ -484,24 +491,30 @@ def newpromotion_view(request, *args, **kwargs):
             except:
                 if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
                     messages.error(request, "Please enter a valid percent!")
+                elif(form.cleaned_data["start_date"] < datetime.date.today()):
+                    messages.error(request, "Start dates must begin either today or later")
+                    return HttpResponseRedirect(".") 
+                elif(not(form.cleaned_data["start_date"] < form.cleaned_data["end_date"])):
+                    messages.error(request, "Start dates must begin before expiration date")
+                    return HttpResponseRedirect(".")                 
                 else:
                     Promotion.objects.create(**form.cleaned_data)
                     obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
-                    obj.isActive = False;
-                    obj.save();
+                    obj.isActive = False
+                    obj.save()
                     button = request.POST.get("saveandsub")
                     if (not button):
-                        print(form.cleaned_data["start_date"].strftime('%m/%d/%Y'));
+                        print(form.cleaned_data["start_date"].strftime('%m/%d/%Y'))
                         messages.error(request, "Promotion Saved!")
-                        return HttpResponseRedirect(".")    
+                        return HttpResponseRedirect(".")
                     else:
                         emailAllUsers(
                         str(form.cleaned_data["promocode"]), 
                         str(form.cleaned_data["percent"]),
                         form.cleaned_data["start_date"].strftime('%m/%d/%Y'),
                         form.cleaned_data["end_date"].strftime('%m/%d/%Y'))
-                        obj.isActive = True;
-                        obj.save();
+                        obj.isActive = True
+                        obj.save()
                         messages.error(request, "Promotion Saved and Sent to the Users!")
                     print(request.POST)
                     return HttpResponseRedirect(".")
