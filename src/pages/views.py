@@ -127,12 +127,12 @@ def addtocart(cart, book):
     found = False;
     for item in cart:
         if book.title == cart[item]["book_title"]:
-            cart[item]["quantity"] += 1;
+            cart[item]["quantity"] = int(cart[item]["quantity"]) + 1;
             found = True;
             break;
     if not found:
         cart[str(len(cart)+1)] = {"book_title" : book.title, 
-                    "quantity" : 1,
+                    "quantity" : "1",
                     "price" : book.price
                     }
     return cart;
@@ -338,15 +338,31 @@ def verifyEmail_view(request, *args, **kwargs):
 def viewCart_view(request, *args, **kwargs):
     context = {};
     if request.session.has_key('user_id'):
+        
         user = User.objects.get(user_id=request.session.get('user_id'))
         tmp = user.cart or "{}"
-        cart = json.loads(tmp) 
+        cart = json.loads(tmp)
+        if request.method =="POST":
+            for key, value in request.POST.items():
+                for item in cart:
+                    if cart[item]["book_title"] == key:
+                        if value != str(0):
+                            cart[item]["quantity"] = str(value);
+                            break;
+                        else:
+                            print("DELETE TIME BOYS\n")
+                            del cart[item];
+                            break;
+
+            user.cart = json.dumps(cart)
+            user.save();
         loop = {}
         total = 0;
         for item in cart:
-            total = total + cart[item]["price"] * cart[item]["quantity"];
+            total = total + cart[item]["price"] * int(cart[item]["quantity"]);
         for i in range(0,11):
-            loop[i] = i;
+            loop[str(i)] = str(i);
+
         context = {"cart" : cart, "loop": loop, "total":total}
     return render(request, "viewCart.html", context)
 

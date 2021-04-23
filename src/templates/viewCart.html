@@ -38,7 +38,9 @@
                 {{ value.book_title }}
               </div>
               <div class="col-sm">
-                  <select name="Amount">
+                <form action="" method="POST"> {% csrf_token %}
+                  <select name="{{ value.book_title }}" id="myselect" onchange="this.form.submit()">
+                    
                     {% for i in loop %}
               
                       <option value ="{{i}}" {% if i == value.quantity %} SELECTED {%endif%}   >{{i}}</option>
