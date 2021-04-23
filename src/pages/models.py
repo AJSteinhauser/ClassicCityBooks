@@ -1,4 +1,5 @@
 from django.db import models
+import json
 from django_cryptography.fields import encrypt
 
 
@@ -31,6 +32,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=25, blank=True, null=True)
     last_name = models.CharField(max_length=25, blank=True, null=True)
     phone_num = models.PositiveIntegerField(blank=True, null=True)
+    cart = models.CharField(max_length=9000000000000);
     user_card_exp = models.CharField(max_length=150, blank=True, null=True)
     user_card_num = models.CharField(max_length=50, blank=True, null=True)
     user_card_seccode = models.CharField(max_length=3, blank=True, null=True)

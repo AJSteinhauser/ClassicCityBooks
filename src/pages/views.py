@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.templatetags.static import static
@@ -27,7 +28,7 @@ from .form import newpromotion
 from django.http import HttpResponseRedirect
 from .form import userStatus
 import datetime
-
+import json
 # Create your views here.
 
 def checkSuspendedStatus(request, *args, **kwargs):
@@ -121,15 +122,45 @@ def resetpass_view(request, *args, **kwargs):
     }
     return render(request, "resetpass.html", context)
 
+def addtocart(cart, book):
+    found = False;
+    for item in cart:
+        print(book.title,"SEP",cart[item]["title"]);
+        if book.title == cart[item]["title"]:
+            cart[item]["quantity"] += 1;
+            found = True;
+            break;
+    if not found:
+        cart[str(len(cart)+1)] = {"title" : book.title, 
+                    "quantity" : 1,
+                    "price" : book.price
+                    }
+    return cart;
+  
+
+
 def details_view(request, *args, **kwargs):
     booksQuery = Book.objects.all()
     context = {}
+    mainbook = None;
     targetISBN = request.get_full_path()[-13:]
     for book in booksQuery:
         if book.isbn == targetISBN:
             context["book"] = book
+            mainbook = book;
             break
+    if request.method =="POST":
+        if request.session.has_key('user_id'):
+            user = User.objects.get(user_id=request.session.get('user_id'))
+            tmpcart = user.cart or "{}"
+            cart = json.loads(tmpcart);
+            user.cart = json.dumps(addtocart(cart,mainbook))
+            user.save();
+            return render(request, "details.html", context)
+        else:
+            return render(request, "details.html", context)
     return render(request, "details.html", context)
+
 
 def unencrypt(string):
     key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
@@ -298,7 +329,6 @@ def search_view(request, *args, **kwargs):
 def verifyEmail_view(request, *args, **kwargs):
 	return render(request, "verifyEmail.html", {})
 
-@login_required(login_url = "login")
 def viewCart_view(request, *args, **kwargs):
 	return render(request, "viewCart.html", {})
 
@@ -313,7 +343,6 @@ def checkSuspendedStatus(request, *args, **kwargs):
         user = User.objects.get(user_id=request.session.get('user_id'))
         print(user.isSuspended)
         return user.isSuspended
-    print("test")
     return False
     
 def recover_view(request, *args, **kwargs):
