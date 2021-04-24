@@ -128,7 +128,7 @@ def addtocart(cart, book):
     for item in cart:
         if book.title == cart[item]["book_title"]:
             if int(cart[item]["quantity"]) < 10:
-                cart[item]["quantity"] = int(cart[item]["quantity"]) + 1;
+                cart[item]["quantity"] = str(int(cart[item]["quantity"]) + 1);
             found = True;
             break;
     if not found:
