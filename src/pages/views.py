@@ -330,13 +330,16 @@ def search_view(request, *args, **kwargs):
     if request.method =="POST":
         form = searchForm(request.POST)
         if form.is_valid():
+            context['searched'] = True
             search = form.cleaned_data["search"]
+            context['search'] = search
             searchCat = form.cleaned_data["searchCat"]
+            context['searchCat'] = searchCat
             if searchCat == 'subject':
                 books = Book.objects.filter(genre__icontains=search)
                 print("test1")
             elif searchCat == 'isbn':
-                boks = Book.objects.filter(isbn=search)
+                books = Book.objects.filter(isbn=search)
                 print("test2")
             elif searchCat == 'title':
                 books = Book.objects.filter(title__icontains=search)

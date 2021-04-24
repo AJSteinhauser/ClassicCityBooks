@@ -83,4 +83,6 @@ body {
       border: 2px solid black;
   }
   
-  
+#div_id_search {
+	width: 80%;
+}
