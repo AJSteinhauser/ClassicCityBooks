@@ -16,13 +16,12 @@
 
 <body>
  {% include './navbar.html' %}
-<form method='GET' action='.' class="input-form"> {% csrf_token %}
+<form method='POST' action='.' class="input-form"> {% csrf_token %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 mx-auto mt-5">
             <div class="input-group" id="adv-search">
                 {{ form.search|as_crispy_field }}
-				
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
@@ -32,8 +31,8 @@
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <form class="form-horizontal" role="form">
                                   <div class="form-group text-center">
-                                    <label for="filter">Filter by</label>
-									{{ form.searchFilter|as_crispy_field }}
+                                    <label for="filter">Search by</label>
+									{{ form.searchCat|as_crispy_field }}
                                   </div>
                                 </form>
                             </div>
@@ -51,6 +50,7 @@
         </div>
 	</div>
 </form>
+{{ books|safe }}
 
 <div class="container marketing mt-5">
 

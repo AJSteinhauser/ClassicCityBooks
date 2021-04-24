@@ -77,4 +77,4 @@ SEARCHCHOICES = (
 
 class searchForm(forms.Form):
     search = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Search'}), label="")
-    searchFilter = forms.ChoiceField(choices=SEARCHCHOICES, label="")
+    searchCat = forms.ChoiceField(choices=SEARCHCHOICES, label="")

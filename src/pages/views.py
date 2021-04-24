@@ -323,13 +323,36 @@ def orderHistory_view(request, *args, **kwargs):
 def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
 """
+import requests
 def search_view(request, *args, **kwargs):
     form = searchForm()
     if request.method =="POST":
         form = searchForm(request.POST)
-    context = {
-        "form": form
-    }
+        if form.is_valid():
+            context = {}
+            search = form.cleaned_data["search"]
+            searchCat = form.cleaned_data["searchCat"]
+            if searchCat == 'subject':
+                books = Book.objects.filter(genre__icontains=search)
+                print("test1")
+            elif searchCat == 'isbn':
+                boks = Book.objects.filter(isbn=search)
+                print("test2")
+            elif searchCat == 'title':
+                books = Book.objects.filter(title__icontains=search)
+                print("test3")
+            else:
+                books = Book.objects.filter(author__icontains=search) 
+            bookArr = []
+            for book in books:
+                    book.title = book.title[0:50] + "..."
+                    book.description = book.description[0:300] + "..."
+                    print(book.title)
+                    bookArr.append(book.title)
+                    
+            context["books"] = bookArr
+    context["form"] = form
+
     return render(request, "search.html", context)
 
 #@login_required(login_url = "login")
