@@ -53,11 +53,24 @@
 {{ books|safe }}
 
 <div class="container marketing mt-5">
-
+{% if books %}
+	{% for book in books %}
+		{% if book.5 == 1 %}
+			{% if book.0 != 0 %}
+				</div>
+			{% endif %}
+			<div class="row mt-5">
+		{% endif %}
+	   <div class="col-lg-4"> 
+        <img class="bookPic" src="{% static book.4 %}" height="170" width="120">
+        <h2 class="display-8">{{ book.1 }}</h2>
+		<p>{{ book.2 }}</p>
+        <p><a class="btn btn-secondary" href="http://127.0.0.1:8000/details/ {% static book.3 %}">View details &raquo;</a></p>
+      </div><!-- /.col-lg-4 -->
+	{% endfor %}
     <!-- Four columns of text below the carousel -->
-
+	
     <h1 class="display-3" id="TopSellers">Search results for "Harry Potter"</h1>
-
     <div class="row mt-5">
       <div class="col-lg-4"> 
         <img class="bookPic" src="{% static '/assets/harrypotter.jpg' %}" height="170" width="120">
@@ -118,7 +131,7 @@
     </div><!-- /.row -->
 
  
-
+{% endif %}
   </div><!-- /.container -->
 
   <!-- FOOTER -->
