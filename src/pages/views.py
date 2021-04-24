@@ -323,13 +323,47 @@ def orderHistory_view(request, *args, **kwargs):
 def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
 """
+import requests
 def search_view(request, *args, **kwargs):
     form = searchForm()
+    context = {}
     if request.method =="POST":
         form = searchForm(request.POST)
-    context = {
-        "form": form
-    }
+        if form.is_valid():
+            search = form.cleaned_data["search"]
+            searchCat = form.cleaned_data["searchCat"]
+            if searchCat == 'subject':
+                books = Book.objects.filter(genre__icontains=search)
+                print("test1")
+            elif searchCat == 'isbn':
+                boks = Book.objects.filter(isbn=search)
+                print("test2")
+            elif searchCat == 'title':
+                books = Book.objects.filter(title__icontains=search)
+                print("test3")
+            else:
+                books = Book.objects.filter(author__icontains=search) 
+            bookArr = []
+            counter = 0
+            for book in books:
+                    book.title = book.title[0:50] + "..."
+                    book.description = book.description[0:300] + "..."
+                    print(book.title)
+                    bookArr.append([])
+                    bookArr[counter].append(counter);
+                    bookArr[counter].append(book.title)
+                    bookArr[counter].append(book.author)
+                    bookArr[counter].append(book.isbn)
+                    bookArr[counter].append(book.cover)
+                    if ((counter) % 4) == 0:
+                        bookArr[counter].append(1)
+                    else:
+                        bookArr[counter].append(0)
+                    counter = counter + 1;
+                    
+            context["books"] = bookArr
+    context["form"] = form
+
     return render(request, "search.html", context)
 
 #@login_required(login_url = "login")
