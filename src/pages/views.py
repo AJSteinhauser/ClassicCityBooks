@@ -613,6 +613,7 @@ def promotions_view(request, *args, **kwargs):
 def newpromotion_view(request, *args, **kwargs):
     if not checkAdminStatus(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
+    form = newpromotion()
     if request.method =="POST":
         form = newpromotion(request.POST)
         if form.is_valid():
