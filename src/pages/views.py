@@ -98,12 +98,9 @@ def checkout_view(request, *args, **kwargs):
         if request.method =="POST":
             try:
                 obj = Promotion.objects.get(promocode=request.POST.get("code"))
-                start = datetime.strptime(str(obj.start_date),"%Y-%m-%d")
-                endtime = datetime.strptime(str(obj.end_date),"%Y-%m-%d")
-                print("\n\n\n");
-                print(datetime.now() >= start);
-                print(datetime.now() <= endtime)
-                if datetime.now() >= start and datetime.now() <= endtime:
+                start = datetime.strptime(str(obj.start_date),"%Y-%m-%d");
+                endtime = datetime.strptime(str(obj.end_date),"%Y-%m-%d");
+                if not (datetime.now() >= start and datetime.now() <= endtime):
                     x = 1/0;
                 if user.active_promotions == "null":
                     user.active_promotions = obj.percent;

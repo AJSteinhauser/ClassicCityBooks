@@ -2,14 +2,7 @@ from django.db import models
 import json
 from django_cryptography.fields import encrypt
 
-'''
-class Promotions(models.Model):
-    start_date = models.DateField(blank=True, null=True);
-    end_date = models.DateField(blank=True, null=True);
-    isActive = models.BooleanField(default=False);
-    promocode = models.CharField(max_length=15);
-    percent = models.PositiveIntegerField(blank=True, null=True)
-'''
+
 class Book(models.Model):
     isbn = models.CharField(primary_key=True, max_length=15)
     title = models.CharField(max_length=150, blank=True, null=True)
