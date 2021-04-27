@@ -80,7 +80,7 @@ def finalCheckout_view(request, *args, **kwargs):
                 promotionvalue = float(user.active_promotions)/100
             for item in cart:
                 cart[item]["price"] = float(cart[item]["price"]) * promotionvalue;
-                totalprice = totalprice + cart[item]["price"]
+                totalprice = totalprice + cart[item]["price"] * int(cart[item]["quantity"])
             cart["totalPrice"] = totalprice;
             orderhis[str(datetime.now())] = cart;
             user.order_history = json.dumps(orderhis);    
@@ -97,14 +97,13 @@ def checkout_view(request, *args, **kwargs):
             return viewCart_view(request, *args, **kwargs);
         if request.method =="POST":
             try:
-                print("1")
                 obj = Promotion.objects.get(promocode=request.POST.get("code"))
-                print("\n\n\n")
-                print(obj.start_date)
-                print(type(datetime.date.today()));
-                print(obj.start_date >= datetime.date.today())
-                print(obj.end_date <= datetime.date.today());
-                if (obj.start_date >= datetime.date.today() and obj.end_date <= datetime.date.today()):
+                start = datetime.strptime(str(obj.start_date),"%Y-%m-%d")
+                endtime = datetime.strptime(str(obj.end_date),"%Y-%m-%d")
+                print("\n\n\n");
+                print(datetime.now() >= start);
+                print(datetime.now() <= endtime)
+                if datetime.now() >= start and datetime.now() <= endtime:
                     x = 1/0;
                 if user.active_promotions == "null":
                     user.active_promotions = obj.percent;
