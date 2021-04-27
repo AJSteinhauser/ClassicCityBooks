@@ -229,13 +229,16 @@ def details_view(request, *args, **kwargs):
 
 
 def unencrypt(string):
-    key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
-    f = Fernet(key)
-    string = string[2:len(string)-1]
-    string = string.encode()
-    string = f.decrypt(string)
-    string = string.decode()
-    return string
+    if string != None:
+        key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
+        f = Fernet(key)
+        string = string[2:len(string)-1]
+        string = string.encode()
+        string = f.decrypt(string)
+        string = string.decode()
+        return string
+    else:
+        return ""
     
 
 def editacct_view(request, *args, **kwargs):
