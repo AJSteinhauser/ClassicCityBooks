@@ -117,7 +117,7 @@ def checkout_view(request, *args, **kwargs):
             cart[item]["book_title"] = str(cart[item]["book_title"]) + " X" + str(cart[item]["quantity"])
             cart[item]["price"] = cart[item]["price"] * int(cart[item]["quantity"]);
         if user.active_promotions != "null":
-            total = total * float(user.active_promotions) / 100;
+            total = total * (1 - (float(user.active_promotions) / 100));
         context["total"] = total;
         context["cart"] = cart;
         context["user"] = user;
