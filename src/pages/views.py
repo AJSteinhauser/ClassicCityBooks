@@ -77,7 +77,7 @@ def finalCheckout_view(request, *args, **kwargs):
             totalprice = 0;
             promotionvalue = 1;
             if user.active_promotions != "null":
-                promotionvalue = float(user.active_promotions)/100
+                promotionvalue = 1 - (float(user.active_promotions)/100)
             for item in cart:
                 cart[item]["price"] = float(cart[item]["price"]) * promotionvalue;
                 totalprice = totalprice + cart[item]["price"] * int(cart[item]["quantity"])
