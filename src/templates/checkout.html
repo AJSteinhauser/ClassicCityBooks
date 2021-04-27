@@ -14,9 +14,11 @@
 {% include './navbar.html' %}
     {% if main_title != "" %}
     <div class="text-center mt-5" style="max-width: 90%; margin:0 auto;">
-        <h1>Checkout</h1>
+        <h1 id="header">Checkout</h1>
+		<div class="alert alert-danger" role="alert" id="alert" style="display:none;"> </div>
             <div class="row">
                 <div class="col col-lg-8">
+
                     <div class="bg-light">
                         <h6>Shipping Information:</h6>
                     </div>
@@ -26,49 +28,49 @@
                         </svg>
                         <text>Full Name:</text>
                         <br>
-                        <input type="text" class="input_field" id="firstName" value="{{ user.first_name }} {{ user.last_name }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="name" name="name" value="{{ user.first_name }} {{ user.last_name }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
                         </svg>
                         Email Address:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_email }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="email" name="email" value="{{ user.user_email }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Street:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_street }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="street" name="street" value="{{ user.user_street }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         City:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_city }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="city" name="city" value="{{ user.user_city }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         State:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_state }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="state" name="state" value="{{ user.user_state }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Zip:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_zip }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="zip" name="zip" value="{{ user.user_zip }}" required autofocus style="width:100%;" required>
                     </div>  
                     <div class="bg-light">
                         <h6>Billing Information:</h6>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Card Name:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.first_name }} {{ user.last_name }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="cardname" name="cardname" value="{{ user.first_name }} {{ user.last_name }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Card Number:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_card_num }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="cardNum" maxlength="16" name="cardNum" value="{{ user.user_card_num }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Card Expiration:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_card_exp }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="cardExp" maxlength="10" name="cardExp" value="{{ user.user_card_exp }}" required autofocus style="width:100%;" required>
                     </div>
                     <div class="bg-light d-flex p-2">
                         Card CVC:
-                        <input type="text" class="input_field" id="firstName" value="{{ user.user_card_seccode }}" required autofocus style="width:100%;">
+                        <input type="text" class="input_field" id="cardSec" maxlength="4" name="cardSec" value="{{ user.user_card_seccode }}" required autofocus style="width:100%;" required>
                     </div>
                 </div>
                 <div class="col-sm">
@@ -113,8 +115,10 @@
                 <div class="col-sm"></div>
                 <div class="col-sm"> </div>
                 <div class="col-sm">
+					<form action="{% url 'finalcheckout' %}" onsubmit="return validateCheckout()">
                     <button type="button" class="btn btn-warning" onclick="location.href = {% url 'home' %}">Cancel</button>
-                    <button type="submit" class="btn btn-success" onclick="location.href = {% url 'finalcheckout' %}">Checkout</button>
+                    <button type="submit" class="btn btn-success" >Checkout</button>
+					</form>
                 </div>
             </div>
             
@@ -129,4 +133,54 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{% static '/js/bootstrap.js' %}"></script>
 </body>
+<script>
+var validateCheckout = function() {
+	var $ = function(id) {
+		return document.getElementById(id);
+	}
+	var cardNum = $("cardNum").value;
+	var cardExp = $("cardExp").value;
+	var cardSec = $("cardSec").value;
+	var email = $("email").value;
+	var street = $("street").value;
+	var city = $("city").value;
+	var state = $("state").value;
+	var zip = $("zip").value;
+	var cardname = $("cardname").value;
+	var name = $("name").value;
+	
+	
+	if(!cardNum || !cardExp || !cardSec || !email || !street || !city || !state || !zip || !cardname || !name){
+		document.getElementById("alert").innerHTML = "Please fill out all the fields";
+		document.getElementById("alert").style.display = "block";
+		return false;
+	} 
+	cardNum = parseInt(cardNum, 10);
+	if(Number.isNaN(cardNum)){
+		document.getElementById("alert").innerHTML = "Please enter a valid card number";
+		document.getElementById("alert").style.display = "block";
+		return false;
+	}
+	cardSec = parseInt(cardSec, 10);
+	if(Number.isNaN(cardSec)){
+		document.getElementById("alert").innerHTML = "Please enter a valid card CVC";
+		document.getElementById("alert").style.display = "block";
+		return false;
+	}
+	cardExp = cardExp.replaceAll("/", "0");
+	if(cardExp.length != 10) {
+		document.getElementById("alert").innerHTML = "Please enter a valid card date";
+		document.getElementById("alert").style.display = "block";
+		return false;
+	}
+	cardExp = parseInt(cardExp, 10);
+	if(Number.isNaN(cardExp)){
+		document.getElementById("alert").innerHTML = "Please enter a valid card CVC";
+		document.getElementById("alert").style.display = "block";
+		return false;
+	}
+	return true;
+
+}
+</script>
 </html>
