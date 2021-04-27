@@ -21,6 +21,11 @@
 
 		    <div class="text-center mt-5" style="max-width: 80%; margin:0 auto;">
         <h1>View Promotions</h1>
+	{% if messages %}
+	{% for message in messages %}
+	<i><h3 style="color:red"{% if message.tags %} class="{{ message.error }}"{% endif %}>{{ message }}</h3></i>
+	{% endfor %}
+	{% endif %}
         <div class="container">
             <div class="row">
               <div class="col-sm">
@@ -41,10 +46,14 @@
               <div class="col-sm">
                 
               </div>
+              <div class="col-sm">
+                
+              </div>
             </div>
             <hr class="solid">
         </div>
 		  {% for promotion in promotion_list %}
+		   {% if promotion.isActive %}
           <div class="row p-3 mb-2 bg-light text-dark">
             <div class="col-sm">
                 {{ promotion.promocode }}
@@ -64,7 +73,11 @@
               {% else %}
 			  Not Active
 			  {% endif %}
+			  
             </div>
+			  <div class="col-sm">
+                
+              </div>
 
             <div class="col-sm">
 				{% if not promotion.isActive %}
@@ -73,8 +86,56 @@
 					<input type="hidden" name="name" value="{{ promotion.id }}">
 				</form>
 				{% endif %}
+				
 			</div>
           </div>
+		  {% else %}
+		  <form method="post" name="{{ promotion.id }}" id="{{ promotion.id }}"> {% csrf_token %}
+		    <div class="row p-3 mb-2 bg-light text-dark">
+            <div class="col-sm">
+				{{ promotion.promocode }}
+				<input type="hidden" name="promocode" value="{{ promotion.promocode }}" class="textinput textInput form-control" required="" id="id_promocode" value="{{ promotion.promocode }}">
+            </div>
+            <div class="col-sm">
+			  {{ promotion.form.percent |as_crispy_field}}
+            </div>
+            <div class="col-sm">
+              {{ promotion.form.start_date |as_crispy_field }}
+            </div>
+            <div class="col-sm">
+              {{ promotion.form.end_date |as_crispy_field }}
+            </div>
+			
+            <div class="col-sm">
+			  {% if promotion.isActive %}
+			  Active
+              {% else %}
+			  Not Active
+			  {% endif %}
+			  
+            </div>
+			<div class="col-sm">
+				 
+					<button type="submit" name="{{ promotion.id }}" id="{{ promotion.id }}" class="btn btn-success">Save Promotion</button>
+					<input type="hidden" name="name" value="{{ promotion.id }}">
+					<input type="hidden" name="save" value="1">
+				
+              </div>
+			</form>
+            <div class="col-sm">
+				{% if not promotion.isActive %}
+				<form method="post" name="{{ promotion.id }}" id="{{ promotion.id }}"> {% csrf_token %}
+					<button type="submit" name="{{ promotion.id }}" id="{{ promotion.id }}" class="btn btn-success">Send Promotion</button>
+					<input type="hidden" name="name" value="{{ promotion.id }}">
+					<input type="hidden" name="save" value="0">
+				</form>
+				{% endif %}
+				
+			</div>
+
+          </div>
+		  
+		  {% endif %}
 		  {% endfor %}
 
 

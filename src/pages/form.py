@@ -55,7 +55,6 @@ class resetPass(forms.Form):
 class newpromotion(forms.Form):
 
     ACTIVE = (
-        ('', 'Promotion Active*'),
         ('', 'False'),
         ('', 'True')
     )

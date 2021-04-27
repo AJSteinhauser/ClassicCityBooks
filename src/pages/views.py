@@ -614,7 +614,6 @@ def promotions_view(request, *args, **kwargs):
 def newpromotion_view(request, *args, **kwargs):
     if not checkAdminStatus(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
-    form = newpromotion()
     if request.method =="POST":
         form = newpromotion(request.POST)
         if form.is_valid():
@@ -666,17 +665,43 @@ def emailAllUsers(promocode, percentage, start, end):
                     
 def viewpromotions_view(request, *args, **kwargs):
     promotionsQuery = Promotion.objects.all()
+    for promotion in promotionsQuery:
+        promotion.form = newpromotion(initial={"promocode": promotion.promocode, 'start_date': promotion.start_date, 'end_date': promotion.end_date, 'percent': promotion.percent})
     context = {
         "promotion_list": promotionsQuery
     }
     for promotion in promotionsQuery:
         context["promotion"] = promotion;
     if request.method =="POST":
-        promo = Promotion.objects.get(id=request.POST.get("name"))
-        emailAllUsers(str(promo.promocode), str(promo.percent), promo.start_date.strftime('%m/%d/%Y'), promo.end_date.strftime('%m/%d/%Y'))
-        promo.isActive = 1
-        promo.save()
-        return HttpResponseRedirect(".")
+        if request.POST.get("save") == "0":
+            promo = Promotion.objects.get(id=request.POST.get("name"))
+            emailAllUsers(str(promo.promocode), str(promo.percent), promo.start_date.strftime('%m/%d/%Y'), promo.end_date.strftime('%m/%d/%Y'))
+            promo.isActive = 1
+            promo.save()
+            return HttpResponseRedirect(".")
+        else:
+            form = newpromotion(request.POST)
+            print("test1")
+            print(form.errors)
+            if form.is_valid():
+                print("test2")
+                if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
+                    messages.error(request, "Please enter a valid percent!")
+                elif(form.cleaned_data["start_date"] < datetime.date.today()):
+                    messages.error(request, "Start dates must begin either today or later")
+                    return HttpResponseRedirect(".") 
+                elif(not(form.cleaned_data["start_date"] < form.cleaned_data["end_date"])):
+                    messages.error(request, "Start dates must begin before expiration date")
+                    return HttpResponseRedirect(".")
+                else:
+                    obj = Promotion.objects.get(promocode=form.cleaned_data["promocode"])
+                    obj.start_date = form.cleaned_data["start_date"]
+                    obj.end_date = form.cleaned_data["end_date"]
+                    obj.percent = form.cleaned_data["percent"]
+                    obj.save()
+                    return HttpResponseRedirect(".")
+            else:
+                messages.error(request, "Please enter valid information for the promos")
     return render(request, "viewpromotions.html", context)
     
 def manageusers_view(request, *args, **kwargs):
