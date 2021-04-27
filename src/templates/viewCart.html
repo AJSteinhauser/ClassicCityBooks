@@ -40,11 +40,8 @@
               <div class="col-sm">
                 <form action="" method="POST"> {% csrf_token %}
                   <select name="{{ value.book_title }}" id="myselect" onchange="this.form.submit()">
-                    
                     {% for i in loop %}
-              
                       <option value ="{{i}}" {% if i == value.quantity %} SELECTED {%endif%}   >{{i}}</option>
-                     
                     {% endfor %}
                   </select> 
               </div>
@@ -64,8 +61,8 @@
                 <div class="col-sm"></div>
                 <div class="col-sm"> </div>
                 <div class="col-sm">
-                    <button type="button" href="/clearcart" class="btn btn-warning">Clear Cart</button>
-                    <button type="button" class="btn btn-success">Checkout</button>
+                    <button type="button" href="/clearcart" class="btn btn-warning" onclick="location.href = {% url 'clearcart' %}">Clear Cart</button>
+                    <button type="button" class="btn btn-success" onclick="location.href = {% url 'checkout' %}">Checkout</button>
                 </div>
             </div>
 

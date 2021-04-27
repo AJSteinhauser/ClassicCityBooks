@@ -20,7 +20,7 @@ from django.urls import include, path, re_path
 
 
 
-from pages.views import viewpromotions_view, unsuspend_view, suspenduser_view, manageusers_view, resetpass_view, newpromotion_view, recover_view, navbar_view, logout_view, homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, promotions_view, viewCart_view 
+from pages.views import finalCheckout_view, clearCart_view, viewpromotions_view, unsuspend_view, suspenduser_view, manageusers_view, resetpass_view, newpromotion_view, recover_view, navbar_view, logout_view, homepage_view, adminpage_view, checkout_view,confirmation_view, details_view, editacct_view, login_view, managebooks_view, newbook_view, orderHistory_view, register_view, search_view, verifyEmail_view, promotions_view, viewCart_view 
 
 
 
@@ -49,5 +49,8 @@ urlpatterns = [
     path('viewpromotions/', viewpromotions_view, name='viewpromotions'),
     path('manageusers/', manageusers_view, name='manageusers'),
     path('suspenduser/', suspenduser_view, name='suspenduser'),
-    path('unsuspend/', unsuspend_view, name='unsuspend')
+    path('unsuspend/', unsuspend_view, name='unsuspend'),
+    path('orderhistory/', orderHistory_view, name='orderhistory'),
+    path('clearcart/', clearCart_view, name='clearcart'),
+    path('finalcheckout/', finalCheckout_view, name="finalcheckout")
 ]

@@ -28,7 +28,7 @@ import datetime
 from .form import newpromotion
 from django.http import HttpResponseRedirect
 from .form import userStatus
-import datetime
+from datetime import datetime
 import json
 # Create your views here.
 
@@ -67,8 +67,65 @@ def adminpage_view(request, *args, **kwargs):
 	    return render(request, "adminpage.html", {})
     return homepage_view(request, *args, **kwargs);
 
+def finalCheckout_view(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        if user.cart:
+            tmp = user.order_history or "{}";
+            orderhis = json.loads(tmp);
+            cart = json.loads(user.cart);
+            totalprice = 0;
+            promotionvalue = 1;
+            if user.active_promotions != "null":
+                promotionvalue = float(user.active_promotions)/100
+            for item in cart:
+                cart[item]["price"] = float(cart[item]["price"]) * promotionvalue;
+                totalprice = totalprice + cart[item]["price"]
+            cart["totalPrice"] = totalprice;
+            orderhis[str(datetime.now())] = cart;
+            user.order_history = json.dumps(orderhis);    
+        user.cart = None;
+        user.active_promotions = "null";
+        user.save();
+    return homepage_view(request, *args, **kwargs);
+
 def checkout_view(request, *args, **kwargs):
-	return render(request, "checkout.html", {})
+    context = {};
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        if user.cart is None:
+            return viewCart_view(request, *args, **kwargs);
+        if request.method =="POST":
+            try:
+                print("1")
+                obj = Promotion.objects.get(promocode=request.POST.get("code"))
+                print("\n\n\n")
+                print(obj.start_date)
+                print(type(datetime.date.today()));
+                print(obj.start_date >= datetime.date.today())
+                print(obj.end_date <= datetime.date.today());
+                if (obj.start_date >= datetime.date.today() and obj.end_date <= datetime.date.today()):
+                    x = 1/0;
+                if user.active_promotions == "null":
+                    user.active_promotions = obj.percent;
+                    user.save();
+            except: 
+                context["message"] = "Not a valid code";
+        user.user_card_num = unencrypt(user.user_card_num)
+        user.user_card_exp = unencrypt(user.user_card_exp)
+        user.user_card_seccode = unencrypt(user.user_card_seccode)
+        cart = json.loads(user.cart);
+        total = 0;
+        for item in cart:
+            total = total + cart[item]["price"] * int(cart[item]["quantity"]);
+            cart[item]["book_title"] = str(cart[item]["book_title"]) + " X" + str(cart[item]["quantity"])
+            cart[item]["price"] = cart[item]["price"] * int(cart[item]["quantity"]);
+        if user.active_promotions != "null":
+            total = total * float(user.active_promotions) / 100;
+        context["total"] = total;
+        context["cart"] = cart;
+        context["user"] = user;
+    return render(request, "checkout.html", context)
 
 def navbar_view(request, *args, **kwargs):
 	return render(request, "navbar.html", {})
@@ -95,6 +152,14 @@ def confirmation_view(request, *args, **kwargs):
         "form": form
     }
     return render(request, "confirmation.html", context)
+
+def clearCart_view(request, *args, **kwargs):
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        user.cart = None;
+        user.active_promotions = "null";
+        user.save();
+    return homepage_view(request, *args, **kwargs);
 
 def resetpass_view(request, *args, **kwargs):
     form = resetPass()
@@ -316,14 +381,25 @@ def managebooks_view(request, *args, **kwargs):
     return homepage_view(request, *args, **kwargs);
 
 
-@login_required(login_url = "login")
 def orderHistory_view(request, *args, **kwargs):
-	return render(request, "orderHistory.html", {})
+    context = {};
+    if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        if user.order_history == None:
+            context["noOrders"] = 1;
+        else:
+            context["orders"] = json.loads(user.order_history);
+
+    return render(request, "orderHistory.html", context)
+
+
 """
 def register_view(request, *args, **kwargs):
 	return render(request, "register.html", {})
 """
-import requests
+
+    
+
 def search_view(request, *args, **kwargs):
     form = searchForm()
     context = {}
@@ -337,13 +413,10 @@ def search_view(request, *args, **kwargs):
             context['searchCat'] = searchCat
             if searchCat == 'subject':
                 books = Book.objects.filter(genre__icontains=search)
-                print("test1")
             elif searchCat == 'isbn':
                 books = Book.objects.filter(isbn=search)
-                print("test2")
             elif searchCat == 'title':
                 books = Book.objects.filter(title__icontains=search)
-                print("test3")
             else:
                 books = Book.objects.filter(author__icontains=search) 
             bookArr = []
@@ -388,10 +461,8 @@ def viewCart_view(request, *args, **kwargs):
                             cart[item]["quantity"] = str(value);
                             break;
                         else:
-                            print("DELETE TIME BOYS\n")
                             del cart[item];
                             break;
-
             user.cart = json.dumps(cart)
             user.save();
         loop = {}
@@ -497,8 +568,6 @@ def newbook_view(request, *args, **kwargs):
                     except:
                         messages.error(request, "There is a problem with some of the data input")
                         return render(request, "newbook.html", context)
-
-
     else:
         return homepage_view(request, *args, **kwargs);
     return render(request, "newbook.html", context)
@@ -517,7 +586,6 @@ def register_view(request, *args, **kwargs):
                 obj = User.objects.get(user_email=entered_email)
                 confirm_code = randint(100000,999999)
                 obj.confirm_code = confirm_code
-                
                 key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
                 f = Fernet(key)
                 if form.cleaned_data["user_pass"] != "":
@@ -556,9 +624,6 @@ def newpromotion_view(request, *args, **kwargs):
             except:
                 if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
                     messages.error(request, "Please enter a valid percent!")
-                elif(form.cleaned_data["start_date"] < datetime.date.today()):
-                    messages.error(request, "Start dates must begin either today or later")
-                    return HttpResponseRedirect(".") 
                 elif(not(form.cleaned_data["start_date"] < form.cleaned_data["end_date"])):
                     messages.error(request, "Start dates must begin before expiration date")
                     return HttpResponseRedirect(".")                 
@@ -614,8 +679,6 @@ def viewpromotions_view(request, *args, **kwargs):
         return HttpResponseRedirect(".")
     return render(request, "viewpromotions.html", context)
     
-
-
 def manageusers_view(request, *args, **kwargs):
     if not checkAdminStatus(request, *args, **kwargs):
         return homepage_view(request, *args, **kwargs);
@@ -640,11 +703,9 @@ def suspenduser_view(request, *args, **kwargs):
                     return HttpResponseRedirect('.')
             except:
                 messages.error(request, "There is not a user with that ID")
-
     context = {
         "form": form
     }
-
     return render(request, "suspenduser.html", context)
 
 def unsuspend_view(request, *args, **kwargs):
@@ -664,8 +725,7 @@ def unsuspend_view(request, *args, **kwargs):
                     messages.error(request, "The user is unsuspended!")
                     return HttpResponseRedirect('.')
             except:
-                messages.error(request, "There is not a user with that ID")
-
+                messages.error(request, "There is not a user with that ID");
     context = {
         "form": form
     }

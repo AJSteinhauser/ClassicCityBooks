@@ -25,6 +25,7 @@ class Book(models.Model):
         managed = True
         db_table = 'Books'
 
+
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     user_email = models.CharField(max_length=50)
@@ -33,6 +34,8 @@ class User(models.Model):
     last_name = models.CharField(max_length=25, blank=True, null=True)
     phone_num = models.PositiveIntegerField(blank=True, null=True)
     cart = models.CharField(max_length=9000000000000);
+    order_history = models.TextField(blank=True, null=True);
+    active_promotions = models.CharField(max_length=50);
     user_card_exp = models.CharField(max_length=150, blank=True, null=True)
     user_card_num = models.CharField(max_length=50, blank=True, null=True)
     user_card_seccode = models.CharField(max_length=3, blank=True, null=True)
