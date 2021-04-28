@@ -48,13 +48,17 @@ def homepage_view(request, *args, **kwargs):
     for book in booksQuery:
         if book.isBestSeller == 1:
             context["book" + str(bestSeller) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
+            if(len(book.title) > 50):
+                book.title = book.title[0:50] + "..."
+            if(len(book.description) > 300):
+                book.description = book.description[0:300] + "..."
             bestSeller = bestSeller + 1
-        if book.genre == "culinary":
+        if "culinary" in book.genre:
             context["culinary" + str(culinary) ] = book
-            book.title = book.title[0:50] + "..."
-            book.description = book.description[0:300] + "..."
+            if(len(book.title) > 50):
+                book.title = book.title[0:50] + "..."
+            if(len(book.description) > 300):
+                book.description = book.description[0:300] + "..."
             culinary = culinary + 1;
     if(checkSuspendedStatus(request, *args, **kwargs)):
         if request.session.has_key('user_id'):
@@ -439,8 +443,10 @@ def search_view(request, *args, **kwargs):
             bookArr = []
             counter = 0
             for book in books:
-                    book.title = book.title[0:50] + "..."
-                    book.description = book.description[0:300] + "..."
+                    if(len(book.title) > 50):
+                        book.title = book.title[0:50] + "..."
+                    if(len(book.description) > 300):
+                        book.description = book.description[0:300] + "..."
                     print(book.title)
                     bookArr.append([])
                     bookArr[counter].append(counter);
