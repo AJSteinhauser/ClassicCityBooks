@@ -434,6 +434,10 @@ def search_view(request, *args, **kwargs):
             context['searchCat'] = searchCat
             if searchCat == 'subject':
                 books = Book.objects.filter(genre__icontains=search)
+                if search.lower() == "fiction":
+                    books = Book.objects.filter(genre="fiction")
+                elif search.lower() == "non-fiction":
+                    books = Book.objects.filter(genre="non-fiction")
             elif searchCat == 'isbn':
                 books = Book.objects.filter(isbn=search)
             elif searchCat == 'title':
