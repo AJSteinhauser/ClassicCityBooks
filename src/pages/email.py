@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 def emailSelf(you, user_id, confirm_code):
     gmail_user = 'classiccitycollection@gmail.com'
     gmail_password = 'CCC123!@'
@@ -161,5 +162,60 @@ def promoEmail(email, promocode, percentage, start, end):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
     mail.sendmail(gmail_user, email, msg.as_string())
+    mail.quit()
+    return "Your email has been sent."
+    
+    
+def emailCheckout(you, user_id, first_name, cart, time):
+    gmail_user = 'classiccitycollection@gmail.com'
+    gmail_password = 'CCC123!@'
+    # Create message container
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Order Summary"
+    msg['From'] = gmail_user
+    msg['To'] = you
+    # Create the body of the message (a plain-text and an HTML version).
+    user_id = str(user_id)
+    text = "We are processing your new order! Please review the information below:"
+    body = """\
+    <html>
+      <head></head>
+      <body>
+        <h1><b>Order Summary</b></h1>
+        <p>Hi, """ + first_name + """, we are processing your new order! Please review the information below:
+    """
+    body = body + "<h2>Order ID:" + time[:10] + "-" + user_id + "</h2>"
+    body = body + "<h3>User ID:" + user_id + "</h3>"
+    for item in cart:
+        if item != "totalPrice":
+            body = body + "<br><h3>" + cart[item]["book_title"] + "</h3>"
+            body = body + "<p>Quantity:" + cart[item]["quantity"] + "</p>"
+            body = body + "<p>Price per item: $%.2f</p>" % cart[item]["price"]
+        else:
+            body = body + "<h2>Total Price: $%.2f</h2>" % cart[item]
+    body = body + "<br><p>Thank you so much for supporting The Classic City Collection! We hope to see you again soon.</p><br>"
+    body = body + "<br><p>If you ever have any questions please reach out to us at classiccitycollection@gmail.com.</p><br>"
+    body = body + """
+        </p>
+      </body>
+    </html>
+    """
+    print("TEST")
+
+    print("ENDTEST")
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(body, 'html')
+    # Attach parts into message container.
+    msg.attach(part1)
+    msg.attach(part2)
+    # Send the message via local SMTP server.
+    mail = smtplib.SMTP('smtp.gmail.com', 587)
+    mail.ehlo()
+    mail.starttls()
+    mail.login(gmail_user, gmail_password)
+    # sendmail function takes 3 arguments: sender's address, recipient's address
+    # and message to send - here it is sent as one string.
+    mail.sendmail(gmail_user, you, msg.as_string())
     mail.quit()
     return "Your email has been sent."

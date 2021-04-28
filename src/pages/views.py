@@ -19,6 +19,7 @@ from .form import resetPass
 from random import randint
 from .email import accountChange
 from .email import promoEmail
+from .email import emailCheckout
 from django_cryptography.fields import encrypt
 from cryptography.fernet import Fernet
 import os
@@ -82,13 +83,30 @@ def finalCheckout_view(request, *args, **kwargs):
                 cart[item]["price"] = float(cart[item]["price"]) * promotionvalue;
                 totalprice = totalprice + cart[item]["price"] * int(cart[item]["quantity"])
             cart["totalPrice"] = totalprice;
-            orderhis[str(datetime.now())] = cart;
-            user.order_history = json.dumps(orderhis);    
+            time = str(datetime.now())
+            orderhis[time] = cart;
+            user.order_history = json.dumps(orderhis);
+            emailCheckout(user.user_email, user.user_id, user.first_name, cart, time)
+
         user.cart = None;
         user.active_promotions = "null";
         user.save();
     return homepage_view(request, *args, **kwargs);
 
+ 
+def exmaple_jsonparse():
+      if request.session.has_key('user_id'):
+        user = User.objects.get(user_id=request.session.get('user_id'))
+        tmpcart = user.cart or "{}" #If Json table is null create empty one so code does not error and table is manipuable
+        cart = json.loads(tmpcart); #Loads JSON table into a python styled Dictionary struct
+
+        for item in cart: #Json tables are essentially hashmaps this loop just gets every key in the map
+            x = cart[item] #This is an example of referencing an entry in the hashmap
+            price = cart[item]["price"] #This the same as line above in terms of accessing 
+            book_title = cart[item]["book_title"] #This the same as line above in terms of accessing 
+            quantity = cart[item]["quantity"]#This the same as line above in terms of accessing 
+            
+            
 def checkout_view(request, *args, **kwargs):
     context = {};
     if request.session.has_key('user_id'):
