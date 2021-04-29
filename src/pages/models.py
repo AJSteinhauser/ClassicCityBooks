@@ -18,7 +18,7 @@ class Book(models.Model):
         managed = True
         db_table = 'Books'
 
-
+#
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     user_email = models.CharField(max_length=50)

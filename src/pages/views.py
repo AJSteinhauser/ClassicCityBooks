@@ -718,10 +718,7 @@ def viewpromotions_view(request, *args, **kwargs):
             return HttpResponseRedirect(".")
         else:
             form = newpromotion(request.POST)
-            print("test1")
-            print(form.errors)
             if form.is_valid():
-                print("test2")
                 if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
                     messages.error(request, "Please enter a valid percent!")
                 elif(not(form.cleaned_data["start_date"] < form.cleaned_data["end_date"])):
