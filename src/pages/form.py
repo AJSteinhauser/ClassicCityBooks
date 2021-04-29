@@ -25,11 +25,11 @@ class UserRegister(forms.Form):
 	user_pass = forms.CharField(widget=forms.PasswordInput(render_value=True, attrs={'placeholder': 'Password*'}), label="", max_length=15)
 	user_street = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Street'}), label="")
 	user_city = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'City'}), label="")
-	user_state = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'State'}), label="")
+	user_state = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'State'}), label="", max_length = 2)
 	user_zip = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Zip Code'}), label="", max_length=5, min_length=5)
 	user_card_num = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Card Number'}), label="", max_length=16, min_length=16)
 	user_card_exp = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Expiration Date'}), label="")
-	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=4, min_length=3)
+	user_card_seccode = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Security Code'}), label="", max_length=3, min_length=3)
 	isSubscribed = forms.ChoiceField(choices=SUBCHOICES, label="")
 
 class NewBook(forms.Form):
