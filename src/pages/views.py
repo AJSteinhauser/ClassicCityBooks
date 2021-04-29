@@ -91,11 +91,13 @@ def finalCheckout_view(request, *args, **kwargs):
             orderhis[time] = cart;
             user.order_history = json.dumps(orderhis);
             emailCheckout(user.user_email, user.user_id, user.first_name, cart, time)
-
+            
         user.cart = None;
         user.active_promotions = "null";
         user.save();
-    return homepage_view(request, *args, **kwargs);
+        messages.info(request, "Order Successfully Processed!")
+        return render(request, "logout.html", {})
+    return 
 
  
 def exmaple_jsonparse():
