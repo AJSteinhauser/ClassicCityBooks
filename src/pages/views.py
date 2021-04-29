@@ -619,6 +619,7 @@ def register_view(request, *args, **kwargs):
                 User.objects.create(**form.cleaned_data)
                 obj = User.objects.get(user_email=entered_email)
                 confirm_code = randint(100000,999999)
+                obj.cart = "{}"
                 obj.confirm_code = confirm_code
                 key = open(os.path.join(settings.BASE_DIR, 'secret.key')).read()
                 f = Fernet(key)
