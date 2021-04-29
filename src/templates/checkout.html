@@ -109,14 +109,21 @@
                             </div>
                         </div>
                     </div>
+					{% if user.active_promotions != "null" %}
+					<form method="POST"> {% csrf_token %}
+						<button type="submit" class="btn btn-warning">Cancel Promotion</button>
+					</form>
+					{%endif%}
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm"></div>
                 <div class="col-sm"> </div>
                 <div class="col-sm">
+					<form action="{% url 'home' %}">
+                    <button type="submit" class="btn btn-warning">Cancel</button>
+					</form>
 					<form action="{% url 'finalcheckout' %}" onsubmit="return validateCheckout()">
-                    <button type="button" class="btn btn-warning" onclick="location.href = {% url 'home' %}">Cancel</button>
                     <button type="submit" class="btn btn-success" >Checkout</button>
 					</form>
                 </div>

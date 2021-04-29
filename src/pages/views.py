@@ -118,17 +118,22 @@ def checkout_view(request, *args, **kwargs):
         if user.cart is None:
             return viewCart_view(request, *args, **kwargs);
         if request.method =="POST":
-            try:
-                obj = Promotion.objects.get(promocode=request.POST.get("code"))
-                start = datetime.strptime(str(obj.start_date),"%Y-%m-%d");
-                endtime = datetime.strptime(str(obj.end_date),"%Y-%m-%d");
-                if not (datetime.now() >= start and datetime.now() <= endtime):
-                    x = 1/0;
-                if user.active_promotions == "null":
-                    user.active_promotions = obj.percent;
-                    user.save();
-            except: 
-                context["message"] = "Not a valid code";
+            if request.POST.get("code"):
+                try:
+                    obj = Promotion.objects.get(promocode=request.POST.get("code"))
+                    start = datetime.strptime(str(obj.start_date),"%Y-%m-%d");
+                    endtime = datetime.strptime(str(obj.end_date),"%Y-%m-%d");
+                    if not (datetime.now() >= start and datetime.now() <= endtime):
+                        x = 1/0;
+                    if user.active_promotions == "null":
+                        user.active_promotions = obj.percent;
+                        user.save();
+                except: 
+                    context["message"] = "Not a valid code";
+            else:
+                user.active_promotions="null"
+                user.save()
+                
         user.user_card_num = unencrypt(user.user_card_num)
         user.user_card_exp = unencrypt(user.user_card_exp)
         user.user_card_seccode = unencrypt(user.user_card_seccode)
