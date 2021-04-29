@@ -724,9 +724,6 @@ def viewpromotions_view(request, *args, **kwargs):
                 print("test2")
                 if (form.cleaned_data["percent"] > 100 or form.cleaned_data["percent"] < 0):
                     messages.error(request, "Please enter a valid percent!")
-                elif(form.cleaned_data["start_date"] < datetime.date.today()):
-                    messages.error(request, "Start dates must begin either today or later")
-                    return HttpResponseRedirect(".") 
                 elif(not(form.cleaned_data["start_date"] < form.cleaned_data["end_date"])):
                     messages.error(request, "Start dates must begin before expiration date")
                     return HttpResponseRedirect(".")
