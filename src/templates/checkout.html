@@ -162,6 +162,11 @@ var validateCheckout = function() {
 		document.getElementById("alert").style.display = "block";
 		return false;
 	} 
+	if(cardNum.length < 12) {
+		document.getElementById("alert").innerHTML = "Please enter a valid card number";
+		document.getElementById("alert").style.display = "block";
+		return false;	
+	}
 	cardNum = parseInt(cardNum, 10);
 	if(Number.isNaN(cardNum)){
 		document.getElementById("alert").innerHTML = "Please enter a valid card number";
